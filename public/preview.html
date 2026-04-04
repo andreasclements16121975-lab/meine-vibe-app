@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vereinsmanager Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <header class="bg-white border-b sticky top-0 z-10">
+      <div class="max-w-7xl mx-auto p-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <img id="clubLogo" src="" alt="Vereinslogo" class="w-10 h-10 rounded-full object-cover border hidden" />
+          <div>
+            <h1 class="text-xl font-bold text-emerald-700">Vereinsmanager Pro</h1>
+            <p class="text-sm text-slate-500">Fußballmanagement in einem System</p>
+          </div>
+        </div>
+        <div id="authInfo" class="text-sm"></div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 space-y-6">
+      <section class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-2">Login</h2>
+          <div class="space-y-2">
+            <input id="loginEmail" class="w-full border rounded p-2" placeholder="E-Mail" />
+            <input id="loginPassword" type="password" class="w-full border rounded p-2" placeholder="Passwort" />
+            <button id="loginBtn" class="px-4 py-2 rounded bg-emerald-600 text-white">Einloggen</button>
+            <button id="forgotBtn" class="px-4 py-2 rounded bg-amber-500 text-white">Passwort vergessen</button>
+            <p id="authMessage" class="text-sm text-slate-600"></p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-2">Branding / Vereinslogo</h2>
+          <input id="logoInput" type="file" accept="image/*" class="mb-2" />
+          <button id="uploadLogoBtn" class="px-4 py-2 rounded bg-sky-600 text-white">Logo hochladen</button>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl border p-4">
+        <h2 class="font-semibold mb-3">Mitgliederverwaltung (CRUD)</h2>
+        <div class="grid md:grid-cols-5 gap-2 mb-3">
+          <input id="memberName" class="border rounded p-2" placeholder="Name" />
+          <input id="memberEmail" class="border rounded p-2" placeholder="E-Mail" />
+          <select id="memberRole" class="border rounded p-2">
+            <option>Admin</option><option>Trainer</option><option>Spieler</option><option>Kassenwart</option>
+          </select>
+          <input id="memberTeam" class="border rounded p-2" placeholder="Team" />
+          <button id="saveMemberBtn" class="rounded bg-emerald-600 text-white px-3">Speichern</button>
+        </div>
+        <div id="membersList" class="space-y-2"></div>
+      </section>
+
+      <section class="grid lg:grid-cols-2 gap-4 items-start">
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-3">Termin erstellen</h2>
+          <div class="grid md:grid-cols-2 gap-2 mb-3">
+            <label class="text-sm">Terminart
+              <select id="eventTitle" class="border rounded p-2 mt-1" required>
+                <option value="">Terminart wählen</option>
+                <option>Meisterschaftsspiel</option><option>Freundschaftsspiel</option><option>Turnier</option><option>Training</option><option>Event</option>
+              </select>
+            </label>
+            <label class="text-sm">Gegner
+              <input id="eventOpponent" list="opponentSuggestions" class="border rounded p-2 mt-1" placeholder="Gegner" />
+            </label>
+            <label class="text-sm">Spielort
+              <select id="eventHomeAway" class="border rounded p-2 mt-1"><option>Heimspiel</option><option>Auswärtsspiel</option></select>
+            </label>
+            <label class="text-sm">Datum
+              <input id="eventDate" type="date" class="border rounded p-2 mt-1" required />
+            </label>
+            <label class="text-sm">Adresse
+              <input id="eventAddress" list="addressSuggestions" class="border rounded p-2 mt-1" placeholder="Adresse" required />
+            </label>
+            <label class="text-sm">Untergrund
+              <select id="eventSurface" class="border rounded p-2 mt-1"><option>Rasen</option><option>Asche</option><option>Kunstrasen</option></select>
+            </label>
+            <label class="text-sm">Treffzeit
+              <select id="eventMeetingTime" class="border rounded p-2 mt-1"></select>
+            </label>
+            <label class="text-sm">Anstoßzeit
+              <select id="eventKickoffTime" class="border rounded p-2 mt-1"></select>
+            </label>
+            <label class="text-sm">Zu-/Absage bis
+              <input id="eventDeadline" type="datetime-local" step="3600" class="border rounded p-2 mt-1" required />
+            </label>
+            <div class="mt-6 space-y-2">
+              <label class="text-sm flex items-center gap-2 border rounded p-2"><input id="eventNotify" type="checkbox" /> Spieler per Push informieren</label>
+              <button id="eventEmailNotifyBtn" type="button" class="w-full px-3 py-2 rounded bg-sky-600 text-white">Spieler per E-Mail informieren</button>
+            </div>
+            <label class="text-sm">Erinnerung (Std.)
+              <select id="eventReminderHours" class="border rounded p-2 mt-1"><option value="6">6</option><option value="12">12</option><option value="24" selected>24</option><option value="36">36</option><option value="48">48</option><option value="72">72</option></select>
+            </label>
+          </div>
+          <div id="trainingSeriesBox" class="hidden border rounded p-3 mb-3 bg-slate-50">
+            <h3 class="font-medium mb-2">Serie erstellen</h3>
+            <div class="grid md:grid-cols-2 gap-2">
+              <label class="text-sm">Startdatum
+                <input id="seriesStartDate" type="date" class="border rounded p-2 mt-1" />
+              </label>
+              <label class="text-sm">Enddatum
+                <input id="seriesEndDate" type="date" class="border rounded p-2 mt-1" />
+              </label>
+              <label class="text-sm">oder Anzahl Wochen
+                <input id="seriesWeeks" type="number" min="1" class="border rounded p-2 mt-1" placeholder="z. B. 8" />
+              </label>
+              <label class="text-sm">Treffzeit (Serie)
+                <select id="seriesMeetingTime" class="border rounded p-2 mt-1"></select>
+              </label>
+              <label class="text-sm">Startzeit (Serie)
+                <select id="seriesKickoffTime" class="border rounded p-2 mt-1"></select>
+              </label>
+              <label class="text-sm">Endzeit (Serie)
+                <select id="seriesEndTime" class="border rounded p-2 mt-1"></select>
+              </label>
+              <label class="text-sm">Zu-/Absage bis (Serie)
+                <input id="seriesDeadline" type="datetime-local" step="3600" class="border rounded p-2 mt-1" />
+              </label>
+            </div>
+            <div class="mt-2 text-sm">
+              <p class="mb-1">Wochentage</p>
+              <div class="flex flex-wrap gap-3">
+                <label><input type="checkbox" class="seriesWeekday" value="1" /> Mo</label>
+                <label><input type="checkbox" class="seriesWeekday" value="2" /> Di</label>
+                <label><input type="checkbox" class="seriesWeekday" value="3" /> Mi</label>
+                <label><input type="checkbox" class="seriesWeekday" value="4" /> Do</label>
+                <label><input type="checkbox" class="seriesWeekday" value="5" /> Fr</label>
+                <label><input type="checkbox" class="seriesWeekday" value="6" /> Sa</label>
+                <label><input type="checkbox" class="seriesWeekday" value="0" /> So</label>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-2 mb-3 flex-wrap">
+            <button id="createEventBtn" class="rounded bg-emerald-600 text-white px-3 py-2">Termin speichern</button>
+            <button id="deleteEventBtn" class="rounded bg-rose-600 text-white px-3 py-2">Termin löschen/absagen</button>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-3">Monatsübersicht mit Team-Terminen</h2>
+          <div class="flex items-center gap-2 mb-3">
+            <button id="prevMonthBtn" type="button" class="px-3 py-1 rounded border bg-white">←</button>
+            <select id="monthSelect" class="border rounded p-1"></select>
+            <span id="currentYearLabel" class="text-sm font-medium"></span>
+            <button id="nextMonthBtn" type="button" class="px-3 py-1 rounded border bg-white">→</button>
+          </div>
+          <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-sm"></div>
+        </div>
+      </section>
+
+<section class="grid lg:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-3">Nominierung + Zu-/Absage</h2>
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <input id="nomEventId" class="border rounded p-2" placeholder="Event-ID" />
+            <select id="nomPlayerId" class="border rounded p-2"></select>
+          </div>
+          <button id="createNomBtn" class="px-4 py-2 rounded bg-emerald-600 text-white">Für Event nominieren</button>
+
+          <hr class="my-3" />
+          <div class="grid grid-cols-3 gap-2 mb-2">
+            <input id="answerNomId" class="border rounded p-2" placeholder="Nominierungs-ID" />
+            <select id="answerStatus" class="border rounded p-2"><option>Zusage</option><option>Absage</option></select>
+            <input id="answerReason" class="border rounded p-2" placeholder="Absagegrund (Pflicht bei Absage)" />
+          </div>
+          <button id="answerNomBtn" class="px-4 py-2 rounded bg-sky-600 text-white">Rückmeldung senden</button>
+          <div id="nomList" class="mt-3 space-y-2"></div>
+        </div>
+
+        <div class="bg-white rounded-xl border p-4">
+          <h2 class="font-semibold mb-3">Mannschaftskasse (Ledger)</h2>
+          <div class="grid grid-cols-4 gap-2 mb-2">
+            <input id="ledgerPlayer" class="border rounded p-2" placeholder="Spieler" />
+            <input id="ledgerAmount" type="number" class="border rounded p-2" placeholder="Betrag" />
+            <select id="ledgerType" class="border rounded p-2"><option>Einnahme</option><option>Ausgabe</option></select>
+            <input id="ledgerReason" class="border rounded p-2" placeholder="Grund / Strafe" />
+          </div>
+          <button id="addLedgerBtn" class="px-4 py-2 rounded bg-emerald-600 text-white">Buchung hinzufügen</button>
+          <div id="ledgerList" class="mt-3 space-y-2"></div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl border p-4">
+        <h2 class="font-semibold mb-3">Trainings-Modul (Filter + Material + Visual Editor)</h2>
+        <div class="grid md:grid-cols-5 gap-2 mb-3">
+          <select id="fAge" class="border rounded p-2"></select>
+          <select id="fPerf" class="border rounded p-2"><option value="">Leistung</option><option>Einsteiger</option><option>Fortgeschritten</option></select>
+          <select id="fType" class="border rounded p-2"><option value="">Kategorie</option><option>Technik & Spezialtraining</option><option>Schnelligkeit & Kraft (Speed & Power)</option><option>Taktik</option><option>Spielform</option></select>
+          <select id="fFit" class="border rounded p-2"><option value="">Fitness</option><option>Niedrig</option><option>Mittel</option><option>Hoch</option></select>
+          <button id="filterExercisesBtn" class="rounded bg-emerald-600 text-white px-3">Filtern</button>
+        </div>
+        <div id="exerciseList" class="grid md:grid-cols-2 gap-2 mb-4"></div>
+
+        <div class="grid md:grid-cols-3 gap-2 mb-3">
+          <select id="materialSelect" class="border rounded p-2"></select>
+          <select id="bibColor" class="border rounded p-2"><option value="orange">Leibchen: Orange</option><option value="blau">Leibchen: Blau</option><option value="grün">Leibchen: Grün</option><option value="gelb">Leibchen: Gelb</option></select>
+          <select id="dummyColor" class="border rounded p-2"><option value="gelb">Dummy: Gelb</option><option value="rot">Dummy: Rot</option><option value="blau">Dummy: Blau</option><option value="schwarz">Dummy: Schwarz</option></select>
+        </div>
+        <div id="materialInfo" class="text-sm text-slate-600 mb-2"></div>
+
+        <div class="flex flex-wrap gap-2 mb-2 text-xl">
+          <button class="draggable border rounded p-2 bg-white" data-icon="🔺">Hütchen</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="🏳️">Eckfahne</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="🥅">Tor</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="🧍">Spieler</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="🦺">Leibchen</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="🧱">Dummy</button>
+          <button class="draggable border rounded p-2 bg-white" data-icon="⚽">Ball</button>
+        </div>
+        <canvas id="tacticsCanvas" width="900" height="300" class="w-full border rounded bg-green-50"></canvas>
+      </section>
+
+      <section class="bg-white rounded-xl border p-4">
+        <h2 class="font-semibold mb-3">Video-Features</h2>
+        <div class="grid md:grid-cols-3 gap-2 mb-2">
+          <input id="videoFile" type="file" class="border rounded p-2" />
+          <input id="videoDesc" class="border rounded p-2" placeholder="Videobeschreibung" />
+          <button id="uploadVideoBtn" class="rounded bg-emerald-600 text-white px-3">Video hochladen</button>
+        </div>
+        <div class="grid md:grid-cols-3 gap-2 mb-2">
+          <input id="socialUrl" class="border rounded p-2 md:col-span-2" placeholder="Instagram/TikTok/YouTube Link" />
+          <button id="addSocialBtn" class="rounded bg-sky-600 text-white px-3">Link einbetten</button>
+        </div>
+        <button id="extractBtn" class="rounded bg-violet-600 text-white px-3 py-2">Beschreibung in Anleitung umwandeln</button>
+        <pre id="instructionsOutput" class="bg-slate-100 p-3 rounded mt-2 text-sm"></pre>
+        <div id="videoList" class="mt-3 space-y-2"></div>
+      </section>
+    </main>
+
+    <div id="calendarModal" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-xl border shadow-xl max-w-xl w-full p-4">
+        <div class="flex justify-between items-center mb-2">
+          <h3 class="font-semibold">Termindetails</h3>
+          <button id="closeCalendarModalBtn" type="button" class="px-2 py-1 rounded border">Schließen</button>
+        </div>
+        <div id="calendarModalContent" class="text-sm space-y-1"></div>
+      </div>
+    </div>
+
+    <datalist id="opponentSuggestions"></datalist>
+    <datalist id="addressSuggestions"></datalist>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
