@@ -384,24 +384,18 @@ async function createEvent() {
       alert('Die Treffzeit muss vor der Anstoßzeit liegen');
       return;
     }
-
-    const eventDate = el('eventDate').value;
-    const deadlineValue = el('eventDeadline').value;
-    if (deadlineValue) {
-      const deadlineMinutes = deadlineValue.slice(14, 16);
-      if (deadlineMinutes !== '00') {
-        highlightEventFields(['eventDeadline']);
-        alert('Zu-/Absage bis darf nur volle Stunden enthalten.');
-        return;
-      }
+    
     }
-    const deadlineDate = el('eventDeadline').value ? el('eventDeadline').value.slice(0, 10) : '';
-    if (deadlineDate && eventDate && deadlineDate > eventDate) {
-      highlightEventFields(['eventDate', 'eventDeadline']);
-      alert('Das Absagedatum darf nicht nach dem Spieltermin liegen!');
-      return;
-    }
+const eventDate = el('eventDate').value;
+const deadlineDate = el('eventDeadlineDate').value;
+const deadlineTime = el('eventDeadlineTime').value;
+const deadlineValue = deadlineDate && deadlineTime ? `${deadlineDate}T${deadlineTime}` : '';
 
+if (deadlineDate && eventDate && deadlineDate > eventDate) {
+  highlightEventFields(['eventDate', 'eventDeadlineDate', 'eventDeadlineTime']);
+  alert('Das Absagedatum darf nicht nach dem Spieltermin liegen!');
+  return;
+}
     const basePayload = {
       title: el('eventTitle').value,
       opponent: el('eventOpponent').value,
@@ -415,7 +409,7 @@ async function createEvent() {
         el('eventAddress').dataset.lat && el('eventAddress').dataset.lng
           ? { lat: Number(el('eventAddress').dataset.lat), lng: Number(el('eventAddress').dataset.lng) }
           : undefined,
-      responseDeadline: el('eventDeadline').value,
+      responseDeadline: deadlineValue,
       notifyPlayers: el('eventNotify').checked,
       reminderHoursBefore: Number(el('eventReminderHours').value || 24)
     };
