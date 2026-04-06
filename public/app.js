@@ -623,7 +623,7 @@ async function loadVideos() {
 
 function loadTimeOptions() {
   const slots = [];
-  for (let h = 6; h <= 21; h++) {
+  for (let h = 8; h <= 18; h++) {
     for (let m = 0; m < 60; m += 15) {
       const val = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
       slots.push(`<option value="${val}">${val}</option>`);
