@@ -352,7 +352,7 @@ function getSeriesDates() {
 }
 
 function clearEventFieldHighlights() {
-  ['eventTitle', 'eventDate', 'eventAddress', 'eventMeetingTime', 'eventKickoffTime', 'eventDeadline'].forEach((id) => {
+  ['eventTitle', 'eventDate', 'eventAddress', 'eventMeetingTime', 'eventKickoffTime', 'eventDeadlineDate', 'eventDeadlineTime'].forEach((id) => {
     el(id).classList.remove('border-rose-500', 'ring-1', 'ring-rose-300');
   });
 }
@@ -369,7 +369,7 @@ async function createEvent() {
     }
 
     clearEventFieldHighlights();
-    const required = ['eventTitle', 'eventDate', 'eventAddress', 'eventMeetingTime', 'eventKickoffTime', 'eventDeadline'];
+    const required = ['eventTitle', 'eventDate', 'eventAddress', 'eventMeetingTime', 'eventKickoffTime', 'eventDeadlineDate', 'eventDeadlineTime'];
     const missing = required.filter((id) => !el(id).value);
     if (missing.length) {
       highlightEventFields(missing);
@@ -629,6 +629,7 @@ function loadTimeOptions() {
   el('seriesMeetingTime').innerHTML = html;
   el('seriesKickoffTime').innerHTML = html;
   el('seriesEndTime').innerHTML = html;
+  el('eventDeadlineTime').innerHTML = html;
 }
 
 async function bootstrapData() {
