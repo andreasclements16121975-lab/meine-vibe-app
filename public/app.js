@@ -382,9 +382,7 @@ async function createEvent() {
     if (meetingTime >= kickoffTime) {
       highlightEventFields(['eventMeetingTime', 'eventKickoffTime']);
       alert('Die Treffzeit muss vor der Anstoßzeit liegen');
-      return;
-    }
-    
+      return;   
     }
 const eventDate = el('eventDate').value;
 const deadlineDate = el('eventDeadlineDate').value;
