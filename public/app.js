@@ -364,8 +364,7 @@ function highlightEventFields(ids) {
 async function createEvent() {
   try {
     if (!token) {
-      alert('Bitte zuerst einloggen, um Termine zu speichern.');
-      return;
+      console.warn('Kein Login vorhanden – Termin wird im Testmodus gespeichert.');
     }
 
     clearEventFieldHighlights();
