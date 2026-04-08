@@ -454,18 +454,18 @@ saveEventLocally({
   endTime: seriesEndTime,
   responseDeadline: seriesDeadline || basePayload.responseDeadline
 });
-        }
-      } else {
-      saveEventLocally({
-  ...basePayload,
-  date: el('eventDate').value
-});
-    } else {
+  } else {
   saveEventLocally({
-  ...basePayload,
-  date: el('eventDate').value
-});
-    }
+    ...basePayload,
+    date: el('eventDate').value
+  });
+}
+} else {
+  saveEventLocally({
+    ...basePayload,
+    date: el('eventDate').value
+  });
+}
 
     await loadEvents();
   } catch (e) {
