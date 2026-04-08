@@ -439,22 +439,25 @@ if (deadlineDate && eventDate && deadlineDate > eventDate) {
         alert('Zu-/Absage bis darf nur volle Stunden enthalten.');
         return;
       }
-      if (seriesDates && seriesDates.length) {
-        for (const date of seriesDates) {
-          const seriesDeadlineDate = seriesDeadline ? seriesDeadline.slice(0, 10) : '';
-          if (seriesDeadlineDate && seriesDeadlineDate > date) {
-            alert('Das Absagedatum darf nicht nach dem Spieltermin liegen!');
-            return;
-          }
-saveEventLocally({
-  ...basePayload,
-  date,
-  meetingTime: seriesMeetingTime,
-  kickoffTime: seriesKickoffTime,
-  endTime: seriesEndTime,
-  responseDeadline: seriesDeadline || basePayload.responseDeadline
-});
-  } else {
+     if (seriesDates && seriesDates.length) {
+  for (const date of seriesDates) {
+    const seriesDeadlineDate = seriesDeadline ? seriesDeadline.slice(0, 10) : '';
+
+    if (seriesDeadlineDate && seriesDeadlineDate > date) {
+      alert('Das Absagedatum darf nicht nach dem Spieltermin liegen!');
+      return;
+    }
+
+    saveEventLocally({
+      ...basePayload,
+      date,
+      meetingTime: seriesMeetingTime,
+      kickoffTime: seriesKickoffTime,
+      endTime: seriesEndTime,
+      responseDeadline: seriesDeadline || basePayload.responseDeadline
+    });
+  }
+} else {
   saveEventLocally({
     ...basePayload,
     date: el('eventDate').value
@@ -466,7 +469,6 @@ saveEventLocally({
     date: el('eventDate').value
   });
 }
-
     await loadEvents();
   } catch (e) {
     alert(`Speichern fehlgeschlagen: ${e.message}`);
