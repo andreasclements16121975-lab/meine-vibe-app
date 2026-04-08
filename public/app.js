@@ -361,6 +361,19 @@ function highlightEventFields(ids) {
   ids.forEach((id) => el(id).classList.add('border-rose-500', 'ring-1', 'ring-rose-300'));
 }
 
+function saveEventLocally(eventData) {
+  const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+  const newEvent = {
+    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    ...eventData,
+    mapLink: eventData.address
+      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventData.address)}`
+      : '#'
+  };
+  events.push(newEvent);
+  localStorage.setItem('localEvents', JSON.stringify(events));
+}
+
 async function createEvent() {
   try {
     if (!token) {
