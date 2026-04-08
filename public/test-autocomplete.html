@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <input type="text" id="eventOpponent" placeholder="Suche...">
+    <input type="text" id="eventAddress" placeholder="Adresse" readonly>
+
+```
+<script
+    async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTGv_RgaBypgLobEsebD182Iqt2SCh4d0&loading=async&libraries=places&callback=initAutocomplete">
+</script>
+
+<script>
+function initAutocomplete() {
+    const opponentInput = document.getElementById('eventOpponent');
+    const addressInput = document.getElementById('eventAddress');
+    if (!opponentInput) return;
+
+    const autocomplete = new google.maps.places.Autocomplete(opponentInput, {
+        types: ['establishment', 'geocode'],
+        componentRestrictions: { country: 'de' }
+    });
+
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place || !place.geometry) return;
+        opponentInput.value = place.name || '';
+        if (addressInput) {
+            addressInput.value = place.formatted_address || '';
+        }
+    });
+}
+window.initAutocomplete = initAutocomplete;
+</script>
+```
+
+</body>
+</html>
