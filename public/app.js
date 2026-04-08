@@ -487,6 +487,20 @@ async function deleteEvent() {
 }
 
 async function loadEvents() {
+  const isGitHubPages = window.location.hostname.includes('github.io');
+
+  if (isGitHubPages) {
+    const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+    renderCalendar(events);
+    el('opponentSuggestions').innerHTML = [...new Set(events.map((e) => e.opponent).filter(Boolean))]
+      .map((x) => `<option value="${x}"></option>`)
+      .join('');
+    el('addressSuggestions').innerHTML = [...new Set(events.map((e) => e.address).filter(Boolean))]
+      .map((x) => `<option value="${x}"></option>`)
+      .join('');
+    return;
+  }
+
   try {
     const events = await api('/api/events');
     renderCalendar(events);
