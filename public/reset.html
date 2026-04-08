@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passwort zurücksetzen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-100 min-h-screen grid place-items-center p-4">
+    <div class="bg-white border rounded-xl p-6 w-full max-w-md">
+      <h1 class="text-xl font-bold mb-3">Passwort zurücksetzen</h1>
+      <input id="pw" type="password" class="w-full border rounded p-2 mb-3" placeholder="Neues Passwort" />
+      <button id="save" class="w-full bg-emerald-600 text-white rounded p-2">Speichern</button>
+      <p id="msg" class="text-sm mt-2"></p>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById('save').addEventListener('click', async () => {
+        const token = params.get('token');
+        const newPassword = document.getElementById('pw').value;
+        const res = await fetch('/api/auth/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, newPassword })
+        });
+        const data = await res.json();
+        document.getElementById('msg').textContent = data.message || data.error;
+      });
+    </script>
+  </body>
+</html>

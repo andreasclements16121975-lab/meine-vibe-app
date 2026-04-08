@@ -85,11 +85,7 @@
               <select id="eventKickoffTime" class="border rounded p-2 mt-1"></select>
             </label>
             <label class="text-sm">Zu-/Absage bis
-              <div class="grid grid-cols-2 gap-2 mt-1">
-  <input id="eventDeadlineDate" type="date" class="border rounded p-2" required />
-  <select id="eventDeadlineTime" class="border rounded p-2" required></select>
-</div>
-
+              <input id="eventDeadline" type="datetime-local" step="3600" class="border rounded p-2 mt-1" required />
             </label>
             <div class="mt-6 space-y-2">
               <label class="text-sm flex items-center gap-2 border rounded p-2"><input id="eventNotify" type="checkbox" /> Spieler per Push informieren</label>
