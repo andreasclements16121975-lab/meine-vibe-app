@@ -446,32 +446,25 @@ if (deadlineDate && eventDate && deadlineDate > eventDate) {
             alert('Das Absagedatum darf nicht nach dem Spieltermin liegen!');
             return;
           }
-          await api('/api/events', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              ...basePayload,
-              date,
-              meetingTime: seriesMeetingTime,
-              kickoffTime: seriesKickoffTime,
-              endTime: seriesEndTime,
-              responseDeadline: seriesDeadline || basePayload.responseDeadline
-            })
-          });
+saveEventLocally({
+  ...basePayload,
+  date,
+  meetingTime: seriesMeetingTime,
+  kickoffTime: seriesKickoffTime,
+  endTime: seriesEndTime,
+  responseDeadline: seriesDeadline || basePayload.responseDeadline
+});
         }
       } else {
-        await api('/api/events', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...basePayload, date: el('eventDate').value })
-        });
-      }
+      saveEventLocally({
+  ...basePayload,
+  date: el('eventDate').value
+});
     } else {
-      await api('/api/events', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...basePayload, date: el('eventDate').value })
-      });
+  saveEventLocally({
+  ...basePayload,
+  date: el('eventDate').value
+});
     }
 
     await loadEvents();
