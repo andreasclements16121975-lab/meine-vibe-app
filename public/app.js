@@ -241,7 +241,53 @@ async function initGooglePlacesForEventFields() {
     console.warn(err.message);
   }
 }
+function getEasterSunday(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(year, month - 1, day);
+}
 
+function formatDateKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function getHolidayMap(year) {
+  const easterSunday = getEasterSunday(year);
+
+  const addDays = (baseDate, days) => {
+    const copy = new Date(baseDate);
+    copy.setDate(copy.getDate() + days);
+    return copy;
+  };
+
+  const holidays = [
+    { date: new Date(year, 0, 1), name: 'Neujahr' },
+    { date: addDays(easterSunday, -2), name: 'Karfreitag' },
+    { date: addDays(easterSunday, 1), name: 'Ostermontag' },
+    { date: new Date(year, 4, 1), name: 'Tag der Arbeit' },
+    { date: addDays(easterSunday, 39), name: 'Christi Himmelfahrt' },
+    { date: addDays(easterSunday, 50), name: 'Pfingstmontag' },
+    { date: new Date(year, 9, 3), name: 'Tag der Deutschen Einheit' },
+    { date: new Date(year, 11, 24), name: 'Heiligabend' },
+    { date: new Date(year, 11, 25), name: '1. Weihnachtstag' },
+    { date: new Date(year, 11, 26), name: '2. Weihnachtstag' },
+    { date: new Date(year, 11, 31), name: 'Silvester' }
+  ];
+
+  return Object.fromEntries(holidays.map((holiday) => [formatDateKey(holiday.date), holiday.name]));
+}
 function renderCalendar(events) {
   calendarEvents = events;
   const now = new Date();
