@@ -368,14 +368,40 @@ function highlightEventFields(ids) {
 
 function saveEventLocally(eventData) {
   const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+
+  const normalizedTitle = (eventData.title || '').trim();
+  const normalizedOpponent = (eventData.opponent || '').trim();
+  const normalizedAddress = (eventData.address || '').trim();
+  const normalizedDate = (eventData.date || '').trim();
+
+  const existingIndex = events.findIndex((event) => {
+    return (
+      (event.title || '').trim() === normalizedTitle &&
+      (event.opponent || '').trim() === normalizedOpponent &&
+      (event.address || '').trim() === normalizedAddress &&
+      (event.date || '').trim() === normalizedDate
+    );
+  });
+
   const newEvent = {
-    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    id:
+      existingIndex >= 0
+        ? events[existingIndex].id
+        : crypto.randomUUID
+          ? crypto.randomUUID()
+          : String(Date.now()),
     ...eventData,
     mapLink: eventData.address
       ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventData.address)}`
       : '#'
   };
-  events.push(newEvent);
+
+  if (existingIndex >= 0) {
+    events[existingIndex] = newEvent;
+  } else {
+    events.push(newEvent);
+  }
+
   localStorage.setItem('localEvents', JSON.stringify(events));
 }
 
