@@ -325,7 +325,67 @@ function closeCalendarModal() {
   el('calendarModal').classList.add('hidden');
   el('calendarModal').classList.remove('flex');
 }
+function openDeleteEventsModal() {
+  renderDeleteEventsList();
+  el('deleteEventsModal').classList.remove('hidden');
+  el('deleteEventsModal').classList.add('flex');
+}
 
+function closeDeleteEventsModal() {
+  el('deleteEventsModal').classList.add('hidden');
+  el('deleteEventsModal').classList.remove('flex');
+}
+
+function renderDeleteEventsList() {
+  const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+
+  if (!events.length) {
+    el('deleteEventsList').innerHTML = '<div class="text-sm text-slate-500">Keine Termine vorhanden.</div>';
+    return;
+  }
+
+  el('deleteEventsList').innerHTML = events
+    .map((event) => {
+      const label = [
+        event.date || '-',
+        event.title || 'Termin',
+        event.opponent || '',
+        event.address || ''
+      ]
+        .filter(Boolean)
+        .join(' – ');
+
+      return `
+        <label class="flex items-start gap-3 border rounded p-2">
+          <input type="checkbox" class="delete-event-checkbox mt-1" value="${event.id}" />
+          <span class="text-sm">${label}</span>
+        </label>
+      `;
+    })
+    .join('');
+}
+
+async function deleteSelectedEvents() {
+  const selectedIds = Array.from(document.querySelectorAll('.delete-event-checkbox:checked')).map((input) => input.value);
+
+  if (!selectedIds.length) {
+    alert('Bitte mindestens einen Termin auswählen.');
+    return;
+  }
+
+  const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+  const filteredEvents = events.filter((event) => !selectedIds.includes(event.id));
+
+  localStorage.setItem('localEvents', JSON.stringify(filteredEvents));
+
+  if (selectedCalendarEventId && selectedIds.includes(selectedCalendarEventId)) {
+    selectedCalendarEventId = '';
+    closeCalendarModal();
+  }
+
+  closeDeleteEventsModal();
+  await loadEvents();
+}
 function updateTrainingSeriesVisibility() {
   const isTraining = el('eventTitle').value === 'Training';
   el('trainingSeriesBox').classList.toggle('hidden', !isTraining);
