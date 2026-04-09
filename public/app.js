@@ -257,7 +257,7 @@ function renderCalendar(events) {
     const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const dayEvents = events.filter((e) => e.date === iso);
     const isToday = now.getFullYear() === y && now.getMonth() === m && now.getDate() === day;
-    cells.push(`<div class="p-2 border rounded min-h-20 ${isToday ? 'bg-blue-100 border-blue-400' : ''}"><div class="font-medium">${day}</div>${dayEvents
+    cells.push(`<div class="p-2 border rounded min-h-20"><div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">${day}</div>${dayEvents
       .map((e) => {
   const eventLabel = e.title || 'Termin';
   const detailLabel = e.opponent || '';
