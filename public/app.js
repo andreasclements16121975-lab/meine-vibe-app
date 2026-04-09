@@ -263,7 +263,14 @@ function renderCalendar(events) {
   const detailLabel = e.opponent || '';
   const addressLabel = e.address || '-';
 
-  return `<div class="text-xs rounded px-1 py-1 my-1 bg-emerald-100 leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ' - ' + detailLabel : ''} | ${addressLabel}">
+  const eventTypeClass =
+  e.title === 'Training'
+    ? 'bg-blue-100'
+    : e.title === 'Event'
+      ? 'bg-orange-100'
+      : 'bg-emerald-100';
+
+return `<div class="text-xs rounded px-1 py-1 my-1 ${eventTypeClass} leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ' - ' + detailLabel : ''} | ${addressLabel}">
     <div class="font-medium truncate">${eventLabel}</div>
     <div class="truncate">${detailLabel || '-'}</div>
     <div class="truncate">${addressLabel}</div>
