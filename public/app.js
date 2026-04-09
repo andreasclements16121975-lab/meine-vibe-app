@@ -296,7 +296,7 @@ function initCalendarControls() {
     renderCalendar(calendarEvents);
   });
 
-  el('calendarGrid').addEventListener('dblclick', (ev) => {
+  el('calendarGrid').addEventListener('click', (ev) => {
     const entry = ev.target.closest('[data-event-id]');
     if (!entry) return;
     openCalendarModal(entry.dataset.eventId);
