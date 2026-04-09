@@ -770,7 +770,7 @@ el('forgotBtn').addEventListener('click', forgotPassword);
 el('saveMemberBtn').addEventListener('click', saveMember);
 el('uploadLogoBtn').addEventListener('click', uploadLogo);
 el('createEventBtn').addEventListener('click', createEvent);
-el('deleteEventBtn').addEventListener('click', deleteEvent);
+el('deleteEventBtn').addEventListener('click', openDeleteEventsModal);
 el('createNomBtn').addEventListener('click', createNomination);
 el('answerNomBtn').addEventListener('click', answerNomination);
 el('addLedgerBtn').addEventListener('click', addLedger);
@@ -786,6 +786,8 @@ el('eventEmailNotifyBtn').addEventListener('click', () => alert('E-Mail-Benachri
 el('eventTitle').addEventListener('change', updateTrainingSeriesVisibility);
 el('closeCalendarModalBtn').addEventListener('click', closeCalendarModal);
 el('modalDeleteEventBtn').addEventListener('click', deleteEvent);
+el('closeDeleteEventsModalBtn').addEventListener('click', closeDeleteEventsModal);
+el('confirmDeleteSelectedBtn').addEventListener('click', deleteSelectedEvents);
 el('calendarModal').addEventListener('click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
