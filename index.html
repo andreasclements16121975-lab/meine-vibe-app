@@ -236,10 +236,15 @@
 
     <div id="calendarModal" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4 z-50">
       <div class="bg-white rounded-xl border shadow-xl max-w-xl w-full p-4">
-        <div class="flex justify-between items-center mb-2">
-          <h3 class="font-semibold">Termindetails</h3>
-          <button id="closeCalendarModalBtn" type="button" class="px-2 py-1 rounded border">Schließen</button>
-        </div>
+<div class="flex justify-between items-center mb-2 gap-2">
+  <h3 class="font-semibold">Termindetails</h3>
+  <div class="flex gap-2">
+    <button id="modalDeleteEventBtn" type="button" class="px-2 py-1 rounded bg-rose-600 text-white">Löschen</button>
+    <button id="closeCalendarModalBtn" type="button" class="px-2 py-1 rounded border">Schließen</button>
+  </div>
+</div>
+<div id="calendarModalContent" class="text-sm space-y-1"></div>
+</div>
         <div id="calendarModalContent" class="text-sm space-y-1"></div>
       </div>
     </div>
