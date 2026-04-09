@@ -258,13 +258,18 @@ function renderCalendar(events) {
     const dayEvents = events.filter((e) => e.date === iso);
     const isToday = now.getFullYear() === y && now.getMonth() === m && now.getDate() === day;
     cells.push(`<div class="p-2 border rounded min-h-20 ${isToday ? 'bg-blue-100 border-blue-400' : ''}"><div class="font-medium">${day}</div>${dayEvents
-      .map(
-        (e) => `<div class="text-xs rounded px-1 py-1 my-1 bg-emerald-100 leading-tight cursor-pointer" data-event-id="${e.id}" title="${e.title}${e.opponent ? ' ' + e.opponent : ''} | ${e.address || ''}">
-          <div class="font-medium">${e.title}${e.opponent ? ' ' + e.opponent : ''}</div>
-          <div>${e.address || '-'}</div>
-          <a class="text-blue-700 underline" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
-        </div>`
-      )
+      .map((e) => {
+  const eventLabel = e.title || 'Termin';
+  const detailLabel = e.opponent || '';
+  const addressLabel = e.address || '-';
+
+  return `<div class="text-xs rounded px-1 py-1 my-1 bg-emerald-100 leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ' - ' + detailLabel : ''} | ${addressLabel}">
+    <div class="font-medium truncate">${eventLabel}</div>
+    <div class="truncate">${detailLabel || '-'}</div>
+    <div class="truncate">${addressLabel}</div>
+    <a class="text-blue-700 underline block truncate" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
+  </div>`;
+})
       .join('')}</div>`);
   }
   el('calendarGrid').innerHTML = cells.join('');
