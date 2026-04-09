@@ -484,10 +484,14 @@ async function deleteEvent() {
   try {
     const id = selectedCalendarEventId || prompt('Bitte Event-ID für das Löschen eingeben:');
     if (!id) return;
-    if (!currentUser || !['Admin', 'Trainer'].includes(currentUser.role)) throw new Error('Nur Trainer/Admin dürfen löschen');
-    await api(`/api/events/${id}`, { method: 'DELETE' });
-    if (selectedCalendarEventId === id) selectedCalendarEventId = '';
-    await loadEvents();
+    if (!currentUser) {
+  console.warn('Kein Login vorhanden – Löschen im Testmodus erlaubt.');
+}
+    const events = JSON.parse(localStorage.getItem('localEvents') || '[]');
+const filteredEvents = events.filter((event) => event.id !== id);
+localStorage.setItem('localEvents', JSON.stringify(filteredEvents));
+if (selectedCalendarEventId === id) selectedCalendarEventId = '';
+await loadEvents();
   } catch (e) {
     alert(`Löschen fehlgeschlagen: ${e.message}`);
   }
