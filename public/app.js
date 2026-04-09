@@ -725,6 +725,7 @@ el('nomEventId').addEventListener('change', () => loadNominations(el('nomEventId
 el('eventEmailNotifyBtn').addEventListener('click', () => alert('E-Mail-Benachrichtigung wurde vorbereitet.'));
 el('eventTitle').addEventListener('change', updateTrainingSeriesVisibility);
 el('closeCalendarModalBtn').addEventListener('click', closeCalendarModal);
+el('modalDeleteEventBtn').addEventListener('click', deleteEvent);
 el('calendarModal').addEventListener('click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
