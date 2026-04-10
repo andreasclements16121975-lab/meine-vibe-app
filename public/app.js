@@ -932,7 +932,7 @@ function setupCanvas() {
   ctx.arc(centerX, penaltySpotBottomY, spotRadius, 0, Math.PI * 2);
   ctx.fill();
 
-  const arcOffset = Math.acos((16.5 - 11) / 9.15);
+  const arcOffset = Math.asin((16.5 - 11) / 9.15);
 
   ctx.beginPath();
   ctx.arc(
