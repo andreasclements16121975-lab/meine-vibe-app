@@ -304,32 +304,39 @@ function renderCalendar(events) {
     const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const dayEvents = events.filter((e) => e.date === iso);
     const isToday = now.getFullYear() === y && now.getMonth() === m && now.getDate() === day;
-    cells.push(`<div class="p-2 border rounded min-h-20"><div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">${day}</div>${dayEvents
-    const holidayName = holidayMap[iso] || '';
-    cells.push(`<div class="p-2 border rounded min-h-20">
-  <div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">${day}</div>
-  ${holidayName ? `<div class="text-[11px] rounded px-1 py-0.5 my-1 bg-rose-100 text-rose-700 leading-tight">${holidayName}</div>` : ''}
-  ${dayEvents
+   const holidayName = holidayMap[iso] || '';
+
+cells.push(`
+  <div class="p-2 border rounded min-h-20">
+    <div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">
+      ${day}
+    </div>
+    ${holidayName ? `<div class="text-[11px] rounded px-1 py-0.5 my-1 bg-rose-100 text-rose-700 leading-tight">${holidayName}</div>` : ''}
+    ${dayEvents
       .map((e) => {
-  const eventLabel = e.title || 'Termin';
-  const detailLabel = e.opponent || '';
-  const addressLabel = e.address || '-';
+        const eventLabel = e.title || 'Termin';
+        const detailLabel = e.opponent || '';
+        const addressLabel = e.address || '-';
 
-  const eventTypeClass =
-  e.title === 'Training'
-    ? 'bg-blue-100'
-    : e.title === 'Event'
-      ? 'bg-orange-100'
-      : 'bg-emerald-100';
+        const eventTypeClass =
+          e.title === 'Training'
+            ? 'bg-blue-100'
+            : e.title === 'Event'
+              ? 'bg-orange-100'
+              : 'bg-emerald-100';
 
-return `<div class="text-xs rounded px-1 py-1 my-1 ${eventTypeClass} leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ' - ' + detailLabel : ''} | ${addressLabel}">
-    <div class="font-medium truncate">${eventLabel}</div>
-    <div class="truncate">${detailLabel || '-'}</div>
-    <div class="truncate">${addressLabel}</div>
-    <a class="text-blue-700 underline block truncate" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
-  </div>`;
-})
-      .join('')}</div>`);
+        return `
+          <div class="text-xs rounded px-1 py-1 my-1 ${eventTypeClass} leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ` - ${detailLabel}` : ''} | ${addressLabel}">
+            <div class="font-medium truncate">${eventLabel}</div>
+            <div class="truncate">${detailLabel || '-'}</div>
+            <div class="truncate">${addressLabel}</div>
+            <a class="text-blue-700 underline block truncate" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
+          </div>
+        `;
+      })
+      .join('')}
+  </div>
+`);
   }
   el('calendarGrid').innerHTML = cells.join('');
   el('currentYearLabel').textContent = String(y);
