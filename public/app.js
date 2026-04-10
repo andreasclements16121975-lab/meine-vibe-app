@@ -304,12 +304,12 @@ function renderCalendar(events) {
     const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const dayEvents = events.filter((e) => e.date === iso);
     const isToday = now.getFullYear() === y && now.getMonth() === m && now.getDate() === day;
+    cells.push(`<div class="p-2 border rounded min-h-20"><div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">${day}</div>${dayEvents
     const holidayName = holidayMap[iso] || '';
-    cells.push(`<div class="p-2 border rounded min-h-20 flex flex-col gap-1">
+    cells.push(`<div class="p-2 border rounded min-h-20">
   <div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">${day}</div>
-  ${holidayName ? `<div class="text-[11px] rounded px-1 py-0.5 bg-rose-100 text-rose-700 leading-tight">${holidayName}</div>` : ''}
-  <div class="space-y-1">
-    ${dayEvents
+  ${holidayName ? `<div class="text-[11px] rounded px-1 py-0.5 my-1 bg-rose-100 text-rose-700 leading-tight">${holidayName}</div>` : ''}
+  ${dayEvents
       .map((e) => {
   const eventLabel = e.title || 'Termin';
   const detailLabel = e.opponent || '';
@@ -329,7 +329,7 @@ return `<div class="text-xs rounded px-1 py-1 my-1 ${eventTypeClass} leading-tig
     <a class="text-blue-700 underline block truncate" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
   </div>`;
 })
-      .join('')}</div></div>`);
+      .join('')}</div>`);
   }
   el('calendarGrid').innerHTML = cells.join('');
   el('currentYearLabel').textContent = String(y);
@@ -756,285 +756,30 @@ async function loadExercises() {
 
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
-  if (!canvas) return;
-
   const ctx = canvas.getContext('2d');
-  const fieldTypeSelect = el('fieldTypeSelect');
   const placed = [];
   let selected = '⚽';
-
-  const FIELD_GREEN = '#059669';
-  const FIELD_GREEN_DARK = '#047857';
-  const LINE_COLOR = '#ffffff';
-
-  const setCanvasSize = () => {
-    const fieldType = fieldTypeSelect?.value || 'half';
-
-    if (fieldType === 'full') {
-      canvas.width = 620;
-      canvas.height = 900;
-    } else {
-      canvas.width = 960;
-      canvas.height = 540;
-    }
-
-    canvas.style.width = '100%';
-    canvas.style.maxWidth = fieldType === 'full' ? '620px' : '960px';
-    canvas.style.height = 'auto';
-    canvas.style.display = 'block';
-    canvas.style.margin = '0 auto';
-    canvas.style.borderRadius = '16px';
-    canvas.style.background = FIELD_GREEN;
-  };
-
-  const drawOuterField = () => {
-    ctx.fillStyle = FIELD_GREEN;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = LINE_COLOR;
-    ctx.lineWidth = 4;
-    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-  };
-
-  const drawHalfField = () => {
-    const margin = 10;
-    const left = margin;
-    const top = margin;
-    const width = canvas.width - margin * 2;
-    const height = canvas.height - margin * 2;
-
-    const midX = left + width;
-    const centerY = top + height / 2;
-
-    const penaltyDepth = width * 0.18;
-    const penaltyWidth = height * 0.52;
-
-    const goalAreaDepth = width * 0.08;
-    const goalAreaWidth = height * 0.24;
-
-    const goalDepth = 16;
-    const goalWidth = height * 0.14;
-
-    const penaltySpotX = left + width * 0.12;
-    const penaltyArcRadius = 44;
-
-    ctx.strokeStyle = LINE_COLOR;
-    ctx.lineWidth = 4;
-
-    ctx.strokeRect(left + 2, top + (height - penaltyWidth) / 2, penaltyDepth, penaltyWidth);
-    ctx.strokeRect(left + 2, top + (height - goalAreaWidth) / 2, goalAreaDepth, goalAreaWidth);
-
-    ctx.beginPath();
-    ctx.moveTo(midX, top);
-    ctx.lineTo(midX, top + height);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(penaltySpotX, centerY, 3, 0, Math.PI * 2);
-    ctx.fillStyle = LINE_COLOR;
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(penaltySpotX, centerY, penaltyArcRadius, -0.9, 0.9);
-    ctx.stroke();
-
-    ctx.strokeRect(left - goalDepth, top + (height - goalWidth) / 2, goalDepth, goalWidth);
-  };
-
- const drawFullField = () => {
-  const margin = Math.min(canvas.width, canvas.height) * 0.2;
-  const FIELD_RATIO = 105 / 68;
-
-  let maxWidth = canvas.width - margin * 2;
-  let maxHeight = canvas.height - margin * 2;
-
-  let width = maxWidth;
-  let height = width * FIELD_RATIO;
-
-  if (height > maxHeight) {
-    height = maxHeight;
-    width = height / FIELD_RATIO;
-  }
-
-  const left = (canvas.width - width) / 2;
-  const top = (canvas.height - height) / 2;
-  const centerX = left + width / 2;
-  const centerY = top + height / 2;
-
-  const scale = height / 105;
-
-  const penaltyAreaDepth = 16.5 * scale;
-  const penaltyAreaWidth = 40.32 * scale;
-  const goalAreaDepth = 5.5 * scale;
-  const goalAreaWidth = 18.32 * scale;
-  const centerCircleRadius = 9.15 * scale;
-  const penaltyArcRadius = 9.15 * scale;
-  const spotRadius = Math.max(1.5, width * 0.004);
-
-  ctx.strokeStyle = LINE_COLOR;
-  ctx.fillStyle = LINE_COLOR;
-  ctx.lineWidth = 2;
-
-  ctx.strokeRect(left, top, width, height);
-
-  ctx.beginPath();
-  ctx.moveTo(left, centerY);
-  ctx.lineTo(left + width, centerY);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, spotRadius, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.strokeRect(centerX - penaltyAreaWidth / 2, top, penaltyAreaWidth, penaltyAreaDepth);
-  ctx.strokeRect(centerX - goalAreaWidth / 2, top, goalAreaWidth, goalAreaDepth);
-
-  ctx.strokeRect(centerX - penaltyAreaWidth / 2, top + height - penaltyAreaDepth, penaltyAreaWidth, penaltyAreaDepth);
-  ctx.strokeRect(centerX - goalAreaWidth / 2, top + height - goalAreaDepth, goalAreaWidth, goalAreaDepth);
-
-  const penDist = 11 * scale;
-  const topPenaltySpotY = top + penDist;
-  const bottomPenaltySpotY = top + height - penDist;
-
-  [topPenaltySpotY, bottomPenaltySpotY].forEach(y => {
-    ctx.beginPath();
-    ctx.arc(centerX, y, spotRadius, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  const arcOffset = Math.asin((16.5 - 11) / 9.15);
-
-  ctx.beginPath();
-  ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, arcOffset, Math.PI - arcOffset);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, Math.PI + arcOffset, 2 * Math.PI - arcOffset);
-  ctx.stroke();
-};
-
-  const arcOffset = Math.asin((16.5 - 11) / 9.15);
-
-  ctx.beginPath();
-  ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, arcOffset, Math.PI - arcOffset);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, Math.PI + arcOffset, 2 * Math.PI - arcOffset);
-  ctx.stroke();
-};
-
-
-  ctx.strokeRect(
-    centerX - goalAreaWidth / 2,
-    top,
-    goalAreaWidth,
-    goalAreaDepth
-  );
-
-  ctx.strokeRect(
-    centerX - goalAreaWidth / 2,
-    bottom - goalAreaDepth,
-    goalAreaWidth,
-    goalAreaDepth
-  );
-
-  ctx.beginPath();
-  ctx.arc(centerX, penaltySpotTopY, spotRadius, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(centerX, penaltySpotBottomY, spotRadius, 0, Math.PI * 2);
-  ctx.fill();
-
-  const arcOffset = Math.asin((16.5 - 11) / 9.15);
-
-  ctx.beginPath();
-  ctx.arc(
-    centerX,
-    penaltySpotTopY,
-    penaltyArcRadius,
-    arcOffset,
-    Math.PI - arcOffset
-  );
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(
-    centerX,
-    penaltySpotBottomY,
-    penaltyArcRadius,
-    Math.PI + arcOffset,
-    2 * Math.PI - arcOffset
-  );
-  ctx.stroke();
-
-  ctx.strokeRect(
-    centerX - goalWidth / 2,
-    top - goalDepth,
-    goalWidth,
-    goalDepth
-  );
-
-  ctx.strokeRect(
-    centerX - goalWidth / 2,
-    bottom,
-    goalWidth,
-    goalDepth
-  );
-};
-
-  const drawPlacedItems = () => {
-    ctx.font = '24px sans-serif';
-    placed.forEach((item) => {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(item.icon, item.x, item.y);
-    });
-  };
-
   const draw = () => {
-    const fieldType = fieldTypeSelect?.value || 'half';
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawOuterField();
-
-    if (fieldType === 'full') {
-      drawFullField();
-    } else {
-      drawHalfField();
-    }
-
-    drawPlacedItems();
+    ctx.fillStyle = '#dcfce7';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#16a34a';
+    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    ctx.font = '24px sans-serif';
+    placed.forEach((p) => ctx.fillText(p.icon, p.x, p.y));
   };
-
   document.querySelectorAll('.draggable').forEach((btn) => {
     btn.addEventListener('click', () => {
       selected = btn.dataset.icon;
-      document.querySelectorAll('.draggable').forEach((b) => {
-        b.classList.remove('ring-2', 'ring-emerald-500');
-      });
+      document.querySelectorAll('.draggable').forEach((b) => b.classList.remove('ring-2', 'ring-emerald-500'));
       btn.classList.add('ring-2', 'ring-emerald-500');
     });
   });
-
   canvas.addEventListener('click', (ev) => {
     const rect = canvas.getBoundingClientRect();
-    const x = ((ev.clientX - rect.left) / rect.width) * canvas.width;
-    const y = ((ev.clientY - rect.top) / rect.height) * canvas.height;
-
-    placed.push({ icon: selected, x, y });
+    placed.push({ icon: selected, x: ((ev.clientX - rect.left) / rect.width) * canvas.width, y: ((ev.clientY - rect.top) / rect.height) * canvas.height });
     draw();
   });
-
-  fieldTypeSelect?.addEventListener('change', () => {
-    setCanvasSize();
-    draw();
-  });
-
-  setCanvasSize();
   draw();
 }
 
@@ -1106,37 +851,10 @@ el('calendarModal').addEventListener('click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
 
-try {
-  loadTimeOptions();
-} catch (err) {
-  console.warn('loadTimeOptions fehlgeschlagen:', err);
-}
-
-try {
-  initCalendarControls();
-  renderCalendar([]);
-} catch (err) {
-  console.warn('Kalender-Initialisierung fehlgeschlagen:', err);
-}
-
-try {
-  updateTrainingSeriesVisibility();
-} catch (err) {
-  console.warn('Training-Series-UI fehlgeschlagen:', err);
-}
-
-try {
-  initGooglePlacesForEventFields();
-} catch (err) {
-  console.warn('Google Places Initialisierung fehlgeschlagen:', err);
-}
-
-try {
-  setupCanvas();
-} catch (err) {
-  console.warn('Canvas-Initialisierung fehlgeschlagen:', err);
-}
-
-if (token) {
-  setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
-}
+loadTimeOptions();
+initCalendarControls();
+renderCalendar([]);
+updateTrainingSeriesVisibility();
+initGooglePlacesForEventFields();
+setupCanvas();
+if (token) setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
