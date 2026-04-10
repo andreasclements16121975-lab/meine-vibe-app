@@ -970,7 +970,6 @@ function setupCanvas() {
   setCanvasSize();
   draw();
 }
-}
 
 async function uploadVideo() {
   const fd = new FormData();
