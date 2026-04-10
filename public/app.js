@@ -936,13 +936,6 @@ function setupCanvas() {
   );
 
   ctx.strokeRect(
-    centerX - penaltyAreaWidth / 2,
-    bottom - penaltyAreaDepth,
-    penaltyAreaWidth,
-    penaltyAreaDepth
-  );
-
-  ctx.strokeRect(
     centerX - goalAreaWidth / 2,
     bottom - goalAreaDepth,
     goalAreaWidth,
