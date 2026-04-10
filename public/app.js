@@ -841,67 +841,81 @@ function setupCanvas() {
     ctx.strokeRect(left - goalDepth, top + (height - goalWidth) / 2, goalDepth, goalWidth);
   };
 
-  const drawFullField = () => {
-  const outerMargin = 10;
-  const availableWidth = canvas.width - outerMargin * 2;
-  const availableHeight = canvas.height - outerMargin * 2;
+ const drawFullField = () => {
+  const margin = Math.min(canvas.width, canvas.height) * 0.2;
+  const FIELD_RATIO = 105 / 68;
 
-  const fieldRatio = 68 / 105;
-  let fieldWidth = availableWidth;
-  let fieldHeight = fieldWidth / fieldRatio;
+  let maxWidth = canvas.width - margin * 2;
+  let maxHeight = canvas.height - margin * 2;
 
-  if (fieldHeight > availableHeight) {
-    fieldHeight = availableHeight;
-    fieldWidth = fieldHeight * fieldRatio;
+  let width = maxWidth;
+  let height = width * FIELD_RATIO;
+
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = height / FIELD_RATIO;
   }
 
-  const left = (canvas.width - fieldWidth) / 2;
-  const top = (canvas.height - fieldHeight) / 2;
-  const right = left + fieldWidth;
-  const bottom = top + fieldHeight;
-  const centerX = left + fieldWidth / 2;
-  const centerY = top + fieldHeight / 2;
+  const left = (canvas.width - width) / 2;
+  const top = (canvas.height - height) / 2;
+  const centerX = left + width / 2;
+  const centerY = top + height / 2;
 
-  const scaleX = fieldWidth / 68;
-  const scaleY = fieldHeight / 105;
+  const scale = height / 105; 
 
-  const penaltyAreaDepth = 16.5 * scaleY;
-  const penaltyAreaWidth = 40.32 * scaleX;
-  const goalAreaDepth = 5.5 * scaleY;
-  const goalAreaWidth = 18.32 * scaleX;
-  const penaltySpotTopY = top + 11 * scaleY;
-  const penaltySpotBottomY = bottom - 11 * scaleY;
-  const centerCircleRadius = 9.15 * scaleX;
-  const penaltyArcRadius = 9.15 * scaleX;
-  const goalWidth = 7.32 * scaleX;
-  const goalDepth = 2 * scaleY;
-  const spotRadius = Math.max(2, fieldWidth * 0.0045);
+  const penaltyAreaDepth = 16.5 * scale;
+  const penaltyAreaWidth = 40.32 * scale;
+  const goalAreaDepth = 5.5 * scale;
+  const goalAreaWidth = 18.32 * scale;
+  const centerCircleRadius = 9.15 * scale;
+  const penaltyArcRadius = 9.15 * scale;
+  const spotRadius = Math.max(1.5, width * 0.004);
 
   ctx.strokeStyle = LINE_COLOR;
   ctx.fillStyle = LINE_COLOR;
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 2;
 
-  ctx.strokeRect(left, top, fieldWidth, fieldHeight);
+  ctx.strokeRect(left, top, width, height);
 
   ctx.beginPath();
   ctx.moveTo(left, centerY);
-  ctx.lineTo(right, centerY);
+  ctx.lineTo(left + width, centerY);
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
   ctx.stroke();
-
   ctx.beginPath();
   ctx.arc(centerX, centerY, spotRadius, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.strokeRect(
-    centerX - penaltyAreaWidth / 2,
-    top,
-    penaltyAreaWidth,
-    penaltyAreaDepth
-  );
+  ctx.strokeRect(centerX - penaltyAreaWidth / 2, top, penaltyAreaWidth, penaltyAreaDepth);
+  ctx.strokeRect(centerX - goalAreaWidth / 2, top, goalAreaWidth, goalAreaDepth);
+
+  ctx.strokeRect(centerX - penaltyAreaWidth / 2, top + height - penaltyAreaDepth, penaltyAreaWidth, penaltyAreaDepth);
+  ctx.strokeRect(centerX - goalAreaWidth / 2, top + height - goalAreaDepth, goalAreaWidth, goalAreaDepth);
+
+  const penDist = 11 * scale;
+  const topPenaltySpotY = top + penDist;
+  const bottomPenaltySpotY = top + height - penDist;
+
+  [topPenaltySpotY, bottomPenaltySpotY].forEach(y => {
+    ctx.beginPath();
+    ctx.arc(centerX, y, spotRadius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  const arcOffset = Math.asin((16.5 - 11) / 9.15);
+
+  ctx.beginPath();
+  ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, arcOffset, Math.PI - arcOffset);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, Math.PI + arcOffset, 2 * Math.PI - arcOffset);
+  ctx.stroke();
+};
+
 
   ctx.strokeRect(
     centerX - goalAreaWidth / 2,
