@@ -842,83 +842,132 @@ function setupCanvas() {
   };
 
   const drawFullField = () => {
-    const margin = 10;
-    const left = margin;
-    const top = margin;
-    const width = canvas.width - margin * 2;
-    const height = canvas.height - margin * 2;
+  const outerMargin = 10;
+  const availableWidth = canvas.width - outerMargin * 2;
+  const availableHeight = canvas.height - outerMargin * 2;
 
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
+  const fieldRatio = 68 / 105;
+  let fieldWidth = availableWidth;
+  let fieldHeight = fieldWidth / fieldRatio;
 
-    const penaltyDepth = height * 0.16;
-    const penaltyWidth = width * 0.56;
+  if (fieldHeight > availableHeight) {
+    fieldHeight = availableHeight;
+    fieldWidth = fieldHeight * fieldRatio;
+  }
 
-    const goalAreaDepth = height * 0.07;
-    const goalAreaWidth = width * 0.26;
+  const left = (canvas.width - fieldWidth) / 2;
+  const top = (canvas.height - fieldHeight) / 2;
+  const right = left + fieldWidth;
+  const bottom = top + fieldHeight;
+  const centerX = left + fieldWidth / 2;
+  const centerY = top + fieldHeight / 2;
 
-    const goalDepth = 16;
-    const goalWidth = width * 0.16;
+  const scaleX = fieldWidth / 68;
+  const scaleY = fieldHeight / 105;
 
-    const topPenaltySpotY = top + height * 0.11;
-    const bottomPenaltySpotY = top + height * 0.89;
-    const centerCircleRadius = 70;
-    const penaltyArcRadius = 44;
+  const penaltyAreaDepth = 16.5 * scaleY;
+  const penaltyAreaWidth = 40.32 * scaleX;
+  const goalAreaDepth = 5.5 * scaleY;
+  const goalAreaWidth = 18.32 * scaleX;
+  const penaltySpotTopY = top + 11 * scaleY;
+  const penaltySpotBottomY = bottom - 11 * scaleY;
+  const centerCircleRadius = 9.15 * scaleX;
+  const penaltyArcRadius = 9.15 * scaleX;
+  const goalWidth = 7.32 * scaleX;
+  const goalDepth = 2 * scaleY;
+  const spotRadius = Math.max(2, fieldWidth * 0.0045);
 
-    ctx.strokeStyle = LINE_COLOR;
-    ctx.lineWidth = 4;
+  ctx.strokeStyle = LINE_COLOR;
+  ctx.fillStyle = LINE_COLOR;
+  ctx.lineWidth = 4;
 
-    ctx.beginPath();
-    ctx.moveTo(left, centerY);
-    ctx.lineTo(left + width, centerY);
-    ctx.stroke();
+  ctx.strokeRect(left, top, fieldWidth, fieldHeight);
 
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
-    ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(left, centerY);
+  ctx.lineTo(right, centerY);
+  ctx.stroke();
 
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 3, 0, Math.PI * 2);
-    ctx.fillStyle = LINE_COLOR;
-    ctx.fill();
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
+  ctx.stroke();
 
-    ctx.strokeRect(left + (width - penaltyWidth) / 2, top + 2, penaltyWidth, penaltyDepth);
-    ctx.strokeRect(left + (width - goalAreaWidth) / 2, top + 2, goalAreaWidth, goalAreaDepth);
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, spotRadius, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.strokeRect(
-      left + (width - penaltyWidth) / 2,
-      top + height - penaltyDepth - 2,
-      penaltyWidth,
-      penaltyDepth
-    );
-    ctx.strokeRect(
-      left + (width - goalAreaWidth) / 2,
-      top + height - goalAreaDepth - 2,
-      goalAreaWidth,
-      goalAreaDepth
-    );
+  ctx.strokeRect(
+    centerX - penaltyAreaWidth / 2,
+    top,
+    penaltyAreaWidth,
+    penaltyAreaDepth
+  );
 
-    ctx.beginPath();
-    ctx.arc(centerX, topPenaltySpotY, 3, 0, Math.PI * 2);
-    ctx.fillStyle = LINE_COLOR;
-    ctx.fill();
+  ctx.strokeRect(
+    centerX - goalAreaWidth / 2,
+    top,
+    goalAreaWidth,
+    goalAreaDepth
+  );
 
-    ctx.beginPath();
-    ctx.arc(centerX, bottomPenaltySpotY, 3, 0, Math.PI * 2);
-    ctx.fillStyle = LINE_COLOR;
-    ctx.fill();
+  ctx.strokeRect(
+    centerX - penaltyAreaWidth / 2,
+    bottom - penaltyAreaDepth,
+    penaltyAreaWidth,
+    penaltyAreaDepth
+  );
 
-    ctx.beginPath();
-    ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, 0.2 * Math.PI, 0.8 * Math.PI);
-    ctx.stroke();
+  ctx.strokeRect(
+    centerX - goalAreaWidth / 2,
+    bottom - goalAreaDepth,
+    goalAreaWidth,
+    goalAreaDepth
+  );
 
-    ctx.beginPath();
-    ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, 1.2 * Math.PI, 1.8 * Math.PI);
-    ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(centerX, penaltySpotTopY, spotRadius, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.strokeRect(left + (width - goalWidth) / 2, top - goalDepth, goalWidth, goalDepth);
-    ctx.strokeRect(left + (width - goalWidth) / 2, top + height, goalWidth, goalDepth);
-  };
+  ctx.beginPath();
+  ctx.arc(centerX, penaltySpotBottomY, spotRadius, 0, Math.PI * 2);
+  ctx.fill();
+
+  const arcOffset = Math.acos((16.5 - 11) / 9.15);
+
+  ctx.beginPath();
+  ctx.arc(
+    centerX,
+    penaltySpotTopY,
+    penaltyArcRadius,
+    arcOffset,
+    Math.PI - arcOffset
+  );
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(
+    centerX,
+    penaltySpotBottomY,
+    penaltyArcRadius,
+    Math.PI + arcOffset,
+    2 * Math.PI - arcOffset
+  );
+  ctx.stroke();
+
+  ctx.strokeRect(
+    centerX - goalWidth / 2,
+    top - goalDepth,
+    goalWidth,
+    goalDepth
+  );
+
+  ctx.strokeRect(
+    centerX - goalWidth / 2,
+    bottom,
+    goalWidth,
+    goalDepth
+  );
+};
 
   const drawPlacedItems = () => {
     ctx.font = '24px sans-serif';
