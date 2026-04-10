@@ -756,31 +756,220 @@ async function loadExercises() {
 
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
+  if (!canvas) return;
+
   const ctx = canvas.getContext('2d');
+  const fieldTypeSelect = el('fieldTypeSelect');
   const placed = [];
   let selected = '⚽';
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#dcfce7';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#16a34a';
-    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-    ctx.font = '24px sans-serif';
-    placed.forEach((p) => ctx.fillText(p.icon, p.x, p.y));
+
+  const FIELD_GREEN = '#059669';
+  const FIELD_GREEN_DARK = '#047857';
+  const LINE_COLOR = '#ffffff';
+
+  const setCanvasSize = () => {
+    const fieldType = fieldTypeSelect?.value || 'half';
+
+    if (fieldType === 'full') {
+      canvas.width = 620;
+      canvas.height = 900;
+    } else {
+      canvas.width = 960;
+      canvas.height = 540;
+    }
+
+    canvas.style.width = '100%';
+    canvas.style.maxWidth = fieldType === 'full' ? '620px' : '960px';
+    canvas.style.height = 'auto';
+    canvas.style.display = 'block';
+    canvas.style.margin = '0 auto';
+    canvas.style.borderRadius = '16px';
+    canvas.style.background = FIELD_GREEN;
   };
+
+  const drawOuterField = () => {
+    ctx.fillStyle = FIELD_GREEN;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = LINE_COLOR;
+    ctx.lineWidth = 4;
+    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+  };
+
+  const drawHalfField = () => {
+    const margin = 10;
+    const left = margin;
+    const top = margin;
+    const width = canvas.width - margin * 2;
+    const height = canvas.height - margin * 2;
+
+    const midX = left + width;
+    const centerY = top + height / 2;
+
+    const penaltyDepth = width * 0.18;
+    const penaltyWidth = height * 0.52;
+
+    const goalAreaDepth = width * 0.08;
+    const goalAreaWidth = height * 0.24;
+
+    const goalDepth = 16;
+    const goalWidth = height * 0.14;
+
+    const penaltySpotX = left + width * 0.12;
+    const penaltyArcRadius = 44;
+
+    ctx.strokeStyle = LINE_COLOR;
+    ctx.lineWidth = 4;
+
+    ctx.strokeRect(left + 2, top + (height - penaltyWidth) / 2, penaltyDepth, penaltyWidth);
+    ctx.strokeRect(left + 2, top + (height - goalAreaWidth) / 2, goalAreaDepth, goalAreaWidth);
+
+    ctx.beginPath();
+    ctx.moveTo(midX, top);
+    ctx.lineTo(midX, top + height);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(penaltySpotX, centerY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = LINE_COLOR;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(penaltySpotX, centerY, penaltyArcRadius, -0.9, 0.9);
+    ctx.stroke();
+
+    ctx.strokeRect(left - goalDepth, top + (height - goalWidth) / 2, goalDepth, goalWidth);
+  };
+
+  const drawFullField = () => {
+    const margin = 10;
+    const left = margin;
+    const top = margin;
+    const width = canvas.width - margin * 2;
+    const height = canvas.height - margin * 2;
+
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+
+    const penaltyDepth = height * 0.16;
+    const penaltyWidth = width * 0.56;
+
+    const goalAreaDepth = height * 0.07;
+    const goalAreaWidth = width * 0.26;
+
+    const goalDepth = 16;
+    const goalWidth = width * 0.16;
+
+    const topPenaltySpotY = top + height * 0.11;
+    const bottomPenaltySpotY = top + height * 0.89;
+    const centerCircleRadius = 70;
+    const penaltyArcRadius = 44;
+
+    ctx.strokeStyle = LINE_COLOR;
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+    ctx.moveTo(left, centerY);
+    ctx.lineTo(left + width, centerY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = LINE_COLOR;
+    ctx.fill();
+
+    ctx.strokeRect(left + (width - penaltyWidth) / 2, top + 2, penaltyWidth, penaltyDepth);
+    ctx.strokeRect(left + (width - goalAreaWidth) / 2, top + 2, goalAreaWidth, goalAreaDepth);
+
+    ctx.strokeRect(
+      left + (width - penaltyWidth) / 2,
+      top + height - penaltyDepth - 2,
+      penaltyWidth,
+      penaltyDepth
+    );
+    ctx.strokeRect(
+      left + (width - goalAreaWidth) / 2,
+      top + height - goalAreaDepth - 2,
+      goalAreaWidth,
+      goalAreaDepth
+    );
+
+    ctx.beginPath();
+    ctx.arc(centerX, topPenaltySpotY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = LINE_COLOR;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(centerX, bottomPenaltySpotY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = LINE_COLOR;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, 0.2 * Math.PI, 0.8 * Math.PI);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, 1.2 * Math.PI, 1.8 * Math.PI);
+    ctx.stroke();
+
+    ctx.strokeRect(left + (width - goalWidth) / 2, top - goalDepth, goalWidth, goalDepth);
+    ctx.strokeRect(left + (width - goalWidth) / 2, top + height, goalWidth, goalDepth);
+  };
+
+  const drawPlacedItems = () => {
+    ctx.font = '24px sans-serif';
+    placed.forEach((item) => {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(item.icon, item.x, item.y);
+    });
+  };
+
+  const draw = () => {
+    const fieldType = fieldTypeSelect?.value || 'half';
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOuterField();
+
+    if (fieldType === 'full') {
+      drawFullField();
+    } else {
+      drawHalfField();
+    }
+
+    drawPlacedItems();
+  };
+
   document.querySelectorAll('.draggable').forEach((btn) => {
     btn.addEventListener('click', () => {
       selected = btn.dataset.icon;
-      document.querySelectorAll('.draggable').forEach((b) => b.classList.remove('ring-2', 'ring-emerald-500'));
+      document.querySelectorAll('.draggable').forEach((b) => {
+        b.classList.remove('ring-2', 'ring-emerald-500');
+      });
       btn.classList.add('ring-2', 'ring-emerald-500');
     });
   });
+
   canvas.addEventListener('click', (ev) => {
     const rect = canvas.getBoundingClientRect();
-    placed.push({ icon: selected, x: ((ev.clientX - rect.left) / rect.width) * canvas.width, y: ((ev.clientY - rect.top) / rect.height) * canvas.height });
+    const x = ((ev.clientX - rect.left) / rect.width) * canvas.width;
+    const y = ((ev.clientY - rect.top) / rect.height) * canvas.height;
+
+    placed.push({ icon: selected, x, y });
     draw();
   });
+
+  fieldTypeSelect?.addEventListener('change', () => {
+    setCanvasSize();
+    draw();
+  });
+
+  setCanvasSize();
   draw();
+}
 }
 
 async function uploadVideo() {
