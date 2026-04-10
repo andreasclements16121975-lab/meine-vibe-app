@@ -1039,10 +1039,37 @@ el('calendarModal').addEventListener('click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
 
-loadTimeOptions();
-initCalendarControls();
-renderCalendar([]);
-updateTrainingSeriesVisibility();
-initGooglePlacesForEventFields();
-setupCanvas();
-if (token) setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
+try {
+  loadTimeOptions();
+} catch (err) {
+  console.warn('loadTimeOptions fehlgeschlagen:', err);
+}
+
+try {
+  initCalendarControls();
+  renderCalendar([]);
+} catch (err) {
+  console.warn('Kalender-Initialisierung fehlgeschlagen:', err);
+}
+
+try {
+  updateTrainingSeriesVisibility();
+} catch (err) {
+  console.warn('Training-Series-UI fehlgeschlagen:', err);
+}
+
+try {
+  initGooglePlacesForEventFields();
+} catch (err) {
+  console.warn('Google Places Initialisierung fehlgeschlagen:', err);
+}
+
+try {
+  setupCanvas();
+} catch (err) {
+  console.warn('Canvas-Initialisierung fehlgeschlagen:', err);
+}
+
+if (token) {
+  setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
+}
