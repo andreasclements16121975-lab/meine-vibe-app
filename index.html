@@ -211,7 +211,12 @@
           <button id="filterExercisesBtn" class="rounded bg-emerald-600 text-white px-3">Filtern</button>
         </div>
         <div id="exerciseList" class="grid md:grid-cols-2 gap-2 mb-4"></div>
-
+<div class="grid md:grid-cols-3 gap-3 mb-4">
+  <select id="fieldTypeSelect" class="border rounded p-2">
+    <option value="half">Feldtyp: Halbes Feld (Querformat)</option>
+    <option value="full">Feldtyp: Ganzes Feld (Hochformat)</option>
+  </select>
+</div>
         <div class="grid md:grid-cols-3 gap-2 mb-3">
           <select id="materialSelect" class="border rounded p-2"></select>
           <select id="bibColor" class="border rounded p-2"><option value="orange">Leibchen: Orange</option><option value="blau">Leibchen: Blau</option><option value="grün">Leibchen: Grün</option><option value="gelb">Leibchen: Gelb</option></select>
