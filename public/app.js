@@ -861,7 +861,7 @@ function setupCanvas() {
   const centerX = left + width / 2;
   const centerY = top + height / 2;
 
-  const scale = height / 105; 
+  const scale = height / 105;
 
   const penaltyAreaDepth = 16.5 * scale;
   const penaltyAreaWidth = 40.32 * scale;
@@ -904,6 +904,17 @@ function setupCanvas() {
     ctx.arc(centerX, y, spotRadius, 0, Math.PI * 2);
     ctx.fill();
   });
+
+  const arcOffset = Math.asin((16.5 - 11) / 9.15);
+
+  ctx.beginPath();
+  ctx.arc(centerX, topPenaltySpotY, penaltyArcRadius, arcOffset, Math.PI - arcOffset);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(centerX, bottomPenaltySpotY, penaltyArcRadius, Math.PI + arcOffset, 2 * Math.PI - arcOffset);
+  ctx.stroke();
+};
 
   const arcOffset = Math.asin((16.5 - 11) / 9.15);
 
