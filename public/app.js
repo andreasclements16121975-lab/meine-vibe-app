@@ -763,18 +763,215 @@ async function loadExercises() {
 
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
+  const wrap = el('tacticsCanvasWrap') || canvas?.parentElement;
+  if (!canvas || !wrap) return;
+
   const ctx = canvas.getContext('2d');
   const placed = [];
   let selected = '⚽';
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#dcfce7';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#16a34a';
-    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-    ctx.font = '24px sans-serif';
-    placed.forEach((p) => ctx.fillText(p.icon, p.x, p.y));
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  const getPitchGreen = () => {
+    const candidates = ['#createEventBtn', '#saveMemberBtn', '#saveEventBtn'];
+    for (const selector of candidates) {
+      const node = document.querySelector(selector);
+      if (!node) continue;
+      const color = getComputedStyle(node).backgroundColor;
+      if (color && color !== 'rgba(0, 0, 0, 0)' && color !== 'transparent') return color;
+    }
+    return '#16a34a';
   };
+
+  const getPitchConfig = () => {
+    const type = el('pitchType')?.value || 'half';
+    const orientation = el('pitchOrientation')?.value || 'landscape';
+
+    return {
+      type,
+      orientation,
+      length: type === 'full' ? 105 : 52.5,
+      width: 68
+    };
+  };
+
+  const resizeCanvas = () => {
+    const { length, width, orientation } = getPitchConfig();
+    const landscapeRatio = length / width;
+    const ratio = orientation === 'portrait' ? 1 / landscapeRatio : landscapeRatio;
+
+    const maxWidth = Math.min((wrap.clientWidth || 960) - 8, 960);
+    const maxHeight = Math.min(Math.max(260, window.innerHeight - wrap.getBoundingClientRect().top - 24), 520);
+
+    let drawWidth = maxWidth;
+    let drawHeight = drawWidth / ratio;
+
+    if (drawHeight > maxHeight) {
+      drawHeight = maxHeight;
+      drawWidth = drawHeight * ratio;
+    }
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.style.width = `${Math.round(drawWidth)}px`;
+    canvas.style.height = `${Math.round(drawHeight)}px`;
+    canvas.width = Math.round(drawWidth * dpr);
+    canvas.height = Math.round(drawHeight * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    return { drawWidth, drawHeight };
+  };
+
+  const toPxX = (meters, fieldX, fieldWidth, totalLength) => fieldX + (meters / totalLength) * fieldWidth;
+  const toPxY = (meters, fieldY, fieldHeight, totalWidth) => fieldY + (meters / totalWidth) * fieldHeight;
+
+  const drawPenaltyBox = (side, fieldX, fieldY, fieldWidth, fieldHeight, pitchLength, pitchWidth) => {
+    const boxDepth = 16.5;
+    const boxWidth = 40.32;
+    const goalAreaDepth = 5.5;
+    const goalAreaWidth = 18.32;
+    const penaltySpotDistance = 11;
+
+    const penaltyTop = toPxY((pitchWidth - boxWidth) / 2, fieldY, fieldHeight, pitchWidth);
+    const penaltyHeight = (boxWidth / pitchWidth) * fieldHeight;
+    const penaltyDepthPx = (boxDepth / pitchLength) * fieldWidth;
+
+    const goalAreaTop = toPxY((pitchWidth - goalAreaWidth) / 2, fieldY, fieldHeight, pitchWidth);
+    const goalAreaHeight = (goalAreaWidth / pitchWidth) * fieldHeight;
+    const goalAreaDepthPx = (goalAreaDepth / pitchLength) * fieldWidth;
+
+    if (side === 'left') {
+      ctx.strokeRect(fieldX, penaltyTop, penaltyDepthPx, penaltyHeight);
+      ctx.strokeRect(fieldX, goalAreaTop, goalAreaDepthPx, goalAreaHeight);
+
+      const spotX = toPxX(penaltySpotDistance, fieldX, fieldWidth, pitchLength);
+      const spotY = fieldY + fieldHeight / 2;
+      ctx.beginPath();
+      ctx.arc(spotX, spotY, 3, 0, Math.PI * 2);
+      ctx.fill();
+      return;
+    }
+
+    const penaltyX = fieldX + fieldWidth - penaltyDepthPx;
+    const goalAreaX = fieldX + fieldWidth - goalAreaDepthPx;
+    const spotX = toPxX(pitchLength - penaltySpotDistance, fieldX, fieldWidth, pitchLength);
+    const spotY = fieldY + fieldHeight / 2;
+
+    ctx.strokeRect(penaltyX, penaltyTop, penaltyDepthPx, penaltyHeight);
+    ctx.strokeRect(goalAreaX, goalAreaTop, goalAreaDepthPx, goalAreaHeight);
+
+    ctx.beginPath();
+    ctx.arc(spotX, spotY, 3, 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  const drawPitch = (drawWidth, drawHeight) => {
+    const { type } = getPitchConfig();
+    const padding = 18;
+    const pitchGreen = getPitchGreen();
+
+    ctx.clearRect(0, 0, drawWidth, drawHeight);
+    ctx.fillStyle = pitchGreen;
+    ctx.fillRect(0, 0, drawWidth, drawHeight);
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.96)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.96)';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const fieldX = padding;
+    const fieldY = padding;
+    const fieldWidth = drawWidth - padding * 2;
+    const fieldHeight = drawHeight - padding * 2;
+
+    if (type === 'full') {
+      const pitchLength = 105;
+      const pitchWidth = 68;
+      const centerX = fieldX + fieldWidth / 2;
+      const centerY = fieldY + fieldHeight / 2;
+
+      ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, fieldY);
+      ctx.lineTo(centerX, fieldY + fieldHeight);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      drawPenaltyBox('left', fieldX, fieldY, fieldWidth, fieldHeight, pitchLength, pitchWidth);
+      drawPenaltyBox('right', fieldX, fieldY, fieldWidth, fieldHeight, pitchLength, pitchWidth);
+      return;
+    }
+
+    ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
+    drawPenaltyBox('left', fieldX, fieldY, fieldWidth, fieldHeight, 52.5, 68);
+  };
+
+  const screenToFieldRatio = (clientX, clientY, rect, orientation) => {
+    const screenX = clamp((clientX - rect.left) / rect.width);
+    const screenY = clamp((clientY - rect.top) / rect.height);
+
+    if (orientation === 'portrait') {
+      return { xRatio: screenY, yRatio: 1 - screenX };
+    }
+
+    return { xRatio: screenX, yRatio: screenY };
+  };
+
+  const fieldRatioToScreen = (item, width, height, orientation) => {
+    if (orientation === 'portrait') {
+      return {
+        x: width - item.yRatio * width,
+        y: item.xRatio * height
+      };
+    }
+
+    return {
+      x: item.xRatio * width,
+      y: item.yRatio * height
+    };
+  };
+
+  const drawPlacedItems = (drawWidth, drawHeight) => {
+    const { orientation } = getPitchConfig();
+    const fontSize = Math.max(18, Math.min(28, Math.round(Math.min(drawWidth, drawHeight) / 14)));
+
+    ctx.save();
+    ctx.font = `${fontSize}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    placed.forEach((item) => {
+      const point = fieldRatioToScreen(item, drawWidth, drawHeight, orientation);
+      ctx.fillText(item.icon, point.x, point.y);
+    });
+
+    ctx.restore();
+  };
+
+  const draw = () => {
+    const { drawWidth, drawHeight } = resizeCanvas();
+    const { orientation } = getPitchConfig();
+
+    ctx.clearRect(0, 0, drawWidth, drawHeight);
+
+    if (orientation === 'portrait') {
+      ctx.save();
+      ctx.translate(drawWidth, 0);
+      ctx.rotate(Math.PI / 2);
+      drawPitch(drawHeight, drawWidth);
+      ctx.restore();
+    } else {
+      drawPitch(drawWidth, drawHeight);
+    }
+
+    drawPlacedItems(drawWidth, drawHeight);
+  };
+
   document.querySelectorAll('.draggable').forEach((btn) => {
     btn.addEventListener('click', () => {
       selected = btn.dataset.icon;
@@ -782,11 +979,29 @@ function setupCanvas() {
       btn.classList.add('ring-2', 'ring-emerald-500');
     });
   });
+
   canvas.addEventListener('click', (ev) => {
     const rect = canvas.getBoundingClientRect();
-    placed.push({ icon: selected, x: ((ev.clientX - rect.left) / rect.width) * canvas.width, y: ((ev.clientY - rect.top) / rect.height) * canvas.height });
+    const { orientation } = getPitchConfig();
+    const point = screenToFieldRatio(ev.clientX, ev.clientY, rect, orientation);
+
+    placed.push({
+      icon: selected,
+      xRatio: point.xRatio,
+      yRatio: point.yRatio
+    });
+
     draw();
   });
+
+  el('pitchType')?.addEventListener('change', draw);
+  el('pitchOrientation')?.addEventListener('change', draw);
+  window.addEventListener('resize', draw);
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(draw).observe(wrap);
+  }
+
   draw();
 }
 
