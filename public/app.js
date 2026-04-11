@@ -760,7 +760,46 @@ async function loadExercises() {
     .map((x) => `<article class="p-3 border rounded bg-slate-50"><h3 class="font-medium">${x.title}</h3><p class="text-xs">${x.ageGroup} · ${x.performance} · ${x.type} · ${x.fitness}</p><p class="text-sm mt-1">Material: ${(x.material || []).join(', ')}</p><p class="text-sm mt-1">${x.description}</p></article>`)
     .join('');
 }
+const tacticsMaterialConfig = [
+  { label: 'Koordinationsleiter', options: ['Rot', 'Gelb'] },
+  { label: 'Pylonen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
+  { label: 'Trainingsdummy', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
+  { label: 'Markierscheiben', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
+ { label: 'Markierstreifen', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
+{ label: 'Markierscheiben mit Nummern', options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
+  { label: 'Markierhütchen in Pfeilform', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
+  { label: 'Leibchen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
+  { label: 'Kegelhürde', options: ['Rot', 'Gelb', 'Blau'] },
+  { label: 'Minihürden Höhe 15 cm', options: ['Rot', 'Gelb', 'Blau'] },
+  { label: 'Minihürden Höhe 30 cm', options: ['Rot', 'Gelb', 'Blau'] },
+  { label: 'Minihürden Höhe 45 cm', options: ['Rot', 'Gelb', 'Blau'] },
+  { label: 'Tore', options: ['1,20 x 0,80', '3,00 x 2,00', '5,00 x 2,00', '7,32 x 2,44'] },
+  { label: 'Torwarttraining', options: ['Trainingsdummy aufblasbar', 'Koordinationskreuz'] },
+  { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiß'] }
+];
 
+function renderTacticsMaterialFields() {
+  const host = el('tacticsMaterialFields');
+  if (!host) return;
+
+  host.innerHTML = tacticsMaterialConfig
+    .map(
+      (field, index) => `
+        <label class="grid gap-1">
+          <span class="text-sm font-medium">${field.label}</span>
+          <select
+            id="tacticsMaterialSelect${index}"
+            class="border rounded p-2 bg-white"
+            data-tactics-material="${field.label}"
+          >
+            <option value="">Bitte wählen</option>
+            ${field.options.map((option) => `<option value="${option}">${option}</option>`).join('')}
+          </select>
+        </label>
+      `
+    )
+    .join('');
+}
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
   const wrap = el('tacticsCanvasWrap');
