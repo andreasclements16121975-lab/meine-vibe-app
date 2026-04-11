@@ -1141,6 +1141,7 @@ initCalendarControls();
 renderCalendar([]);
 updateTrainingSeriesVisibility();
 initGooglePlacesForEventFields();
+renderTacticsMaterialFields();
 window.addEventListener('load', () => {
   setTimeout(() => {
     setupCanvas();
