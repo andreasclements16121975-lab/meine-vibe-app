@@ -777,7 +777,50 @@ const tacticsMaterialConfig = [
   { label: 'Torwarttraining', options: ['Trainingsdummy aufblasbar', 'Koordinationskreuz'] },
   { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiß'] }
 ];
+function getMaterialPreviewMarkup(material, value) {
+  if (material === 'Koordinationsleiter') {
+    const colorMap = {
+      Rot: '#ef4444',
+      Gelb: '#eab308'
+    };
 
+    const fill = colorMap[value] || '#f97316';
+    const rungFill = value === 'Gelb' ? '#fde047' : fill;
+
+    return `
+      <div class="w-full h-full flex items-center justify-center p-3">
+        <svg
+          width="150"
+          height="260"
+          viewBox="0 0 160 420"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Koordinationsleiter ${value}"
+        >
+          <rect x="28" y="18" width="12" height="384" rx="6" fill="${fill}" stroke="#111827" stroke-width="3" />
+          <rect x="120" y="18" width="12" height="384" rx="6" fill="${fill}" stroke="#111827" stroke-width="3" />
+
+          <rect x="36" y="28"  width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="72"  width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="116" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="160" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="204" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="248" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="292" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="336" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="380" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+        </svg>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
+      <div class="text-sm text-slate-500 mb-2">${material}</div>
+      <div class="text-2xl font-semibold text-slate-800">${value}</div>
+    </div>
+  `;
+}
 function updateTacticsPreview() {
   const previewBox = el('tacticsPreviewBox');
   if (!previewBox) return;
