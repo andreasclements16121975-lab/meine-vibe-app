@@ -835,13 +835,7 @@ function updateTacticsPreview() {
 
   const material = activeSelect.dataset.tacticsMaterial;
   const value = activeSelect.value;
-
-  previewBox.innerHTML = `
-    <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
-      <div class="text-sm text-slate-500 mb-2">${material}</div>
-      <div class="text-2xl font-semibold text-slate-800">${value}</div>
-    </div>
-  `;
+previewBox.innerHTML = getMaterialPreviewMarkup(material, value);
 }
 
 function renderTacticsMaterialFields() {
