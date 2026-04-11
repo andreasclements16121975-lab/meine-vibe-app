@@ -762,20 +762,20 @@ async function loadExercises() {
 }
 const tacticsMaterialConfig = [
   { label: 'Koordinationsleiter', options: ['Rot', 'Gelb'] },
-  { label: 'Pylonen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
-  { label: 'Trainingsdummy', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
-  { label: 'Markierscheiben', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
- { label: 'Markierstreifen', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
-{ label: 'Markierscheiben mit Nummern', options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
-  { label: 'Markierhütchen in Pfeilform', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz', 'Neongelb'] },
-  { label: 'Leibchen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Neonorange', 'Neongelb', 'Neongrün'] },
+  { label: 'Pylonen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Orange'] },
+  { label: 'Trainingsdummy', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Orange'] },
+  { label: 'Markierscheiben', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
+  { label: 'Markierstreifen', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
+  { label: 'Markierscheiben mit Nummern', options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
+  { label: 'Markierhütchen in Pfeilform', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
+  { label: 'Leibchen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Orange'] },
   { label: 'Kegelhürde', options: ['Rot', 'Gelb', 'Blau'] },
   { label: 'Minihürden Höhe 15 cm', options: ['Rot', 'Gelb', 'Blau'] },
   { label: 'Minihürden Höhe 30 cm', options: ['Rot', 'Gelb', 'Blau'] },
   { label: 'Minihürden Höhe 45 cm', options: ['Rot', 'Gelb', 'Blau'] },
   { label: 'Tore', options: ['1,20 x 0,80', '3,00 x 2,00', '5,00 x 2,00', '7,32 x 2,44'] },
   { label: 'Torwarttraining', options: ['Trainingsdummy aufblasbar', 'Koordinationskreuz'] },
-  { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiß'] }
+  { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiße'] }
 ];
 function getMaterialPreviewMarkup(material, value) {
   if (material === 'Koordinationsleiter') {
