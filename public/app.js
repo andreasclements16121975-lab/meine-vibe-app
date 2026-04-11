@@ -813,7 +813,69 @@ function getMaterialPreviewMarkup(material, value) {
       </div>
     `;
   }
+if (material === 'Pylonen') {
+  const colorMap = {
+    Rot: '#ef4444',
+    Gelb: '#eab308',
+    Blau: '#3b82f6',
+    Weiß: '#f8fafc',
+    Neonorange: '#ff5f1f',
+    Neongelb: '#d9f99d',
+    Neongrün: '#22c55e'
+  };
 
+  const fill = colorMap[value] || '#f97316';
+  const stroke = value === 'Weiß' ? '#334155' : '#111827';
+
+  return `
+    <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
+      <svg
+        width="100%"
+        height="100%"
+        class="max-w-[120px] max-h-[160px]"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 200 220"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Pylone ${value}"
+      >
+        <path
+          d="M100 24 L138 158 H62 Z"
+          fill="${fill}"
+          stroke="${stroke}"
+          stroke-width="6"
+          stroke-linejoin="round"
+        />
+        <rect
+          x="38"
+          y="158"
+          width="124"
+          height="24"
+          rx="4"
+          fill="${fill}"
+          stroke="${stroke}"
+          stroke-width="6"
+        />
+        <rect
+          x="86"
+          y="54"
+          width="28"
+          height="12"
+          rx="4"
+          fill="rgba(255,255,255,0.22)"
+        />
+        <rect
+          x="78"
+          y="104"
+          width="44"
+          height="12"
+          rx="4"
+          fill="rgba(255,255,255,0.18)"
+        />
+      </svg>
+    </div>
+  `;
+}
   return `
     <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
       <div class="text-sm text-slate-500 mb-2">${material}</div>
