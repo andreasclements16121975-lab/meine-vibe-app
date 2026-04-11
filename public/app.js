@@ -788,7 +788,7 @@ function getMaterialPreviewMarkup(material, value) {
     const rungFill = value === 'Gelb' ? '#fde047' : fill;
 
     return `
-      <div class="w-full h-full flex items-center justify-center p-3">
+      <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
         <svg
           width="150"
           height="260"
