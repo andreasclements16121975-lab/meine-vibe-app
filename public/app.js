@@ -883,6 +883,7 @@ if (material === 'Pylonen') {
     </div>
   `;
 }
+let activeTacticsSelection = null;
 function updateTacticsPreview(activeSelect = null) {
   const previewBox = el('tacticsPreviewBox');
   if (!previewBox) return;
