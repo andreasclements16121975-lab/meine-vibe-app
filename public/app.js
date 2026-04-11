@@ -778,6 +778,29 @@ const tacticsMaterialConfig = [
   { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiß'] }
 ];
 
+function updateTacticsPreview() {
+  const previewBox = el('tacticsPreviewBox');
+  if (!previewBox) return;
+
+  const selects = Array.from(document.querySelectorAll('[data-tactics-material]'));
+  const activeSelect = selects.find((select) => select.value);
+
+  if (!activeSelect) {
+    previewBox.textContent = 'Keine Auswahl';
+    return;
+  }
+
+  const material = activeSelect.dataset.tacticsMaterial;
+  const value = activeSelect.value;
+
+  previewBox.innerHTML = `
+    <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
+      <div class="text-sm text-slate-500 mb-2">${material}</div>
+      <div class="text-2xl font-semibold text-slate-800">${value}</div>
+    </div>
+  `;
+}
+
 function renderTacticsMaterialFields() {
   const host = el('tacticsMaterialFields');
   if (!host) return;
@@ -799,6 +822,12 @@ function renderTacticsMaterialFields() {
       `
     )
     .join('');
+
+  host.querySelectorAll('[data-tactics-material]').forEach((select) => {
+    select.addEventListener('change', updateTacticsPreview);
+  });
+
+  updateTacticsPreview();
 }
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
