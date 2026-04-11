@@ -780,8 +780,8 @@ const tacticsMaterialConfig = [
 function getMaterialPreviewMarkup(material, value) {
   if (material === 'Koordinationsleiter') {
     const colorMap = {
-      Rot: '#ef4444',
-      Gelb: '#eab308'
+      Rot: '#C00000',
+      Gelb: '#FFDC00'
     };
 
     const fill = colorMap[value] || '#f97316';
@@ -814,15 +814,13 @@ function getMaterialPreviewMarkup(material, value) {
     `;
   }
 if (material === 'Pylonen') {
-  const colorMap = {
-    Rot: '#ef4444',
-    Gelb: '#eab308',
-    Blau: '#3b82f6',
-    Weiß: '#f8fafc',
-    Neonorange: '#ff5f1f',
-    Neongelb: '#d9f99d',
-    Neongrün: '#22c55e'
-  };
+const colorMap = {
+  Rot: '#C00000',
+  Gelb: '#FFDC00',
+  Blau: '#00B0F0',
+  Weiß: '#F8FAFC',
+  Orange: '#FFAD00'
+};
 
   const fill = colorMap[value] || '#f97316';
   const stroke = value === 'Weiß' ? '#334155' : '#111827';
