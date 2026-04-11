@@ -874,6 +874,59 @@ const colorMap = {
     </div>
   `;
 }
+  if (material === 'Markierscheiben') {
+  const colorMap = {
+    Orange: '#FFAD00',
+    Blau: '#00B0F0',
+    Gelb: '#FFDC00',
+    Pink: '#FF4FA3',
+    Weiß: '#F8FAFC',
+    Schwarz: '#111827'
+  };
+
+  const fill = colorMap[value] || '#FFAD00';
+  const stroke = value === 'Schwarz' ? '#475569' : '#111827';
+  const highlight = value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
+
+  return `
+    <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
+      <svg
+        width="100%"
+        height="100%"
+        class="max-w-[150px] max-h-[150px]"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 220 220"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Markierscheiben ${value}"
+      >
+        <ellipse
+          cx="110"
+          cy="126"
+          rx="62"
+          ry="24"
+          fill="rgba(15, 23, 42, 0.10)"
+        />
+        <ellipse
+          cx="110"
+          cy="110"
+          rx="70"
+          ry="42"
+          fill="${fill}"
+          stroke="${stroke}"
+          stroke-width="7"
+        />
+        <ellipse
+          cx="110"
+          cy="100"
+          rx="42"
+          ry="16"
+          fill="${highlight}"
+        />
+      </svg>
+    </div>
+  `;
+}
   return `
     <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
       <div class="text-sm text-slate-500 mb-2">${material}</div>
