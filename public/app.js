@@ -883,21 +883,24 @@ if (material === 'Pylonen') {
     </div>
   `;
 }
-function updateTacticsPreview() {
+function updateTacticsPreview(activeSelect = null) {
   const previewBox = el('tacticsPreviewBox');
   if (!previewBox) return;
 
-  const selects = Array.from(document.querySelectorAll('[data-tactics-material]'));
-  const activeSelect = selects.find((select) => select.value);
+  if (activeSelect && activeSelect.value) {
+    activeTacticsSelection = {
+      material: activeSelect.dataset.tacticsMaterial,
+      value: activeSelect.value
+    };
+  }
 
-  if (!activeSelect) {
+  if (!activeTacticsSelection || !activeTacticsSelection.value) {
     previewBox.textContent = 'Keine Auswahl';
     return;
   }
 
-  const material = activeSelect.dataset.tacticsMaterial;
-  const value = activeSelect.value;
-previewBox.innerHTML = getMaterialPreviewMarkup(material, value);
+  const { material, value } = activeTacticsSelection;
+  previewBox.innerHTML = getMaterialPreviewMarkup(material, value);
 }
 
 function renderTacticsMaterialFields() {
