@@ -233,7 +233,17 @@
           <button class="draggable border rounded p-2 bg-white" data-icon="🧱">Dummy</button>
           <button class="draggable border rounded p-2 bg-white" data-icon="⚽">Ball</button>
         </div>
-        <canvas id="tacticsCanvas" width="900" height="300" class="w-full border rounded bg-green-50"></canvas>
+        <details id="tacticsEditorSection" class="mt-4 border rounded-xl bg-white overflow-hidden" open>
+  <summary class="cursor-pointer select-none px-4 py-3 text-lg font-semibold bg-slate-50 border-b">
+    Taktikfeld öffnen
+  </summary>
+
+  <div class="p-4">
+    <div id="tacticsCanvasWrap" class="w-full flex justify-center overflow-auto">
+      <canvas id="tacticsCanvas"></canvas>
+    </div>
+  </div>
+</details>
       </section>
 
       <section class="bg-white rounded-xl border p-4">
