@@ -925,8 +925,24 @@ function renderTacticsMaterialFields() {
     )
     .join('');
 
-  host.querySelectorAll('[data-tactics-material]').forEach((select) => {
-    select.addEventListener('change', updateTacticsPreview);
+  const selects = Array.from(host.querySelectorAll('[data-tactics-material]'));
+
+  selects.forEach((select) => {
+    select.addEventListener('change', (event) => {
+      const current = event.currentTarget;
+
+      if (current.value) {
+        selects.forEach((other) => {
+          if (other !== current) other.value = '';
+        });
+
+        updateTacticsPreview(current);
+        return;
+      }
+
+      activeTacticsSelection = null;
+      updateTacticsPreview();
+    });
   });
 
   updateTacticsPreview();
