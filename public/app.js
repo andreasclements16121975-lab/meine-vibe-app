@@ -790,8 +790,8 @@ function getMaterialPreviewMarkup(material, value) {
     return `
       <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
         <svg
-          width="150"
-          height="260"
+          width="75"
+          height="130"
           viewBox="0 0 160 420"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
