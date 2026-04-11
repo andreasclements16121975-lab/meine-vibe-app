@@ -1102,5 +1102,9 @@ initCalendarControls();
 renderCalendar([]);
 updateTrainingSeriesVisibility();
 initGooglePlacesForEventFields();
-setupCanvas();
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    setupCanvas();
+  }, 100);
+});
 if (token) setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
