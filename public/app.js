@@ -1519,6 +1519,7 @@ const drawCanvasMaterialItem = (item, x, y) => {
   if (!section || section.open) {
     draw();
   }
+  updateTacticsEditPanel();
 }
 
 async function uploadVideo() {
