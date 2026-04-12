@@ -1304,24 +1304,12 @@ const getPlacedItemAtPoint = (clientX, clientY) => {
 
   if (topSide) {
     ctx.arc(x, y, radius, angle, Math.PI - angle);
-  window.addPlacedTacticsItem = (item) => {
-  const placedItem = {
-    id: placedItemIdCounter++,
-    material: item.material || activeTacticsSelection?.material || '',
-    value: item.value || activeTacticsSelection?.value || '',
-    xRatio: item.xRatio,
-    yRatio: item.yRatio,
-    scale: item.scale ?? 1,
-    rotation: item.rotation ?? 0
-  };
+  } else {
+    ctx.arc(x, y, radius, Math.PI + angle, Math.PI * 2 - angle);
+  }
 
-  placed.push(placedItem);
-  selectedPlacedItemId = placedItem.id;
-  updateTacticsEditPanel();
-  draw();
-};
   ctx.stroke();
-};
+    };
 
   const drawEnd = (isTop, fieldX, fieldY, fieldWidth, fieldHeight, scale) => {
     const goalWidth = 7.32;
