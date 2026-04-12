@@ -1060,9 +1060,9 @@ function initCoachingAreaDragAndDrop() {
     const draggable = event.target.closest('#tacticsPreviewDraggable');
     if (!draggable) return;
 
-    const material = draggable.dataset.material;
-    const value = draggable.dataset.value;
-    if (!material || !value) return;
+    const material = activeTacticsSelection?.material;
+const value = activeTacticsSelection?.value;
+if (!material || !value) return;
 
     event.preventDefault();
 
