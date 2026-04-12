@@ -1121,6 +1121,10 @@ function setupCanvas() {
 
   const ctx = canvas.getContext('2d');
   const placed = [];
+  window.addPlacedTacticsItem = (item) => {
+  placed.push(item);
+  draw();
+};
   let selected = '⚽';
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
