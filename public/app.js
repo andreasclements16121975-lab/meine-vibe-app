@@ -1066,7 +1066,6 @@ function initCoachingAreaDragAndDrop() {
 
     event.preventDefault();
 
-    draggable.setPointerCapture?.(event.pointerId);
 
     coachingAreaDragState = {
       pointerId: event.pointerId,
