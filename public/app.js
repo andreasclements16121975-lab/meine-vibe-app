@@ -1036,7 +1036,7 @@ function setupCanvas() {
 
   const resizeCanvas = () => {
     const pitchRatio = 68 / 105;
-    const availableWidth = Math.min(wrap.clientWidth || 1350, 1470);
+    const availableWidth = Math.min(wrap.clientWidth || 1100, 2060);
     const maxHeight = Math.min(Math.max(window.innerHeight * 0.74, 640), 980);
 
     let drawWidth = availableWidth;
