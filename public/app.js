@@ -1014,6 +1014,105 @@ function renderTacticsMaterialFields() {
 
   updateTacticsPreview();
 }
+let coachingAreaDragState = null;
+
+function getCanvasDropPoint(canvas, clientX, clientY) {
+  const rect = canvas.getBoundingClientRect();
+
+  const xRatio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+  const yRatio = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
+
+  return { xRatio, yRatio };
+}
+
+function createDragGhost(material, value, clientX, clientY) {
+  const ghost = document.createElement('div');
+  ghost.id = 'tacticsDragGhost';
+  ghost.style.position = 'fixed';
+  ghost.style.left = '0';
+  ghost.style.top = '0';
+  ghost.style.width = '110px';
+  ghost.style.height = '110px';
+  ghost.style.pointerEvents = 'none';
+  ghost.style.zIndex = '9999';
+  ghost.style.transform = `translate(${clientX - 55}px, ${clientY - 55}px)`;
+  ghost.innerHTML = getMaterialPreviewMarkup(material, value);
+  document.body.appendChild(ghost);
+  return ghost;
+}
+
+function moveDragGhost(ghost, clientX, clientY) {
+  if (!ghost) return;
+  ghost.style.transform = `translate(${clientX - 55}px, ${clientY - 55}px)`;
+}
+
+function removeDragGhost() {
+  const ghost = document.getElementById('tacticsDragGhost');
+  if (ghost) ghost.remove();
+}
+
+function initCoachingAreaDragAndDrop() {
+  const previewBox = el('tacticsPreviewBox');
+  const canvas = el('tacticsCanvas');
+  if (!previewBox || !canvas) return;
+
+  previewBox.addEventListener('pointerdown', (event) => {
+    const draggable = event.target.closest('#tacticsPreviewDraggable');
+    if (!draggable) return;
+
+    const material = draggable.dataset.material;
+    const value = draggable.dataset.value;
+    if (!material || !value) return;
+
+    event.preventDefault();
+
+    draggable.setPointerCapture?.(event.pointerId);
+
+    coachingAreaDragState = {
+      pointerId: event.pointerId,
+      material,
+      value,
+      ghost: createDragGhost(material, value, event.clientX, event.clientY)
+    };
+  });
+
+  window.addEventListener('pointermove', (event) => {
+    if (!coachingAreaDragState) return;
+    moveDragGhost(coachingAreaDragState.ghost, event.clientX, event.clientY);
+  });
+
+  window.addEventListener('pointerup', (event) => {
+    if (!coachingAreaDragState) return;
+
+    const { material, value } = coachingAreaDragState;
+    const rect = canvas.getBoundingClientRect();
+
+    const isInsideCanvas =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (isInsideCanvas && window.addPlacedTacticsItem) {
+      const point = getCanvasDropPoint(canvas, event.clientX, event.clientY);
+
+      window.addPlacedTacticsItem({
+        material,
+        value,
+        xRatio: point.xRatio,
+        yRatio: point.yRatio
+      });
+    }
+
+    removeDragGhost();
+    coachingAreaDragState = null;
+  });
+
+  window.addEventListener('pointercancel', () => {
+    removeDragGhost();
+    coachingAreaDragState = null;
+  });
+}
 function setupCanvas() {
   const canvas = el('tacticsCanvas');
   const wrap = el('tacticsCanvasWrap');
