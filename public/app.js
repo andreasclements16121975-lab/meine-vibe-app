@@ -1121,9 +1121,20 @@ function setupCanvas() {
   const ctx = canvas.getContext('2d');
   const placed = [];
   let selectedPlacedItemId = null;
-let placedItemIdCounter = 1;
-  window.addPlacedTacticsItem = (item) => {
-  placed.push(item);
+window.addPlacedTacticsItem = (item) => {
+  const placedItem = {
+    id: placedItemIdCounter++,
+    material: item.material || activeTacticsSelection?.material || '',
+    value: item.value || activeTacticsSelection?.value || '',
+    xRatio: item.xRatio,
+    yRatio: item.yRatio,
+    scale: item.scale ?? 1,
+    rotation: item.rotation ?? 0
+  };
+
+  placed.push(placedItem);
+  selectedPlacedItemId = placedItem.id;
+  updateTacticsEditPanel();
   draw();
 };
   let selected = '⚽';
