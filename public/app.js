@@ -1159,7 +1159,7 @@ const updateTacticsEditPanel = () => {
 
   emptyState.classList.add('hidden');
   controls.classList.remove('hidden');
-  selectedLabel.textContent = `${selectedItem.material} – ${selectedItem.value}`;
+  selectedLabel.textContent = `${selectedItem.material} – ${selectedItem.value} | Größe ${Math.round((selectedItem.scale ?? 1) * 100)}% | Rotation ${selectedItem.rotation ?? 0}°`;
 };
 
 const getPlacedItemHitbox = (item, drawWidth, drawHeight) => {
