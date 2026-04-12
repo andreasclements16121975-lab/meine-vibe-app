@@ -1145,7 +1145,7 @@ function setupCanvas() {
       ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      drawHalfPenaltyArc(centerX, spotY, penaltyArcRadius * scale, true);
+      drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, fieldY + penaltyAreaDepthPx, true);
       return;
     }
 
@@ -1163,7 +1163,7 @@ function setupCanvas() {
     ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
     ctx.fill();
 
-    drawHalfPenaltyArc(centerX, spotY, penaltyArcRadius * scale, false);
+    drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, penaltyAreaY, false);
   };
 
   const drawPitch = (drawWidth, drawHeight) => {
