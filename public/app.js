@@ -966,7 +966,7 @@ function renderTacticsMaterialFields() {
           <span class="text-sm font-medium leading-tight min-h-[2.5rem] flex items-end">${field.label}</span>
           <select
             id="tacticsMaterialSelect${index}"
-            class="border rounded p-2 bg-white text-base font-medium"
+            class="border rounded p-2 bg-white text-sm font-medium"
             data-tactics-material="${field.label}"
           >
             <option value="">Bitte wählen</option>
