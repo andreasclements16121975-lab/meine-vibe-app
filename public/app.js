@@ -1427,6 +1427,22 @@ const getPlacedItemAtPoint = (clientX, clientY) => {
     };
   };
 const drawCanvasMaterialItem = (item, x, y) => {
+  const scale = item.scale ?? 1;
+  const rotation = ((item.rotation ?? 0) * Math.PI) / 180;
+  const isSelected = item.id === selectedPlacedItemId;
+
+  const applyTransform = () => {
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.scale(scale, scale);
+  };
+
+  const applySelectionStyle = () => {
+    if (!isSelected) return;
+    ctx.shadowColor = 'rgba(59, 130, 246, 0.35)';
+    ctx.shadowBlur = 10;
+  };
+
   if (item.material === 'Pylonen') {
     const colorMap = {
       Rot: '#C00000',
@@ -1440,7 +1456,8 @@ const drawCanvasMaterialItem = (item, x, y) => {
     const stroke = item.value === 'Weiß' ? '#334155' : '#111827';
 
     ctx.save();
-    ctx.translate(x, y);
+    applyTransform();
+    applySelectionStyle();
 
     ctx.beginPath();
     ctx.moveTo(0, -26);
@@ -1486,7 +1503,8 @@ const drawCanvasMaterialItem = (item, x, y) => {
     const highlight = item.value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
 
     ctx.save();
-    ctx.translate(x, y);
+    applyTransform();
+    applySelectionStyle();
 
     ctx.fillStyle = 'rgba(15, 23, 42, 0.10)';
     ctx.beginPath();
@@ -1519,7 +1537,9 @@ const drawCanvasMaterialItem = (item, x, y) => {
     const fill = colorMap[item.value] || '#FFAD00';
 
     ctx.save();
-    ctx.translate(x, y);
+    applyTransform();
+    applySelectionStyle();
+
     ctx.strokeStyle = '#111827';
     ctx.lineWidth = 3;
     ctx.fillStyle = fill;
@@ -1542,20 +1562,23 @@ const drawCanvasMaterialItem = (item, x, y) => {
   }
 
   ctx.save();
+  applyTransform();
+  applySelectionStyle();
+
   ctx.font = '12px sans-serif';
   ctx.fillStyle = 'rgba(255,255,255,0.92)';
   ctx.strokeStyle = '#0f172a';
   ctx.lineWidth = 2;
 
   ctx.beginPath();
-  ctx.roundRect(x - 34, y - 16, 68, 32, 8);
+  ctx.roundRect(-34, -16, 68, 32, 8);
   ctx.fill();
   ctx.stroke();
 
   ctx.fillStyle = '#0f172a';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(item.material || item.value || 'Objekt', x, y);
+  ctx.fillText(item.material || item.value || 'Objekt', 0, 0);
 
   ctx.restore();
 };
