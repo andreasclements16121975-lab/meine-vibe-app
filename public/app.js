@@ -1121,6 +1121,7 @@ function setupCanvas() {
   const ctx = canvas.getContext('2d');
   const placed = [];
   let selectedPlacedItemId = null;
+  let placedItemIdCounter = 1;
 window.addPlacedTacticsItem = (item) => {
   const placedItem = {
     id: placedItemIdCounter++,
