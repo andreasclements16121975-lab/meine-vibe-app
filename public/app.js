@@ -1482,6 +1482,7 @@ renderCalendar([]);
 updateTrainingSeriesVisibility();
 initGooglePlacesForEventFields();
 renderTacticsMaterialFields();
+initCoachingAreaDragAndDrop();
 window.addEventListener('load', () => {
   setTimeout(() => {
     setupCanvas();
