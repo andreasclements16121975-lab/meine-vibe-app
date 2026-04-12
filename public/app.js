@@ -1095,15 +1095,20 @@ function setupCanvas() {
     ctx.stroke();
   };
 
-  const drawHalfPenaltyArc = (x, y, radius, topSide) => {
-    ctx.beginPath();
-    if (topSide) {
-      ctx.arc(x, y, radius, 0, Math.PI);
-    } else {
-      ctx.arc(x, y, radius, Math.PI, Math.PI * 2);
-    }
-    ctx.stroke();
-  };
+  const drawPenaltyArc = (x, y, radius, penaltyLineY, topSide) => {
+  const offset = Math.min(radius, Math.abs(penaltyLineY - y));
+  const angle = Math.asin(offset / radius);
+
+  ctx.beginPath();
+
+  if (topSide) {
+    ctx.arc(x, y, radius, angle, Math.PI - angle);
+  } else {
+    ctx.arc(x, y, radius, Math.PI + angle, Math.PI * 2 - angle);
+  }
+
+  ctx.stroke();
+};
 
   const drawEnd = (isTop, fieldX, fieldY, fieldWidth, fieldHeight, scale) => {
     const goalWidth = 7.32;
