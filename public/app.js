@@ -1137,6 +1137,76 @@ window.addPlacedTacticsItem = (item) => {
   updateTacticsEditPanel();
   draw();
 };
+  const getSelectedPlacedItem = () =>
+  placed.find((item) => item.id === selectedPlacedItemId) || null;
+
+const updateTacticsEditPanel = () => {
+  const emptyState = el('tacticsEditEmpty');
+  const controls = el('tacticsEditControls');
+  const selectedLabel = el('tacticsSelectedLabel');
+
+  if (!emptyState || !controls || !selectedLabel) return;
+
+  const selectedItem = getSelectedPlacedItem();
+
+  if (!selectedItem) {
+    emptyState.classList.remove('hidden');
+    controls.classList.add('hidden');
+    selectedLabel.textContent = '';
+    return;
+  }
+
+  emptyState.classList.add('hidden');
+  controls.classList.remove('hidden');
+  selectedLabel.textContent = `${selectedItem.material} – ${selectedItem.value}`;
+};
+
+const getPlacedItemHitbox = (item, drawWidth, drawHeight) => {
+  const x = item.xRatio * drawWidth;
+  const y = item.yRatio * drawHeight;
+  const scale = item.scale ?? 1;
+
+  if (item.material === 'Pylonen') {
+    return { item, x, y, halfWidth: 28 * scale, halfHeight: 34 * scale };
+  }
+
+  if (item.material === 'Markierscheiben') {
+    return { item, x, y, halfWidth: 30 * scale, halfHeight: 18 * scale };
+  }
+
+  if (item.material === 'Koordinationsleiter') {
+    return { item, x, y, halfWidth: 16 * scale, halfHeight: 38 * scale };
+  }
+
+  return { item, x, y, halfWidth: 34 * scale, halfHeight: 16 * scale };
+};
+
+const getPlacedItemAtPoint = (clientX, clientY) => {
+  const rect = canvas.getBoundingClientRect();
+  const drawWidth = rect.width;
+  const drawHeight = rect.height;
+
+  const pointerX = clamp(clientX - rect.left, 0, drawWidth);
+  const pointerY = clamp(clientY - rect.top, 0, drawHeight);
+
+  for (let i = placed.length - 1; i >= 0; i -= 1) {
+    const hitbox = getPlacedItemHitbox(placed[i], drawWidth, drawHeight);
+
+    const insideX =
+      pointerX >= hitbox.x - hitbox.halfWidth &&
+      pointerX <= hitbox.x + hitbox.halfWidth;
+
+    const insideY =
+      pointerY >= hitbox.y - hitbox.halfHeight &&
+      pointerY <= hitbox.y + hitbox.halfHeight;
+
+    if (insideX && insideY) {
+      return hitbox.item;
+    }
+  }
+
+  return null;
+};
   let selected = '⚽';
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
