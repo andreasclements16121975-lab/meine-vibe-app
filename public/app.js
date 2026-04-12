@@ -952,7 +952,16 @@ function updateTacticsPreview(activeSelect = null) {
   }
 
   const { material, value } = activeTacticsSelection;
-  previewBox.innerHTML = getMaterialPreviewMarkup(material, value);
+  previewBox.innerHTML = `
+  <div
+    id="tacticsPreviewDraggable"
+    class="w-full h-full cursor-grab touch-none select-none"
+    data-material="${material}"
+    data-value="${value}"
+  >
+    ${getMaterialPreviewMarkup(material, value)}
+  </div>
+`;
 }
 
 function renderTacticsMaterialFields() {
