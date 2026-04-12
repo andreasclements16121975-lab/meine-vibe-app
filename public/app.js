@@ -1480,18 +1480,7 @@ const drawCanvasMaterialItem = (item, x, y) => {
       return;
     }
 
-    ctx.font = '12px sans-serif';
-ctx.fillStyle = 'rgba(255,255,255,0.92)';
-ctx.strokeStyle = '#0f172a';
-ctx.lineWidth = 2;
-
-ctx.beginPath();
-ctx.roundRect(x - 34, y - 16, 68, 32, 8);
-ctx.fill();
-ctx.stroke();
-
-ctx.fillStyle = '#0f172a';
-ctx.fillText(item.value || item.material || 'Objekt', x, y);
+    drawCanvasMaterialItem(item, x, y);
   });
 
   ctx.restore();
