@@ -962,11 +962,17 @@ function renderTacticsMaterialFields() {
   host.innerHTML = tacticsMaterialConfig
     .map(
       (field, index) => `
-        <label class="grid gap-1">
-          <span class="text-sm font-medium leading-tight min-h-[2.5rem] flex items-end">${field.label}</span>
+        <label class="grid gap-1 min-w-0">
+          <span
+            class="block break-words leading-tight"
+            style="font-size: 12px; line-height: 1.15; min-height: 1.7rem; font-weight: 600;"
+          >
+            ${field.label}
+          </span>
           <select
             id="tacticsMaterialSelect${index}"
-            class="border rounded p-2 bg-white text-sm font-medium"
+            class="w-full min-w-0 max-w-full border rounded bg-white"
+            style="font-size: 12px; line-height: 1.1; font-weight: 500; padding: 8px 28px 8px 10px;"
             data-tactics-material="${field.label}"
           >
             <option value="">Bitte wählen</option>
