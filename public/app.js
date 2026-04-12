@@ -1616,7 +1616,72 @@ canvas.addEventListener('pointerdown', (ev) => {
   updateTacticsEditPanel();
   draw();
 });
- 
+ el('tacticsScaleDownBtn')?.addEventListener('click', () => {
+  const selectedItem = getSelectedPlacedItem();
+  if (!selectedItem) return;
+
+  selectedItem.scale = Math.max(0.4, Number(((selectedItem.scale ?? 1) - 0.1).toFixed(2)));
+  updateTacticsEditPanel();
+  draw();
+});
+
+el('tacticsScaleUpBtn')?.addEventListener('click', () => {
+  const selectedItem = getSelectedPlacedItem();
+  if (!selectedItem) return;
+
+  selectedItem.scale = Math.min(2.5, Number(((selectedItem.scale ?? 1) + 0.1).toFixed(2)));
+  updateTacticsEditPanel();
+  draw();
+});
+
+el('tacticsRotateLeftBtn')?.addEventListener('click', () => {
+  const selectedItem = getSelectedPlacedItem();
+  if (!selectedItem) return;
+
+  selectedItem.rotation = (selectedItem.rotation ?? 0) - 15;
+  updateTacticsEditPanel();
+  draw();
+});
+el('tacticsRotateRightBtn')?.addEventListener('click', () => {
+  const selectedItem = getSelectedPlacedItem();
+  if (!selectedItem) return;
+
+  selectedItem.rotation = (selectedItem.rotation ?? 0) + 15;
+  updateTacticsEditPanel();
+  draw();
+});
+
+el('tacticsDeleteBtn')?.addEventListener('click', () => {
+  if (selectedPlacedItemId == null) return;
+
+  const index = placed.findIndex((item) => item.id === selectedPlacedItemId);
+  if (index === -1) return;
+
+  placed.splice(index, 1);
+  selectedPlacedItemId = null;
+  updateTacticsEditPanel();
+  draw();
+});
+el('tacticsRotateRightBtn')?.addEventListener('click', () => {
+  const selectedItem = getSelectedPlacedItem();
+  if (!selectedItem) return;
+
+  selectedItem.rotation = (selectedItem.rotation ?? 0) + 15;
+  updateTacticsEditPanel();
+  draw();
+});
+
+el('tacticsDeleteBtn')?.addEventListener('click', () => {
+  if (selectedPlacedItemId == null) return;
+
+  const index = placed.findIndex((item) => item.id === selectedPlacedItemId);
+  if (index === -1) return;
+
+  placed.splice(index, 1);
+  selectedPlacedItemId = null;
+  updateTacticsEditPanel();
+  draw();
+});
   section?.addEventListener('toggle', () => {
     if (section.open) requestAnimationFrame(draw);
   });
