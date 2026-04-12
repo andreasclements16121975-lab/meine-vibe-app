@@ -1516,7 +1516,13 @@ const drawCanvasMaterialItem = (item, x, y) => {
       btn.classList.add('ring-2', 'ring-emerald-500');
     });
   });
+canvas.addEventListener('pointerdown', (ev) => {
+  const hitItem = getPlacedItemAtPoint(ev.clientX, ev.clientY);
 
+  selectedPlacedItemId = hitItem ? hitItem.id : null;
+  updateTacticsEditPanel();
+  draw();
+});
  
   section?.addEventListener('toggle', () => {
     if (section.open) requestAnimationFrame(draw);
