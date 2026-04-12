@@ -1334,19 +1334,37 @@ function setupCanvas() {
   };
 
   const drawPlacedItems = (drawWidth, drawHeight) => {
-    const fontSize = Math.max(22, Math.min(34, Math.round(drawWidth / 18)));
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
 
-    ctx.save();
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+  placed.forEach((item) => {
+    const x = item.xRatio * drawWidth;
+    const y = item.yRatio * drawHeight;
 
-    placed.forEach((item) => {
-      ctx.fillText(item.icon, item.xRatio * drawWidth, item.yRatio * drawHeight);
-    });
+    if (item.icon) {
+      const fontSize = Math.max(22, Math.min(34, Math.round(drawWidth / 18)));
+      ctx.font = `${fontSize}px sans-serif`;
+      ctx.fillText(item.icon, x, y);
+      return;
+    }
 
-    ctx.restore();
-  };
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.roundRect(x - 34, y - 16, 68, 32, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#0f172a';
+    ctx.fillText(item.value || item.material || 'Objekt', x, y);
+  });
+
+  ctx.restore();
+};
 
   const draw = () => {
     if (section && !section.open) return;
