@@ -963,7 +963,7 @@ function renderTacticsMaterialFields() {
     .map(
       (field, index) => `
         <label class="grid gap-1">
-          <span class="text-sm font-medium">${field.label}</span>
+          <span class="text-base font-medium">${field.label}</span>
           <select
             id="tacticsMaterialSelect${index}"
             class="border rounded p-2 bg-white"
