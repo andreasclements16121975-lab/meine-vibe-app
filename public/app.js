@@ -1331,7 +1331,139 @@ function setupCanvas() {
       yRatio: clamp((clientY - rect.top) / rect.height)
     };
   };
+const drawCanvasMaterialItem = (item, x, y) => {
+  if (item.material === 'Pylonen') {
+    const colorMap = {
+      Rot: '#C00000',
+      Gelb: '#FFDC00',
+      Blau: '#00B0F0',
+      Weiß: '#F8FAFC',
+      Orange: '#FFAD00'
+    };
 
+    const fill = colorMap[item.value] || '#FFAD00';
+    const stroke = item.value === 'Weiß' ? '#334155' : '#111827';
+
+    ctx.save();
+    ctx.translate(x, y);
+
+    ctx.beginPath();
+    ctx.moveTo(0, -26);
+    ctx.lineTo(20, 18);
+    ctx.lineTo(-20, 18);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 3;
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.roundRect(-26, 18, 52, 16, 4);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    ctx.beginPath();
+    ctx.roundRect(-8, -6, 16, 6, 3);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.roundRect(-12, 7, 24, 6, 3);
+    ctx.fill();
+
+    ctx.restore();
+    return;
+  }
+
+  if (item.material === 'Markierscheiben') {
+    const colorMap = {
+      Orange: '#FFAD00',
+      Blau: '#00B0F0',
+      Gelb: '#FFDC00',
+      Pink: '#FF4FA3',
+      Weiß: '#F8FAFC',
+      Schwarz: '#111827'
+    };
+
+    const fill = colorMap[item.value] || '#FFAD00';
+    const stroke = item.value === 'Schwarz' ? '#475569' : '#111827';
+    const highlight = item.value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
+
+    ctx.save();
+    ctx.translate(x, y);
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.10)';
+    ctx.beginPath();
+    ctx.ellipse(0, 10, 24, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = fill;
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 28, 16, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = highlight;
+    ctx.beginPath();
+    ctx.ellipse(0, -4, 16, 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+    return;
+  }
+
+  if (item.material === 'Koordinationsleiter') {
+    const colorMap = {
+      Rot: '#C00000',
+      Gelb: '#FFDC00'
+    };
+
+    const fill = colorMap[item.value] || '#FFAD00';
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.strokeStyle = '#111827';
+    ctx.lineWidth = 3;
+    ctx.fillStyle = fill;
+
+    ctx.beginPath();
+    ctx.roundRect(-14, -34, 6, 68, 3);
+    ctx.roundRect(8, -34, 6, 68, 3);
+    ctx.fill();
+    ctx.stroke();
+
+    for (let i = -26; i <= 26; i += 13) {
+      ctx.beginPath();
+      ctx.roundRect(-10, i, 20, 4, 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    ctx.restore();
+    return;
+  }
+
+  ctx.save();
+  ctx.font = '12px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.strokeStyle = '#0f172a';
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.roundRect(x - 34, y - 16, 68, 32, 8);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#0f172a';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(item.material || item.value || 'Objekt', x, y);
+
+  ctx.restore();
+};
   const drawPlacedItems = (drawWidth, drawHeight) => {
   ctx.save();
   ctx.textAlign = 'center';
