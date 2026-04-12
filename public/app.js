@@ -1514,16 +1514,7 @@ ctx.fillText(item.value || item.material || 'Objekt', x, y);
     });
   });
 
-  canvas.addEventListener('click', (ev) => {
-    const point = pointFromClick(ev.clientX, ev.clientY);
-    placed.push({
-      icon: selected,
-      xRatio: point.xRatio,
-      yRatio: point.yRatio
-    });
-    draw();
-  });
-
+ 
   section?.addEventListener('toggle', () => {
     if (section.open) requestAnimationFrame(draw);
   });
