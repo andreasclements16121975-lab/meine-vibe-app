@@ -892,7 +892,6 @@ if (material === 'Pylonen') {
     </div>
   `;
 }
-}
   if (material === 'Markierscheiben') {
   const colorMap = {
     Orange: '#FFAD00',
