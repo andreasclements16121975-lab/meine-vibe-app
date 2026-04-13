@@ -1616,37 +1616,45 @@ canvas.addEventListener('pointerdown', (ev) => {
   updateTacticsEditPanel();
   draw();
 });
- el('tacticsScaleDownBtn')?.addEventListener('click', () => {
+ const getScaleStep = (event) => (event.shiftKey ? 0.1 : 0.05);
+const getRotationStep = (event) => (event.shiftKey ? 15 : 5);
+
+el('tacticsScaleDownBtn')?.addEventListener('click', (event) => {
   const selectedItem = getSelectedPlacedItem();
   if (!selectedItem) return;
 
-  selectedItem.scale = Math.max(0.4, Number(((selectedItem.scale ?? 1) - 0.1).toFixed(2)));
+  const step = getScaleStep(event);
+  selectedItem.scale = Math.max(0.4, Number(((selectedItem.scale ?? 1) - step).toFixed(2)));
   updateTacticsEditPanel();
   draw();
 });
 
-el('tacticsScaleUpBtn')?.addEventListener('click', () => {
+el('tacticsScaleUpBtn')?.addEventListener('click', (event) => {
   const selectedItem = getSelectedPlacedItem();
   if (!selectedItem) return;
 
-  selectedItem.scale = Math.min(2.5, Number(((selectedItem.scale ?? 1) + 0.1).toFixed(2)));
+  const step = getScaleStep(event);
+  selectedItem.scale = Math.min(2.5, Number(((selectedItem.scale ?? 1) + step).toFixed(2)));
   updateTacticsEditPanel();
   draw();
 });
 
-el('tacticsRotateLeftBtn')?.addEventListener('click', () => {
+el('tacticsRotateLeftBtn')?.addEventListener('click', (event) => {
   const selectedItem = getSelectedPlacedItem();
   if (!selectedItem) return;
 
-  selectedItem.rotation = (selectedItem.rotation ?? 0) - 15;
+  const step = getRotationStep(event);
+  selectedItem.rotation = (selectedItem.rotation ?? 0) - step;
   updateTacticsEditPanel();
   draw();
 });
-el('tacticsRotateRightBtn')?.addEventListener('click', () => {
+
+el('tacticsRotateRightBtn')?.addEventListener('click', (event) => {
   const selectedItem = getSelectedPlacedItem();
   if (!selectedItem) return;
 
-  selectedItem.rotation = (selectedItem.rotation ?? 0) + 15;
+  const step = getRotationStep(event);
+  selectedItem.rotation = (selectedItem.rotation ?? 0) + step;
   updateTacticsEditPanel();
   draw();
 });
