@@ -814,16 +814,15 @@ function getMaterialPreviewMarkup(material, value) {
     `;
   }
 if (material === 'Pylonen') {
-const colorMap = {
-  Rot: '#C00000',
-  Gelb: '#FFDC00',
-  Blau: '#00B0F0',
-  Weiß: '#F8FAFC',
-  Orange: '#FFAD00'
-};
+  const colorMap = {
+    Rot: '#C00000',
+    Gelb: '#FFDC00',
+    Blau: '#00B0F0',
+    Weiß: '#F8FAFC',
+    Orange: '#FFAD00'
+  };
 
   const fill = colorMap[value] || '#f97316';
-  const stroke = value === 'Weiß' ? '#334155' : '#111827';
 
   return `
     <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
@@ -837,42 +836,62 @@ const colorMap = {
         role="img"
         aria-label="Pylone ${value}"
       >
+        <ellipse
+          cx="100"
+          cy="182"
+          rx="52"
+          ry="10"
+          fill="#0f172a"
+          opacity="0.10"
+        />
         <path
-          d="M100 24 L138 158 H62 Z"
+          d="M100 28 L136 150 H64 Z"
           fill="${fill}"
-          stroke="${stroke}"
-          stroke-width="6"
-          stroke-linejoin="round"
+        />
+        <path
+          d="M100 28 L121 150 H79 Z"
+          fill="#ffffff"
+          opacity="0.08"
         />
         <rect
-          x="38"
-          y="158"
-          width="124"
-          height="24"
-          rx="4"
+          x="48"
+          y="148"
+          width="104"
+          height="28"
+          rx="8"
           fill="${fill}"
-          stroke="${stroke}"
-          stroke-width="6"
         />
         <rect
-          x="86"
-          y="54"
-          width="28"
+          x="74"
+          y="74"
+          width="52"
           height="12"
-          rx="4"
-          fill="rgba(255,255,255,0.22)"
+          rx="6"
+          fill="#ffffff"
+          opacity="0.22"
         />
         <rect
-          x="78"
-          y="104"
-          width="44"
+          x="68"
+          y="102"
+          width="64"
           height="12"
-          rx="4"
-          fill="rgba(255,255,255,0.18)"
+          rx="6"
+          fill="#ffffff"
+          opacity="0.16"
+        />
+        <rect
+          x="62"
+          y="130"
+          width="76"
+          height="12"
+          rx="6"
+          fill="#ffffff"
+          opacity="0.12"
         />
       </svg>
     </div>
   `;
+}
 }
   if (material === 'Markierscheiben') {
   const colorMap = {
