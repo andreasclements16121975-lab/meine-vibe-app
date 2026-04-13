@@ -785,7 +785,7 @@ function getMaterialPreviewMarkup(material, value) {
     };
 
     const fill = colorMap[value] || '#f97316';
-    const rungFill = value === 'Gelb' ? '#fde047' : fill;
+    const rungFill = value === 'Gelb' ? '#fde047' : 'rgba(255,255,255,0.22)';
 
     return `
       <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
@@ -797,154 +797,154 @@ function getMaterialPreviewMarkup(material, value) {
           role="img"
           aria-label="Koordinationsleiter ${value}"
         >
-          <rect x="28" y="18" width="12" height="384" rx="6" fill="${fill}" stroke="#111827" stroke-width="3" />
-          <rect x="120" y="18" width="12" height="384" rx="6" fill="${fill}" stroke="#111827" stroke-width="3" />
+          <rect x="28" y="18" width="12" height="384" rx="6" fill="${fill}" opacity="0.95" />
+          <rect x="120" y="18" width="12" height="384" rx="6" fill="${fill}" opacity="0.95" />
 
-          <rect x="36" y="28"  width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="72"  width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="116" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="160" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="204" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="248" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="292" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="336" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
-          <rect x="36" y="380" width="88" height="10" rx="5" fill="${rungFill}" stroke="#111827" stroke-width="3" />
+          <rect x="36" y="28" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="72" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="116" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="160" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="204" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="248" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="292" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="336" width="88" height="10" rx="5" fill="${rungFill}" />
+          <rect x="36" y="380" width="88" height="10" rx="5" fill="${rungFill}" />
         </svg>
       </div>
     `;
   }
-if (material === 'Pylonen') {
-  const colorMap = {
-    Rot: '#C00000',
-    Gelb: '#FFDC00',
-    Blau: '#00B0F0',
-    Weiß: '#F8FAFC',
-    Orange: '#FFAD00'
-  };
 
-  const fill = colorMap[value] || '#f97316';
+  if (material === 'Pylonen') {
+    const colorMap = {
+      Rot: '#C00000',
+      Gelb: '#FFDC00',
+      Blau: '#00B0F0',
+      Weiß: '#F8FAFC',
+      Orange: '#FFAD00'
+    };
 
-  return `
-    <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
-      <svg
-        width="100%"
-        height="100%"
-        class="max-w-[120px] max-h-[160px]"
-        preserveAspectRatio="xMidYMid meet"
-        viewBox="0 0 200 220"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="Pylone ${value}"
-      >
-        <ellipse
-          cx="100"
-          cy="182"
-          rx="52"
-          ry="10"
-          fill="#0f172a"
-          opacity="0.10"
-        />
-        <path
-          d="M100 28 L136 150 H64 Z"
-          fill="${fill}"
-        />
-        <path
-          d="M100 28 L121 150 H79 Z"
-          fill="#ffffff"
-          opacity="0.08"
-        />
-        <rect
-          x="48"
-          y="148"
-          width="104"
-          height="28"
-          rx="8"
-          fill="${fill}"
-        />
-        <rect
-          x="74"
-          y="74"
-          width="52"
-          height="12"
-          rx="6"
-          fill="#ffffff"
-          opacity="0.22"
-        />
-        <rect
-          x="68"
-          y="102"
-          width="64"
-          height="12"
-          rx="6"
-          fill="#ffffff"
-          opacity="0.16"
-        />
-        <rect
-          x="62"
-          y="130"
-          width="76"
-          height="12"
-          rx="6"
-          fill="#ffffff"
-          opacity="0.12"
-        />
-      </svg>
-    </div>
-  `;
-}
+    const fill = colorMap[value] || '#f97316';
+
+    return `
+      <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
+        <svg
+          width="100%"
+          height="100%"
+          class="max-w-[120px] max-h-[160px]"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 200 220"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Pylone ${value}"
+        >
+          <ellipse
+            cx="100"
+            cy="182"
+            rx="52"
+            ry="10"
+            fill="#0f172a"
+            opacity="0.10"
+          />
+          <path
+            d="M100 28 L136 150 H64 Z"
+            fill="${fill}"
+          />
+          <path
+            d="M100 28 L121 150 H79 Z"
+            fill="#ffffff"
+            opacity="0.08"
+          />
+          <rect
+            x="48"
+            y="148"
+            width="104"
+            height="28"
+            rx="8"
+            fill="${fill}"
+          />
+          <rect
+            x="74"
+            y="74"
+            width="52"
+            height="12"
+            rx="6"
+            fill="#ffffff"
+            opacity="0.22"
+          />
+          <rect
+            x="68"
+            y="102"
+            width="64"
+            height="12"
+            rx="6"
+            fill="#ffffff"
+            opacity="0.16"
+          />
+          <rect
+            x="62"
+            y="130"
+            width="76"
+            height="12"
+            rx="6"
+            fill="#ffffff"
+            opacity="0.12"
+          />
+        </svg>
+      </div>
+    `;
+  }
+
   if (material === 'Markierscheiben') {
-  const colorMap = {
-    Orange: '#FFAD00',
-    Blau: '#00B0F0',
-    Gelb: '#FFDC00',
-    Pink: '#FF4FA3',
-    Weiß: '#F8FAFC',
-    Schwarz: '#111827'
-  };
+    const colorMap = {
+      Orange: '#FFAD00',
+      Blau: '#00B0F0',
+      Gelb: '#FFDC00',
+      Pink: '#FF4FA3',
+      Weiß: '#F8FAFC',
+      Schwarz: '#111827'
+    };
 
-  const fill = colorMap[value] || '#FFAD00';
-  const stroke = value === 'Schwarz' ? '#475569' : '#111827';
-  const highlight = value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
+    const fill = colorMap[value] || '#FFAD00';
+    const highlight = value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
 
-  return `
-    <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
-      <svg
-        width="100%"
-        height="100%"
-        class="max-w-[150px] max-h-[150px]"
-        preserveAspectRatio="xMidYMid meet"
-        viewBox="0 0 220 220"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="Markierscheiben ${value}"
-      >
-        <ellipse
-          cx="110"
-          cy="126"
-          rx="62"
-          ry="24"
-          fill="rgba(15, 23, 42, 0.10)"
-        />
-        <ellipse
-          cx="110"
-          cy="110"
-          rx="70"
-          ry="42"
-          fill="${fill}"
-          stroke="${stroke}"
-          stroke-width="7"
-        />
-        <ellipse
-          cx="110"
-          cy="100"
-          rx="42"
-          ry="16"
-          fill="${highlight}"
-        />
-      </svg>
-    </div>
-  `;
-}
+    return `
+      <div class="w-full h-full flex items-center justify-center p-3 overflow-hidden">
+        <svg
+          width="100%"
+          height="100%"
+          class="max-w-[150px] max-h-[150px]"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 220 220"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Markierscheiben ${value}"
+        >
+          <ellipse
+            cx="110"
+            cy="126"
+            rx="62"
+            ry="24"
+            fill="rgba(15, 23, 42, 0.10)"
+          />
+          <ellipse
+            cx="110"
+            cy="110"
+            rx="70"
+            ry="42"
+            fill="${fill}"
+          />
+          <ellipse
+            cx="110"
+            cy="100"
+            rx="42"
+            ry="16"
+            fill="${highlight}"
+          />
+        </svg>
+      </div>
+    `;
+  }
+
   return `
     <div class="w-full h-full flex flex-col items-center justify-center text-center p-4">
       <div class="text-sm text-slate-500 mb-2">${material}</div>
