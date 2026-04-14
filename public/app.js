@@ -1499,49 +1499,63 @@ const drawCanvasMaterialItem = (item, x, y) => {
   };
 
   if (item.material === 'Pylonen') {
-    const colorMap = {
-      Rot: '#C00000',
-      Gelb: '#FFDC00',
-      Blau: '#00B0F0',
-      Weiß: '#F8FAFC',
-      Orange: '#FFAD00'
-    };
+  const colorMap = {
+    Rot: '#E10600',
+    Gelb: '#F4D03F',
+    Blau: '#2D9CDB',
+    Weiß: '#F8FAFC',
+    Orange: '#F77F00'
+  };
 
-    const fill = colorMap[item.value] || '#FFAD00';
-    const stroke = item.value === 'Weiß' ? '#334155' : '#111827';
+  const fill = colorMap[item.value] || '#F77F00';
+  const sideShade = item.value === 'Weiß' ? 'rgba(203,213,225,0.95)' : 'rgba(0,0,0,0.12)';
+  const stripe = item.value === 'Weiß' ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.96)';
 
-    ctx.save();
-    applyTransform();
-    applySelectionStyle();
+  ctx.save();
+  applyTransform();
+  applySelectionStyle();
 
-    ctx.beginPath();
-    ctx.moveTo(0, -26);
-    ctx.lineTo(20, 18);
-    ctx.lineTo(-20, 18);
-    ctx.closePath();
-    ctx.fillStyle = fill;
-    ctx.strokeStyle = stroke;
-    ctx.lineWidth = 3;
-    ctx.fill();
-    ctx.stroke();
+  ctx.fillStyle = 'rgba(15,23,42,0.10)';
+  ctx.beginPath();
+  ctx.ellipse(0, 27, 22, 5.5, 0, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.beginPath();
-    ctx.roundRect(-26, 18, 52, 16, 4);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fillStyle = '#05070b';
+  ctx.beginPath();
+  ctx.ellipse(0, 2, 34, 14, 0, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.fillStyle = 'rgba(255,255,255,0.22)';
-    ctx.beginPath();
-    ctx.roundRect(-8, -6, 16, 6, 3);
-    ctx.fill();
+  ctx.fillStyle = fill;
+  ctx.beginPath();
+  ctx.moveTo(0, -46);
+  ctx.lineTo(28, -6);
+  ctx.lineTo(15, -6);
+  ctx.lineTo(0, -10);
+  ctx.lineTo(-15, -6);
+  ctx.lineTo(-28, -6);
+  ctx.closePath();
+  ctx.fill();
 
-    ctx.beginPath();
-    ctx.roundRect(-12, 7, 24, 6, 3);
-    ctx.fill();
+  ctx.fillStyle = sideShade;
+  ctx.beginPath();
+  ctx.moveTo(0, -46);
+  ctx.lineTo(28, -6);
+  ctx.lineTo(11, -6);
+  ctx.closePath();
+  ctx.fill();
 
-    ctx.restore();
-    return;
-  }
+  ctx.fillStyle = stripe;
+  ctx.beginPath();
+  ctx.moveTo(-8, -34);
+  ctx.bezierCurveTo(-3, -18, 1, -2, 4, 16);
+  ctx.lineTo(12, 16);
+  ctx.bezierCurveTo(13, -2, 17, -18, 22, -32);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+  return;
+}
 
   if (item.material === 'Markierscheiben') {
     const colorMap = {
