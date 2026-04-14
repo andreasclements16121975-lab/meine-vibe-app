@@ -1234,17 +1234,19 @@ const getPlacedItemHitbox = (item, drawWidth, drawHeight) => {
   const scale = item.scale ?? 1;
 
   if (item.material === 'Pylonen') {
-    return { item, x, y, halfWidth: 28 * scale, halfHeight: 34 * scale };
-  }
+  return { item, x, y, halfWidth: 22 * scale, halfHeight: 32 * scale };
+}
 
   if (item.material === 'Markierscheiben') {
-    return { item, x, y, halfWidth: 30 * scale, halfHeight: 18 * scale };
-  }
+  return { item, x, y, halfWidth: 26 * scale, halfHeight: 10 * scale };
+}
 
   if (item.material === 'Koordinationsleiter') {
     return { item, x, y, halfWidth: 16 * scale, halfHeight: 38 * scale };
   }
-
+if (item.material === 'Markierhütchen') {
+  return { item, x, y, halfWidth: 34 * scale, halfHeight: 24 * scale };
+}
   return { item, x, y, halfWidth: 34 * scale, halfHeight: 16 * scale };
 };
 
