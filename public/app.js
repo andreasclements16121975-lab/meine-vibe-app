@@ -767,7 +767,7 @@ const tacticsMaterialConfig = [
   { label: 'Markierscheiben', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
   { label: 'Markierstreifen', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
   { label: 'Markierscheiben mit Nummern', options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] },
-  { label: 'Markierhütchen in Pfeilform', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
+  { label: 'Markierhütchen', options: ['Orange', 'Blau', 'Gelb', 'Pink', 'Weiß', 'Schwarz'] },
   { label: 'Leibchen', options: ['Rot', 'Gelb', 'Blau', 'Weiß', 'Orange'] },
   { label: 'Kegelhürde', options: ['Rot', 'Gelb', 'Blau'] },
   { label: 'Minihürden Höhe 15 cm', options: ['Rot', 'Gelb', 'Blau'] },
