@@ -1497,7 +1497,31 @@ const drawCanvasMaterialItem = (item, x, y) => {
   ctx.beginPath();
   ctx.ellipse(0, 2, 34, 14, 0, 0, Math.PI * 2);
   ctx.fill();
+const drawSvgMaterial = (width, height) => {
+  const svg = getMaterialSvgMarkup(item.material, item.value);
+  if (!svg) return false;
 
+  const cacheKey = `${item.material}:${item.value}`;
+  let img = materialSvgImageCache.get(cacheKey);
+
+  if (!img) {
+    img = new Image();
+    img.onload = () => requestAnimationFrame(draw);
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    materialSvgImageCache.set(cacheKey, img);
+  }
+
+  ctx.save();
+  applyTransform();
+  applySelectionStyle();
+
+  if (img.complete && img.naturalWidth > 0) {
+    ctx.drawImage(img, -width / 2, -height / 2, width, height);
+  }
+
+  ctx.restore();
+  return true;
+};
   ctx.fillStyle = fill;
   ctx.beginPath();
   ctx.moveTo(0, -46);
