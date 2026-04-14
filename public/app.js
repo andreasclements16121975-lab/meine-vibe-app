@@ -1558,44 +1558,52 @@ const drawCanvasMaterialItem = (item, x, y) => {
 }
 
   if (item.material === 'Markierscheiben') {
-    const colorMap = {
-      Orange: '#FFAD00',
-      Blau: '#00B0F0',
-      Gelb: '#FFDC00',
-      Pink: '#FF4FA3',
-      Weiß: '#F8FAFC',
-      Schwarz: '#111827'
-    };
+  const colorMap = {
+    Orange: '#F77F00',
+    Blau: '#2D9CDB',
+    Gelb: '#F4D03F',
+    Pink: '#E64980',
+    Weiß: '#F8FAFC',
+    Schwarz: '#1F2937'
+  };
 
-    const fill = colorMap[item.value] || '#FFAD00';
-    const stroke = item.value === 'Schwarz' ? '#475569' : '#111827';
-    const highlight = item.value === 'Schwarz' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.28)';
+  const fill = colorMap[item.value] || '#F77F00';
+  const topGlow = item.value === 'Schwarz' ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.18)';
+  const centerTone = item.value === 'Weiß' ? 'rgba(203,213,225,0.70)' : 'rgba(255,255,255,0.14)';
 
-    ctx.save();
-    applyTransform();
-    applySelectionStyle();
+  ctx.save();
+  applyTransform();
+  applySelectionStyle();
 
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.10)';
-    ctx.beginPath();
-    ctx.ellipse(0, 10, 24, 8, 0, 0, Math.PI * 2);
-    ctx.fill();
+  ctx.fillStyle = 'rgba(15,23,42,0.08)';
+  ctx.beginPath();
+  ctx.ellipse(0, 18, 26, 4.5, 0, 0, Math.PI * 2);
+  ctx.fill();
 
-    ctx.fillStyle = fill;
-    ctx.strokeStyle = stroke;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 28, 16, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fillStyle = fill;
+  ctx.beginPath();
+  ctx.moveTo(-28, 4);
+  ctx.bezierCurveTo(-20, -12, 20, -12, 28, 4);
+  ctx.bezierCurveTo(20, 12, -20, 12, -28, 4);
+  ctx.closePath();
+  ctx.fill();
 
-    ctx.fillStyle = highlight;
-    ctx.beginPath();
-    ctx.ellipse(0, -4, 16, 6, 0, 0, Math.PI * 2);
-    ctx.fill();
+  ctx.fillStyle = topGlow;
+  ctx.beginPath();
+  ctx.moveTo(-24, 1);
+  ctx.bezierCurveTo(-14, -7, 14, -7, 24, 1);
+  ctx.bezierCurveTo(14, 6, -14, 6, -24, 1);
+  ctx.closePath();
+  ctx.fill();
 
-    ctx.restore();
-    return;
-  }
+  ctx.fillStyle = centerTone;
+  ctx.beginPath();
+  ctx.ellipse(0, -3, 10, 3.2, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+  return;
+}
 
   if (item.material === 'Koordinationsleiter') {
     const colorMap = {
