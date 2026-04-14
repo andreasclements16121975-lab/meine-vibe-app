@@ -777,53 +777,9 @@ const tacticsMaterialConfig = [
   { label: 'Torwarttraining', options: ['Trainingsdummy aufblasbar', 'Koordinationskreuz'] },
   { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiße'] }
 ];
-function getMaterialPreviewMarkup(material, value) {
-  if (material === 'Koordinationsleiter') {
-    const colorMap = {
-      Rot: '#D95F02',
-      Gelb: '#E6C229'
-    };
+const materialSvgImageCache = new Map();
 
-    const fill = colorMap[value] || '#D95F02';
-    const rungFill = value === 'Gelb' ? '#D4B21A' : '#C55300';
-    const gloss = value === 'Gelb' ? 'rgba(255,255,255,0.16)' : 'rgba(255,255,255,0.12)';
-
-    return `
-      <div class="w-full h-full flex items-center justify-center p-2 overflow-hidden">
-        <svg
-          width="100%"
-          height="100%"
-          class="max-w-[180px] max-h-[90px]"
-          viewBox="0 0 260 110"
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Koordinationsleiter ${value}"
-        >
-          <ellipse
-            cx="130"
-            cy="82"
-            rx="94"
-            ry="8"
-            fill="rgba(15,23,42,0.08)"
-          />
-          <g transform="translate(20 18) rotate(-1.8 110 28)">
-            <rect x="0" y="8" width="220" height="5" rx="2.5" fill="${fill}" />
-            <rect x="0" y="52" width="220" height="5" rx="2.5" fill="${fill}" />
-            <rect x="0" y="8" width="220" height="1.5" rx="1" fill="${gloss}" />
-            <rect x="12" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="38" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="64" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="90" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="116" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="142" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="168" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-            <rect x="194" y="6" width="5" height="54" rx="2.5" fill="${rungFill}" />
-          </g>
-        </svg>
-      </div>
-    `;
-  }
-
+function getMaterialSvgMarkup(material, value) {
   if (material === 'Pylonen') {
     const colorMap = {
       Rot: '#E10600',
@@ -832,6 +788,78 @@ function getMaterialPreviewMarkup(material, value) {
       Weiß: '#F8FAFC',
       Orange: '#F77F00'
     };
+
+    const fill = colorMap[value] || '#F77F00';
+    const sideShade = value === 'Weiß' ? '#d6dde6' : '#b21f10';
+    const stripe = '#ffffff';
+
+    return `
+      <svg
+        width="100%"
+        height="100%"
+        class="max-w-[92px] max-h-[150px]"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 180 220"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Pylone ${value}"
+      >
+        <ellipse cx="90" cy="198" rx="22" ry="5" fill="rgba(15,23,42,0.10)" />
+        <ellipse cx="90" cy="173" rx="34" ry="13" fill="#05070b" />
+        <path d="M90 24 C100 56 109 95 118 166 H62 C71 95 80 56 90 24 Z" fill="${fill}" />
+        <path d="M90 24 C101 58 110 96 118 166 H101 C99 116 96 72 90 24 Z" fill="${sideShade}" opacity="0.22" />
+        <path d="M83 46 C87 73 91 107 94 157 H103 C104 124 109 85 114 48 Z" fill="${stripe}" opacity="0.95" />
+      </svg>
+    `;
+  }
+
+  if (material === 'Markierhütchen') {
+    const colorMap = {
+      Orange: '#F77F00',
+      Blau: '#2D9CDB',
+      Gelb: '#F4D03F',
+      Pink: '#E64980',
+      Weiß: '#F8FAFC',
+      Schwarz: '#111827'
+    };
+
+    const fill = colorMap[value] || '#F77F00';
+    const topFill = value === 'Weiß' ? '#E2E8F0' : fill;
+    const stripe = value === 'Schwarz' ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.92)';
+
+    return `
+      <svg
+        width="100%"
+        height="100%"
+        class="max-w-[126px] max-h-[90px]"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 180 120"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Markierhütchen ${value}"
+      >
+        <ellipse cx="90" cy="104" rx="34" ry="5" fill="rgba(15,23,42,0.08)" />
+        <ellipse cx="90" cy="87" rx="44" ry="12" fill="#05070b" />
+        <path d="M48 86 C58 54 76 31 90 22 C104 31 122 54 132 86 C119 95 61 95 48 86 Z" fill="${fill}" />
+        <ellipse cx="90" cy="30" rx="15" ry="6" fill="${topFill}" />
+        <path d="M84 36 C89 48 94 61 97 79 H105 C101 60 106 46 114 33 Z" fill="${stripe}" />
+      </svg>
+    `;
+  }
+
+  return null;
+}
+
+function getMaterialSvgPreviewMarkup(material, value) {
+  const svg = getMaterialSvgMarkup(material, value);
+  if (!svg) return null;
+
+  return `
+    <div class="w-full h-full flex items-center justify-center p-1 overflow-hidden">
+      ${svg}
+    </div>
+  `;
+}
 
     const fill = colorMap[value] || '#F77F00';
     const sideShade = value === 'Weiß' ? 'rgba(203,213,225,0.95)' : 'rgba(0,0,0,0.12)';
