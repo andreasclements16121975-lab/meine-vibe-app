@@ -777,7 +777,6 @@ const tacticsMaterialConfig = [
   { label: 'Torwarttraining', options: ['Trainingsdummy aufblasbar', 'Koordinationskreuz'] },
   { label: 'Spielerauswahl', options: ['Rote', 'Blaue', 'Gelbe', 'Weiße'] }
 ];
-// Datei: public/app.js
 function getMaterialPreviewMarkup(material, value) {
   if (material === 'Koordinationsleiter') {
     const colorMap = {
@@ -827,7 +826,7 @@ function getMaterialPreviewMarkup(material, value) {
 
   if (material === 'Pylonen') {
     const colorMap = {
-      Rot: '#D62828',
+      Rot: '#E10600',
       Gelb: '#F4D03F',
       Blau: '#2D9CDB',
       Weiß: '#F8FAFC',
@@ -835,15 +834,15 @@ function getMaterialPreviewMarkup(material, value) {
     };
 
     const fill = colorMap[value] || '#F77F00';
-    const shade = value === 'Weiß' ? 'rgba(203,213,225,0.95)' : 'rgba(0,0,0,0.10)';
-    const gloss = value === 'Weiß' ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0.20)';
+    const sideShade = value === 'Weiß' ? 'rgba(203,213,225,0.95)' : 'rgba(0,0,0,0.12)';
+    const stripe = value === 'Weiß' ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.96)';
 
     return `
-      <div class="w-full h-full flex items-center justify-center p-2 overflow-hidden">
+      <div class="w-full h-full flex items-center justify-center p-1 overflow-hidden">
         <svg
           width="100%"
           height="100%"
-          class="max-w-[96px] max-h-[138px]"
+          class="max-w-[86px] max-h-[150px]"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 180 220"
           xmlns="http://www.w3.org/2000/svg"
@@ -852,30 +851,89 @@ function getMaterialPreviewMarkup(material, value) {
         >
           <ellipse
             cx="90"
-            cy="186"
-            rx="30"
-            ry="6"
+            cy="197"
+            rx="22"
+            ry="5.5"
             fill="rgba(15,23,42,0.10)"
           />
+          <ellipse
+            cx="90"
+            cy="172"
+            rx="34"
+            ry="14"
+            fill="#05070b"
+          />
           <path
-            d="M90 42 L114 154 H66 Z"
+            d="M90 24 L118 166 H62 Z"
             fill="${fill}"
           />
           <path
-            d="M90 42 L114 154 H96 Z"
-            fill="${shade}"
+            d="M90 24 L118 166 H101 Z"
+            fill="${sideShade}"
           />
           <path
-            d="M90 56 L83 142 H94 L98 58 Z"
-            fill="${gloss}"
+            d="M82 44 C87 80, 91 116, 94 156 L102 156 C103 118, 107 82, 112 48 Z"
+            fill="${stripe}"
+          />
+        </svg>
+      </div>
+    `;
+  }
+
+  if (material === 'Markierhütchen' || material === 'Markierhütchen in Pfeilform') {
+    const colorMap = {
+      Orange: '#F77F00',
+      Blau: '#2D9CDB',
+      Gelb: '#F4D03F',
+      Pink: '#E64980',
+      Weiß: '#F8FAFC',
+      Schwarz: '#111827'
+    };
+
+    const fill = colorMap[value] || '#F77F00';
+    const topFill = value === 'Weiß' ? '#E2E8F0' : fill;
+    const stripe = value === 'Schwarz' ? 'rgba(255,255,255,0.40)' : 'rgba(255,255,255,0.92)';
+
+    return `
+      <div class="w-full h-full flex items-center justify-center p-1 overflow-hidden">
+        <svg
+          width="100%"
+          height="100%"
+          class="max-w-[122px] max-h-[92px]"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 180 120"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Markierhütchen ${value}"
+        >
+          <ellipse
+            cx="90"
+            cy="102"
+            rx="34"
+            ry="5"
+            fill="rgba(15,23,42,0.08)"
+          />
+          <ellipse
+            cx="90"
+            cy="86"
+            rx="44"
+            ry="12"
+            fill="#05070b"
           />
           <path
-            d="M56 168 L90 152 L124 168 L90 182 Z"
+            d="M90 22 C101 28, 117 50, 131 84 C119 95, 61 95, 49 84 C63 50, 79 28, 90 22 Z"
             fill="${fill}"
           />
+          <ellipse
+            cx="90"
+            cy="30"
+            rx="15"
+            ry="6"
+            fill="${topFill}"
+          />
           <path
-            d="M90 152 L124 168 L90 182 Z"
-            fill="${shade}"
+            d="M84 36 C89 48, 94 61, 97 79 L105 79 C101 60, 106 46, 114 33 Z"
+            fill="${stripe}"
           />
         </svg>
       </div>
