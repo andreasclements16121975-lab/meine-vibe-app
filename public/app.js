@@ -145,7 +145,13 @@ async function forgotPassword() {
 }
 
 async function loadMembers() {
+  if (!isAdmin()) {
+    el('membersList').innerHTML = '';
+    return;
+  }
+
   const members = await api('/api/members');
+
   el('nomPlayerId').innerHTML = members
     .filter((m) => m.role === 'Spieler')
     .map((m) => `<option value="${m.id}">${m.name} (${m.team || '-'})</option>`)
