@@ -122,10 +122,12 @@ async function login() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: el('loginEmail').value, password: el('loginPassword').value })
     });
+
     token = data.token;
-    currentUser = data.user;
     localStorage.setItem('token', token);
-    setAuthInfo(`Eingeloggt als ${data.user.name} (${data.user.role})`);
+    setStoredUser(data.user);
+    renderSessionUi();
+
     await bootstrapData();
     el('authMessage').textContent = 'Login erfolgreich';
   } catch (e) {
