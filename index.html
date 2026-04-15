@@ -92,94 +92,160 @@
     </section>
 
     <section data-tab-panel="create-event" class="hidden bg-white rounded-xl border p-4">
-      <h2 class="font-semibold mb-3">Termin erstellen</h2>
-      <div class="grid md:grid-cols-2 gap-2 mb-3">
-        <label class="text-sm">Terminart
-          <select id="eventTitle" class="border rounded p-2 mt-1" required>
-            <option value="">Terminart wählen</option>
-            <option>Meisterschaftsspiel</option><option>Freundschaftsspiel</option><option>Turnier</option><option>Training</option><option>Event</option>
+  <h2 class="font-semibold mb-4">Termin erstellen</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
+    <label class="grid gap-1 text-sm">
+      <span>Terminart</span>
+      <select id="eventTitle" class="w-full border rounded p-2" required>
+        <option value="">Terminart wählen</option>
+        <option>Meisterschaftsspiel</option>
+        <option>Freundschaftsspiel</option>
+        <option>Turnier</option>
+        <option>Training</option>
+        <option>Event</option>
+      </select>
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Gegner</span>
+      <input id="eventOpponent" list="opponentSuggestions" class="w-full border rounded p-2" placeholder="Gegner" />
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Spielort</span>
+      <select id="eventHomeAway" class="w-full border rounded p-2">
+        <option>Heimspiel</option>
+        <option>Auswärtsspiel</option>
+      </select>
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Datum</span>
+      <input id="eventDate" type="date" class="w-full border rounded p-2" required />
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Adresse</span>
+      <input id="eventAddress" list="addressSuggestions" class="w-full border rounded p-2" placeholder="Adresse" required />
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Untergrund</span>
+      <select id="eventSurface" class="w-full border rounded p-2">
+        <option>Rasen</option>
+        <option>Asche</option>
+        <option>Kunstrasen</option>
+      </select>
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Treffzeit</span>
+      <select id="eventMeetingTime" class="w-full border rounded p-2"></select>
+    </label>
+
+    <label class="grid gap-1 text-sm">
+      <span>Anstoßzeit</span>
+      <select id="eventKickoffTime" class="w-full border rounded p-2"></select>
+    </label>
+
+    <label class="grid gap-1 text-sm md:col-span-2 xl:col-span-1">
+      <span>Zu-/Absage bis</span>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <input id="eventDeadlineDate" type="date" class="w-full border rounded p-2" required />
+        <select id="eventDeadlineTime" class="w-full border rounded p-2" required></select>
+      </div>
+    </label>
+
+    <div class="grid gap-3 text-sm md:col-span-2 xl:col-span-3">
+      <label class="flex items-center gap-2 border rounded p-3 bg-slate-50">
+        <input id="eventNotify" type="checkbox" />
+        <span>Spieler per Push informieren</span>
+      </label>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-3 items-end">
+        <label class="grid gap-1 text-sm">
+          <span>Erinnerung (Std.)</span>
+          <select id="eventReminderHours" class="w-full border rounded p-2">
+            <option value="6">6</option>
+            <option value="12">12</option>
+            <option value="24" selected>24</option>
+            <option value="36">36</option>
+            <option value="48">48</option>
+            <option value="72">72</option>
           </select>
         </label>
-        <label class="text-sm">Gegner
-          <input id="eventOpponent" list="opponentSuggestions" class="border rounded p-2 mt-1" placeholder="Gegner" />
-        </label>
-        <label class="text-sm">Spielort
-          <select id="eventHomeAway" class="border rounded p-2 mt-1"><option>Heimspiel</option><option>Auswärtsspiel</option></select>
-        </label>
-        <label class="text-sm">Datum
-          <input id="eventDate" type="date" class="border rounded p-2 mt-1" required />
-        </label>
-        <label class="text-sm">Adresse
-          <input id="eventAddress" list="addressSuggestions" class="border rounded p-2 mt-1" placeholder="Adresse" required />
-        </label>
-        <label class="text-sm">Untergrund
-          <select id="eventSurface" class="border rounded p-2 mt-1"><option>Rasen</option><option>Asche</option><option>Kunstrasen</option></select>
-        </label>
-        <label class="text-sm">Treffzeit
-          <select id="eventMeetingTime" class="border rounded p-2 mt-1"></select>
-        </label>
-        <label class="text-sm">Anstoßzeit
-          <select id="eventKickoffTime" class="border rounded p-2 mt-1"></select>
-        </label>
-        <label class="text-sm">Zu-/Absage bis
-          <div class="grid grid-cols-2 gap-2 mt-1">
-            <input id="eventDeadlineDate" type="date" class="border rounded p-2" required />
-            <select id="eventDeadlineTime" class="border rounded p-2" required></select>
-          </div>
-        </label>
-        <div class="mt-6 space-y-2">
-          <label class="text-sm flex items-center gap-2 border rounded p-2"><input id="eventNotify" type="checkbox" /> Spieler per Push informieren</label>
-          <button id="eventEmailNotifyBtn" type="button" class="w-full px-3 py-2 rounded bg-sky-600 text-white">Spieler per E-Mail informieren</button>
-        </div>
-        <label class="text-sm">Erinnerung (Std.)
-          <select id="eventReminderHours" class="border rounded p-2 mt-1"><option value="6">6</option><option value="12">12</option><option value="24" selected>24</option><option value="36">36</option><option value="48">48</option><option value="72">72</option></select>
-        </label>
-      </div>
 
-      <div id="trainingSeriesBox" class="hidden border rounded p-3 mb-3 bg-slate-50">
-        <h3 class="font-medium mb-2">Serie erstellen</h3>
-        <div class="grid md:grid-cols-2 gap-2">
-          <label class="text-sm">Startdatum
-            <input id="seriesStartDate" type="date" class="border rounded p-2 mt-1" />
-          </label>
-          <label class="text-sm">Enddatum
-            <input id="seriesEndDate" type="date" class="border rounded p-2 mt-1" />
-          </label>
-          <label class="text-sm">oder Anzahl Wochen
-            <input id="seriesWeeks" type="number" min="1" class="border rounded p-2 mt-1" placeholder="z. B. 8" />
-          </label>
-          <label class="text-sm">Treffzeit (Serie)
-            <select id="seriesMeetingTime" class="border rounded p-2 mt-1"></select>
-          </label>
-          <label class="text-sm">Startzeit (Serie)
-            <select id="seriesKickoffTime" class="border rounded p-2 mt-1"></select>
-          </label>
-          <label class="text-sm">Endzeit (Serie)
-            <select id="seriesEndTime" class="border rounded p-2 mt-1"></select>
-          </label>
-          <label class="text-sm">Zu-/Absage bis (Serie)
-            <input id="seriesDeadline" type="datetime-local" step="3600" class="border rounded p-2 mt-1" />
-          </label>
-        </div>
-        <div class="mt-2 text-sm">
-          <p class="mb-1">Wochentage</p>
-          <div class="flex flex-wrap gap-3">
-            <label><input type="checkbox" class="seriesWeekday" value="1" /> Mo</label>
-            <label><input type="checkbox" class="seriesWeekday" value="2" /> Di</label>
-            <label><input type="checkbox" class="seriesWeekday" value="3" /> Mi</label>
-            <label><input type="checkbox" class="seriesWeekday" value="4" /> Do</label>
-            <label><input type="checkbox" class="seriesWeekday" value="5" /> Fr</label>
-            <label><input type="checkbox" class="seriesWeekday" value="6" /> Sa</label>
-            <label><input type="checkbox" class="seriesWeekday" value="0" /> So</label>
-          </div>
-        </div>
+        <button id="eventEmailNotifyBtn" type="button" class="w-full px-3 py-2 rounded bg-sky-600 text-white">
+          Spieler per E-Mail informieren
+        </button>
       </div>
+    </div>
+  </div>
 
-      <div class="flex gap-2 mb-3 flex-wrap">
-        <button id="createEventBtn" class="rounded bg-emerald-600 text-white px-3 py-2">Termin speichern</button>
-        <button id="deleteEventBtn" class="rounded bg-rose-600 text-white px-3 py-2">Termin löschen/absagen</button>
+  <div id="trainingSeriesBox" class="hidden border rounded p-4 mt-5 bg-slate-50">
+    <h3 class="font-medium mb-3">Serie erstellen</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <label class="grid gap-1 text-sm">
+        <span>Startdatum</span>
+        <input id="seriesStartDate" type="date" class="w-full border rounded p-2" />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span>Enddatum</span>
+        <input id="seriesEndDate" type="date" class="w-full border rounded p-2" />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span>oder Anzahl Wochen</span>
+        <input id="seriesWeeks" type="number" min="1" class="w-full border rounded p-2" placeholder="z. B. 8" />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span>Treffzeit (Serie)</span>
+        <select id="seriesMeetingTime" class="w-full border rounded p-2"></select>
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span>Startzeit (Serie)</span>
+        <select id="seriesKickoffTime" class="w-full border rounded p-2"></select>
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span>Endzeit (Serie)</span>
+        <select id="seriesEndTime" class="w-full border rounded p-2"></select>
+      </label>
+
+      <label class="grid gap-1 text-sm md:col-span-2 xl:col-span-3">
+        <span>Zu-/Absage bis (Serie)</span>
+        <input id="seriesDeadline" type="datetime-local" step="3600" class="w-full border rounded p-2" />
+      </label>
+    </div>
+
+    <div class="mt-4 text-sm">
+      <p class="mb-2 font-medium">Wochentage</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="1" /> Mo</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="2" /> Di</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="3" /> Mi</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="4" /> Do</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="5" /> Fr</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="6" /> Sa</label>
+        <label class="flex items-center gap-2 border rounded p-2 bg-white"><input type="checkbox" class="seriesWeekday" value="0" /> So</label>
       </div>
-    </section>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3 mt-5">
+    <button id="createEventBtn" class="w-full sm:w-auto rounded bg-emerald-600 text-white px-4 py-2">
+      Termin speichern
+    </button>
+    <button id="deleteEventBtn" class="w-full sm:w-auto rounded bg-rose-600 text-white px-4 py-2">
+      Termin löschen/absagen
+    </button>
+  </div>
+</section>
 
     <section data-tab-panel="austellung" class="hidden bg-white rounded-xl border p-4">
       <h2 class="font-semibold mb-3">Austellung</h2>
