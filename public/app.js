@@ -20,7 +20,97 @@ const api = async (url, options = {}) => {
 };
 
 const el = (id) => document.getElementById(id);
+let activeDashboardTab = 'overview';
 
+const normalizeRole = (role) => String(role || '').trim().toLowerCase();
+const isAdmin = () => normalizeRole(currentUser?.role) === 'admin';
+
+function getStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function setStoredUser(user) {
+  currentUser = user || null;
+  if (currentUser) {
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  } else {
+    localStorage.removeItem('currentUser');
+  }
+}
+
+function setTabButtonState(button, isActive) {
+  button.className = `whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition ${isActive ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`;
+}
+
+function activateDashboardTab(tabKey) {
+  const buttons = Array.from(document.querySelectorAll('[data-tab-button]'));
+  const panels = Array.from(document.querySelectorAll('[data-tab-panel]'));
+  const allowedButtons = buttons.filter((button) => !button.dataset.adminOnly || isAdmin());
+  const allowedKeys = allowedButtons.map((button) => button.dataset.tabButton);
+
+  if (!allowedKeys.includes(tabKey)) {
+    tabKey = allowedKeys[0] || 'overview';
+  }
+
+  activeDashboardTab = tabKey;
+
+  buttons.forEach((button) => {
+    const allowed = !button.dataset.adminOnly || isAdmin();
+    button.classList.toggle('hidden', !allowed);
+    if (!allowed) return;
+    setTabButtonState(button, button.dataset.tabButton === tabKey);
+  });
+
+  panels.forEach((panel) => {
+    const adminOnly = panel.dataset.adminOnly === 'true';
+    const visible = panel.dataset.tabPanel === tabKey && (!adminOnly || isAdmin());
+    panel.classList.toggle('hidden', !visible);
+  });
+
+  if (tabKey === 'coaching') {
+    requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  }
+}
+
+function renderSessionUi() {
+  const hasUser = Boolean(currentUser);
+  const welcomeBanner = el('welcomeBanner');
+  const dashboardShell = el('dashboardShell');
+  const welcomeUserName = el('welcomeUserName');
+
+  if (welcomeBanner) {
+    welcomeBanner.classList.toggle('hidden', !hasUser);
+  }
+
+  if (dashboardShell) {
+    dashboardShell.classList.toggle('hidden', !hasUser);
+  }
+
+  if (!hasUser) {
+    setAuthInfo('');
+    return;
+  }
+
+  if (welcomeUserName) {
+    welcomeUserName.textContent = currentUser.name || '';
+  }
+
+  setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
+  activateDashboardTab(activeDashboardTab);
+}
+
+function initDashboardTabs() {
+  el('dashboardTabs')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-tab-button]');
+    if (!button) return;
+    if (button.dataset.adminOnly && !isAdmin()) return;
+    activateDashboardTab(button.dataset.tabButton);
+  });
+}
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
 }
