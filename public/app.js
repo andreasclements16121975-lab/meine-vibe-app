@@ -171,27 +171,35 @@ async function loadMembers() {
 }
 
 window.editMember = async (id) => {
+  if (!isAdmin()) return;
+
   const members = await api('/api/members');
   const m = members.find((x) => x.id === id);
   if (!m) return;
+
   editingMemberId = id;
   el('memberName').value = m.name;
   el('memberEmail').value = m.email;
   el('memberRole').value = m.role;
   el('memberTeam').value = m.team || '';
 };
+
 window.deleteMember = async (id) => {
+  if (!isAdmin()) return;
   await api(`/api/members/${id}`, { method: 'DELETE' });
   await loadMembers();
 };
 
 async function saveMember() {
+  if (!isAdmin()) return;
+
   const payload = {
     name: el('memberName').value,
     email: el('memberEmail').value,
     role: el('memberRole').value,
     team: el('memberTeam').value
   };
+
   if (editingMemberId) {
     await api(`/api/members/${editingMemberId}`, {
       method: 'PUT',
@@ -200,8 +208,13 @@ async function saveMember() {
     });
     editingMemberId = null;
   } else {
-    await api('/api/members', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    await api('/api/members', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
   }
+
   await loadMembers();
 }
 
