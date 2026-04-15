@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vereinsmanager Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+  }
+
+  body {
+    touch-action: pan-y;
+  }
+
+  main, section {
+    min-width: 0;
+  }
+
+  #dashboardShell,
+  #tacticsCanvasWrap,
+  #tacticsPreviewPanel,
+  #tacticsMaterialsPanel {
+    min-width: 0;
+    max-width: 100%;
+  }
+</style>
   </head>
   <body class="bg-slate-50 text-slate-800 overflow-x-hidden">
     <header class="bg-white border-b sticky top-0 z-10">
