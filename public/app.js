@@ -1950,7 +1950,9 @@ el('confirmDeleteSelectedBtn').addEventListener('click', deleteSelectedEvents);
 el('calendarModal').addEventListener('click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
-
+currentUser = getStoredUser();
+initDashboardTabs();
+renderSessionUi();
 loadTimeOptions();
 initCalendarControls();
 renderCalendar([]);
@@ -1963,4 +1965,10 @@ window.addEventListener('load', () => {
     setupCanvas();
   }, 100);
 });
-if (token) setAuthInfo('Session gefunden – bitte einloggen zum Aktualisieren.');
+if (token && currentUser) {
+  bootstrapData().catch(() => {
+    setAuthInfo('Session gefunden – bitte neu einloggen.');
+  });
+} else if (token) {
+  setAuthInfo('Session gefunden – bitte neu einloggen.');
+}
