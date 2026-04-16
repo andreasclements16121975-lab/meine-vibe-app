@@ -306,6 +306,174 @@ function renderLineupSelectedInfo() {
   el('lineupAssignedCount').textContent = `${assignedCount}/${formation.positions.length} besetzt`;
   el('lineupPlayerCount').textContent = `${lineupState.players.length} Spieler`;
 }
+function renderLineupPitch() {
+  const host = el('lineupPitchSlots');
+  if (!host) return;
+
+  const formation = getCurrentLineupFormation();
+
+  host.innerHTML = formation.positions
+    .map((position) => {
+      const assignedPlayer = getLineupPlayerById(lineupState.assigned[position.slotId]);
+      const isSelected = lineupState.selectedSlotId === position.slotId;
+
+      return `
+        <button
+          type="button"
+          data-lineup-slot="${position.slotId}"
+          class="absolute -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl border px-1 py-1 text-center shadow-md ${
+            assignedPlayer ? 'bg-white text-slate-900 border-white/90' : 'bg-white/15 text-white border-white/35'
+          } ${isSelected ? 'ring-4 ring-amber-300' : 'ring-2 ring-white/10'}"
+          style="left:${position.x}%; top:${position.y}%"
+        >
+          <div class="text-[10px] font-bold uppercase ${assignedPlayer ? 'text-emerald-700' : 'text-white/90'}">${position.label}</div>
+          <div class="text-[11px] sm:text-xs font-medium leading-tight truncate">${assignedPlayer ? assignedPlayer.name : 'frei'}</div>
+        </button>
+      `;
+    })
+    .join('');
+
+  Array.from(host.querySelectorAll('[data-lineup-slot]')).forEach((button) => {
+    button.addEventListener('click', () => {
+      lineupState.selectedSlotId = button.dataset.lineupSlot;
+      renderLineupBuilder();
+      setLineupStatus('Position gewählt. Jetzt einen Spieler aus dem Pool antippen.');
+    });
+  });
+}
+
+function renderLineupPlayerPool() {
+  const host = el('lineupPlayerPool');
+  if (!host) return;
+
+  const assignedIds = new Set(Object.values(lineupState.assigned));
+  const availablePlayers = lineupState.players.filter((player) => !assignedIds.has(player.id));
+
+  host.innerHTML = availablePlayers.length
+    ? availablePlayers
+        .map(
+          (player) => `
+            <button
+              type="button"
+              data-lineup-player="${player.id}"
+              class="w-full text-left border rounded-xl bg-white px-3 py-2 hover:bg-slate-100"
+            >
+              <div class="font-medium text-slate-800">${player.name}</div>
+              <div class="text-xs text-slate-500">${player.team || 'Spieler'}</div>
+            </button>
+          `
+        )
+        .join('')
+    : `<div class="text-sm text-slate-500 border rounded-xl bg-white px-3 py-3">Keine freien Spieler mehr.</div>`;
+
+  Array.from(host.querySelectorAll('[data-lineup-player]')).forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!lineupState.selectedSlotId) {
+        setLineupStatus('Bitte zuerst eine Position auf dem Spielfeld auswählen.');
+        return;
+      }
+
+      const playerId = button.dataset.lineupPlayer;
+      Object.keys(lineupState.assigned).forEach((slotId) => {
+        if (lineupState.assigned[slotId] === playerId) {
+          delete lineupState.assigned[slotId];
+        }
+      });
+
+      lineupState.assigned[lineupState.selectedSlotId] = playerId;
+      renderLineupBuilder();
+      setLineupStatus('Spieler wurde zugewiesen.');
+    });
+  });
+}
+
+function renderLineupBuilder() {
+  sanitizeLineupAssignments();
+  renderLineupPitch();
+  renderLineupPlayerPool();
+  renderLineupSelectedInfo();
+}
+
+async function refreshLineupBuilderData() {
+  lineupState.sourceMode = el('lineupSourceMode')?.value || 'free';
+  lineupState.eventId = el('lineupEventSelect')?.value || '';
+  lineupState.formationId = el('lineupFormationSelect')?.value || lineupState.formationId;
+  lineupState.scenarioName = el('lineupScenarioName')?.value.trim() || 'Freies Szenario';
+
+  el('lineupEventWrap')?.classList.toggle('hidden', lineupState.sourceMode !== 'event');
+
+  loadStoredLineupForContext();
+
+  lineupState.players =
+    lineupState.sourceMode === 'event' && lineupState.eventId
+      ? await fetchLineupPlayersForEvent(lineupState.eventId)
+      : await fetchLineupMembers();
+
+  sanitizeLineupAssignments();
+  renderLineupBuilder();
+}
+
+function saveCurrentLineup() {
+  if (lineupState.sourceMode === 'event' && !lineupState.eventId) {
+    setLineupStatus('Bitte zuerst ein Event auswählen.');
+    return;
+  }
+
+  const store = getLineupStore();
+  const payload = {
+    name: el('lineupScenarioName')?.value.trim() || 'Freies Szenario',
+    formationId: el('lineupFormationSelect')?.value || lineupState.formationId,
+    assigned: lineupState.assigned,
+    updatedAt: new Date().toISOString()
+  };
+
+  store[getLineupStorageContextKey()] = payload;
+  setLineupStore(store);
+
+  el('lineupSaveState').textContent = `${payload.name} – ${new Date(payload.updatedAt).toLocaleString('de-DE')}`;
+  setLineupStatus('Aufstellung gespeichert.');
+}
+
+function resetCurrentLineup() {
+  lineupState.assigned = {};
+  lineupState.selectedSlotId = null;
+  renderLineupBuilder();
+  setLineupStatus('Aufstellung zurückgesetzt.');
+}
+
+function clearSelectedLineupSlot() {
+  if (!lineupState.selectedSlotId) {
+    setLineupStatus('Bitte zuerst eine Position auswählen.');
+    return;
+  }
+
+  delete lineupState.assigned[lineupState.selectedSlotId];
+  renderLineupBuilder();
+  setLineupStatus('Zuweisung entfernt.');
+}
+
+function initLineupBuilder() {
+  if (lineupBuilderInitialized) return;
+  if (!el('lineupFormationSelect')) return;
+
+  lineupBuilderInitialized = true;
+
+  renderLineupFormationOptions();
+  refreshLineupEventOptions();
+  el('lineupScenarioName').value = lineupState.scenarioName;
+
+  el('lineupSourceMode').addEventListener('change', refreshLineupBuilderData);
+  el('lineupEventSelect').addEventListener('change', refreshLineupBuilderData);
+  el('lineupFormationSelect').addEventListener('change', refreshLineupBuilderData);
+  el('lineupScenarioName').addEventListener('input', () => {
+    lineupState.scenarioName = el('lineupScenarioName').value.trim() || 'Freies Szenario';
+  });
+  el('lineupClearSlotBtn').addEventListener('click', clearSelectedLineupSlot);
+  el('lineupResetBtn').addEventListener('click', resetCurrentLineup);
+  el('lineupSaveBtn').addEventListener('click', saveCurrentLineup);
+
+  refreshLineupBuilderData();
+}
 function getStoredUser() {
   try {
     return JSON.parse(localStorage.getItem('currentUser') || 'null');
