@@ -124,7 +124,72 @@ let activeDashboardTab = 'overview';
 
 const normalizeRole = (role) => String(role || '').trim().toLowerCase();
 const isAdmin = () => normalizeRole(currentUser?.role) === 'admin';
+function getLineupStore() {
+  try {
+    return JSON.parse(localStorage.getItem(LINEUP_STORAGE_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
 
+function setLineupStore(store) {
+  localStorage.setItem(LINEUP_STORAGE_KEY, JSON.stringify(store));
+}
+
+function buildFallbackLineupPlayers() {
+  return Array.from({ length: 18 }, (_, index) => ({
+    id: `fallback-player-${index + 1}`,
+    name: `Spieler ${index + 1}`,
+    team: 'Testkader',
+    role: 'Spieler'
+  }));
+}
+
+function getCurrentLineupFormation() {
+  return LINEUP_FORMATIONS.find((formation) => formation.id === lineupState.formationId) || LINEUP_FORMATIONS[0];
+}
+
+function getLineupStorageContextKey() {
+  if (lineupState.sourceMode === 'event' && lineupState.eventId) {
+    return `event:${lineupState.eventId}`;
+  }
+  return 'free:default';
+}
+
+function sanitizeLineupAssignments() {
+  const slotIds = new Set(getCurrentLineupFormation().positions.map((position) => position.slotId));
+  const playerIds = new Set(lineupState.players.map((player) => player.id));
+
+  lineupState.assigned = Object.fromEntries(
+    Object.entries(lineupState.assigned).filter(([slotId, playerId]) => slotIds.has(slotId) && playerIds.has(playerId))
+  );
+
+  if (lineupState.selectedSlotId && !slotIds.has(lineupState.selectedSlotId)) {
+    lineupState.selectedSlotId = null;
+  }
+}
+
+function formatLineupEventLabel(eventItem) {
+  const title = eventItem.title || 'Termin';
+  const opponent = eventItem.opponent ? ` ${eventItem.opponent}` : '';
+  const date = eventItem.date || '';
+  return [date, `${title}${opponent}`].filter(Boolean).join(' – ');
+}
+
+function refreshLineupEventOptions() {
+  const select = el('lineupEventSelect');
+  if (!select) return;
+
+  const previous = lineupState.eventId || select.value || '';
+  select.innerHTML = `<option value="">Event wählen</option>${calendarEvents
+    .map((eventItem) => `<option value="${eventItem.id}">${formatLineupEventLabel(eventItem)}</option>`)
+    .join('')}`;
+
+  if (previous && calendarEvents.some((eventItem) => eventItem.id === previous)) {
+    select.value = previous;
+    lineupState.eventId = previous;
+  }
+}
 function getStoredUser() {
   try {
     return JSON.parse(localStorage.getItem('currentUser') || 'null');
