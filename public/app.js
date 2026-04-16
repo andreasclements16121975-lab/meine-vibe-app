@@ -4,8 +4,108 @@ let currentUser = null;
 let calendarViewDate = new Date();
 let calendarEvents = [];
 let selectedCalendarEventId = '';
+const LINEUP_STORAGE_KEY = 'lineupBuilderStoreV1';
+const lineupState = {
+  sourceMode: 'free',
+  eventId: '',
+  formationId: '442',
+  scenarioName: 'Freies Szenario',
+  players: [],
+  assigned: {},
+  selectedSlotId: null
+};
 
+let lineupBuilderInitialized = false;
+let lineupMembersCache = [];
+function createFormation(id, name, rows) {
+  const positions = [{ slotId: `${id}-gk`, label: 'TW', x: 50, y: 90 }];
 
+  rows.forEach((row, rowIndex) => {
+    row.labels.forEach((label, index) => {
+      const x = row.labels.length === 1 ? 50 : 14 + (72 / (row.labels.length - 1)) * index;
+      positions.push({
+        slotId: `${id}-${rowIndex}-${index}`,
+        label,
+        x,
+        y: row.y
+      });
+    });
+  });
+
+  return { id, name, positions };
+}
+
+const LINEUP_FORMATIONS = [
+  createFormation('442', '4-4-2', [
+    { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 56, labels: ['LM', 'ZM', 'ZM', 'RM'] },
+    { y: 28, labels: ['ST', 'ST'] }
+  ]),
+  createFormation('4231', '4-2-3-1', [
+    { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 60, labels: ['6', '6'] },
+    { y: 42, labels: ['LA', '10', 'RA'] },
+    { y: 24, labels: ['ST'] }
+  ]),
+  createFormation('433', '4-3-3', [
+    { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 56, labels: ['8', '6', '8'] },
+    { y: 28, labels: ['LA', 'ST', 'RA'] }
+  ]),
+  createFormation('4312', '4-3-2-1 / 4-3-1-2', [
+    { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 58, labels: ['8', '6', '8'] },
+    { y: 40, labels: ['10'] },
+    { y: 24, labels: ['ST', 'ST'] }
+  ]),
+  createFormation('343', '3-4-3', [
+    { y: 78, labels: ['IV', 'IV', 'IV'] },
+    { y: 56, labels: ['LM', 'ZM', 'ZM', 'RM'] },
+    { y: 28, labels: ['LA', 'ST', 'RA'] }
+  ]),
+  createFormation('532', '5-3-2', [
+    { y: 80, labels: ['LAV', 'IV', 'IV', 'IV', 'RAV'] },
+    { y: 56, labels: ['ZM', '6', 'ZM'] },
+    { y: 28, labels: ['ST', 'ST'] }
+  ]),
+  createFormation('352', '3-5-2', [
+    { y: 80, labels: ['IV', 'IV', 'IV'] },
+    { y: 56, labels: ['LM', 'ZM', '6', 'ZM', 'RM'] },
+    { y: 28, labels: ['ST', 'ST'] }
+  ]),
+  createFormation('3331', '3-3-3-1', [
+    { y: 80, labels: ['IV', 'IV', 'IV'] },
+    { y: 60, labels: ['LM', '6', 'RM'] },
+    { y: 40, labels: ['LA', '10', 'RA'] },
+    { y: 22, labels: ['ST'] }
+  ]),
+  createFormation('541', '5-4-1', [
+    { y: 80, labels: ['LAV', 'IV', 'IV', 'IV', 'RAV'] },
+    { y: 56, labels: ['LM', 'ZM', 'ZM', 'RM'] },
+    { y: 24, labels: ['ST'] }
+  ]),
+  createFormation('451', '4-5-1', [
+    { y: 78, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 54, labels: ['LM', 'ZM', '6', 'ZM', 'RM'] },
+    { y: 24, labels: ['ST'] }
+  ]),
+  createFormation('4141', '4-1-4-1', [
+    { y: 78, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 62, labels: ['6'] },
+    { y: 42, labels: ['LM', 'ZM', 'ZM', 'RM'] },
+    { y: 24, labels: ['ST'] }
+  ]),
+  createFormation('424', '4-2-4', [
+    { y: 78, labels: ['LV', 'IV', 'IV', 'RV'] },
+    { y: 56, labels: ['ZM', 'ZM'] },
+    { y: 28, labels: ['LA', 'ST', 'ST', 'RA'] }
+  ]),
+  createFormation('334', '3-3-4 / 3-3-1-3', [
+    { y: 80, labels: ['IV', 'IV', 'IV'] },
+    { y: 58, labels: ['LM', '6', 'RM'] },
+    { y: 30, labels: ['LA', 'ST', 'ST', 'RA'] }
+  ])
+];
 const api = async (url, options = {}) => {
   const res = await fetch(url, {
     ...options,
