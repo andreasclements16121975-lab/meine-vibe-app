@@ -921,6 +921,7 @@ cells.push(`
   el('calendarGrid').innerHTML = cells.join('');
   el('currentYearLabel').textContent = String(y);
   el('monthSelect').value = String(m);
+  refreshLineupEventOptions();
 }
 
 function initCalendarControls() {
