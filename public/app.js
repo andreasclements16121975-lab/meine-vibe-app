@@ -190,6 +190,122 @@ function refreshLineupEventOptions() {
     lineupState.eventId = previous;
   }
 }
+async function fetchLineupMembers() {
+  try {
+    const members = await api('/api/members');
+    lineupMembersCache = members
+      .filter((member) => member.role === 'Spieler')
+      .map((member) => ({
+        id: member.id,
+        name: member.name,
+        team: member.team || '',
+        role: member.role
+      }));
+
+    if (!lineupMembersCache.length) {
+      lineupMembersCache = buildFallbackLineupPlayers();
+    }
+
+    return lineupMembersCache;
+  } catch {
+    if (!lineupMembersCache.length) {
+      lineupMembersCache = buildFallbackLineupPlayers();
+    }
+    return lineupMembersCache;
+  }
+}
+
+async function fetchLineupPlayersForEvent(eventId) {
+  const members = await fetchLineupMembers();
+
+  try {
+    const nominations = await api(`/api/nominations/${eventId}`);
+    if (!Array.isArray(nominations) || !nominations.length) {
+      return members;
+    }
+
+    const mapped = nominations.map((entry, index) => {
+      const fromMembers = members.find((member) => member.id === entry.playerId);
+      if (fromMembers) return fromMembers;
+
+      return {
+        id: entry.playerId || entry.id || `nom-player-${index + 1}`,
+        name: entry.playerName || `Spieler ${index + 1}`,
+        team: '',
+        role: 'Spieler'
+      };
+    });
+
+    return Array.from(new Map(mapped.map((player) => [player.id, player])).values());
+  } catch {
+    return members;
+  }
+}
+
+function getLineupPlayerById(playerId) {
+  return lineupState.players.find((player) => player.id === playerId) || null;
+}
+
+function getSelectedLineupPlayer() {
+  if (!lineupState.selectedSlotId) return null;
+  return getLineupPlayerById(lineupState.assigned[lineupState.selectedSlotId]);
+}
+
+function setLineupStatus(text) {
+  const node = el('lineupStatusText');
+  if (node) node.textContent = text;
+}
+
+function loadStoredLineupForContext() {
+  const entry = getLineupStore()[getLineupStorageContextKey()];
+  if (!entry) {
+    lineupState.assigned = {};
+    lineupState.selectedSlotId = null;
+    return;
+  }
+
+  lineupState.formationId = entry.formationId || lineupState.formationId;
+  lineupState.assigned = entry.assigned || {};
+  lineupState.selectedSlotId = null;
+  lineupState.scenarioName = entry.name || lineupState.scenarioName;
+
+  if (el('lineupFormationSelect')) {
+    el('lineupFormationSelect').value = lineupState.formationId;
+  }
+
+  if (el('lineupScenarioName')) {
+    el('lineupScenarioName').value = lineupState.scenarioName;
+  }
+
+  if (el('lineupSaveState')) {
+    const updatedAt = entry.updatedAt ? new Date(entry.updatedAt).toLocaleString('de-DE') : 'unbekannt';
+    el('lineupSaveState').textContent = `${entry.name || 'Aufstellung'} – ${updatedAt}`;
+  }
+}
+
+function renderLineupFormationOptions() {
+  const select = el('lineupFormationSelect');
+  if (!select) return;
+
+  select.innerHTML = LINEUP_FORMATIONS.map(
+    (formation) => `<option value="${formation.id}">${formation.name}</option>`
+  ).join('');
+
+  select.value = lineupState.formationId;
+}
+
+function renderLineupSelectedInfo() {
+  const formation = getCurrentLineupFormation();
+  const selectedPosition = formation.positions.find((position) => position.slotId === lineupState.selectedSlotId) || null;
+  const selectedPlayer = getSelectedLineupPlayer();
+
+  el('lineupSelectedSlotLabel').textContent = selectedPosition ? selectedPosition.label : 'Keine Position gewählt';
+  el('lineupSelectedPlayerLabel').textContent = selectedPlayer ? selectedPlayer.name : 'Niemand zugewiesen';
+
+  const assignedCount = Object.keys(lineupState.assigned).length;
+  el('lineupAssignedCount').textContent = `${assignedCount}/${formation.positions.length} besetzt`;
+  el('lineupPlayerCount').textContent = `${lineupState.players.length} Spieler`;
+}
 function getStoredUser() {
   try {
     return JSON.parse(localStorage.getItem('currentUser') || 'null');
