@@ -2442,6 +2442,7 @@ el('calendarModal').addEventListener('click', (ev) => {
 currentUser = getStoredUser();
 initDashboardTabs();
 renderSessionUi();
+initLineupBuilder();
 loadTimeOptions();
 initCalendarControls();
 renderCalendar([]);
