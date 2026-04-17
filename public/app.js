@@ -2493,33 +2493,6 @@ window.addEventListener('load', () => {
 });
 window.addEventListener('load', () => {
   setTimeout(() => {
-    const lineupCanvas = el('lineupCanvas');
-    const lineupWrap = el('lineupCanvasWrap');
-    if (!lineupCanvas || !lineupWrap) return;
-
-    lineupCanvas.width = 900;
-    lineupCanvas.height = 1400;
-
-    const ctx = lineupCanvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.fillStyle = '#0f9d6a';
-    ctx.fillRect(0, 0, lineupCanvas.width, lineupCanvas.height);
-
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 6;
-    ctx.strokeRect(40, 40, lineupCanvas.width - 80, lineupCanvas.height - 80);
-
-    ctx.beginPath();
-    ctx.moveTo(40, lineupCanvas.height / 2);
-    ctx.lineTo(lineupCanvas.width - 40, lineupCanvas.height / 2);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(lineupCanvas.width / 2, lineupCanvas.height / 2, 110, 0, Math.PI * 2);
-    ctx.stroke();
-  }, 120);
-});
 if (token && currentUser) {
   bootstrapData().catch(() => {
     setAuthInfo('Session gefunden – bitte neu einloggen.');
