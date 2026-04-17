@@ -635,7 +635,7 @@ async function loadMembers() {
     return;
   }
 
-  const members = await api('/api/members');
+  const members = await api('/api/members').catch(() => DEMO_MEMBERS);
 
   el('nomPlayerId').innerHTML =
   '<option value="">Spieler wählen</option>' +
