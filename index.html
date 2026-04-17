@@ -178,34 +178,7 @@
             <option value="72">72</option>
           </select>
         </label>
-        <label class="text-sm">Gegner
-          <input id="eventOpponent" list="opponentSuggestions" class="border rounded p-2 mt-1" placeholder="Gegner" />
-        </label>
-        <label class="text-sm">Spielort
-          <select id="eventHomeAway" class="border rounded p-2 mt-1"><option>Heimspiel</option><option>Auswärtsspiel</option></select>
-        </label>
-        <label class="text-sm">Datum
-          <input id="eventDate" type="date" class="border rounded p-2 mt-1" required />
-        </label>
-        <label class="text-sm">Adresse
-          <input id="eventAddress" list="addressSuggestions" class="border rounded p-2 mt-1" placeholder="Adresse" required />
-        </label>
-        <label class="text-sm">Untergrund
-          <select id="eventSurface" class="border rounded p-2 mt-1"><option>Rasen</option><option>Asche</option><option>Kunstrasen</option></select>
-        </label>
-        <label class="text-sm">Treffzeit
-          <select id="eventMeetingTime" class="border rounded p-2 mt-1"></select>
-        </label>
-        <label class="text-sm">Anstoßzeit
-          <select id="eventKickoffTime" class="border rounded p-2 mt-1"></select>
-        </label>
-        <label class="text-sm">Zu-/Absage bis
-          <div class="grid grid-cols-2 gap-2 mt-1">
-            <input id="eventDeadlineDate" type="date" class="border rounded p-2" required />
-            <select id="eventDeadlineTime" class="border rounded p-2" required></select>
-          </div>
-        </label>
-        <div class="mt-6 space-y-2">
+                <div class="mt-6 space-y-2">
           <label class="text-sm flex items-center gap-2 border rounded p-2"><input id="eventNotify" type="checkbox" /> Spieler per Push informieren</label>
           <button id="eventEmailNotifyBtn" type="button" class="w-full px-3 py-2 rounded bg-sky-600 text-white">Spieler per E-Mail informieren</button>
         </div>
