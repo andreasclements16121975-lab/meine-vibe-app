@@ -612,7 +612,23 @@ async function forgotPassword() {
   });
   el('authMessage').innerHTML = `${data.message} <a class="text-blue-700 underline" href="${data.resetUrl || '#'}">Reset öffnen</a>`;
 }
-
+const DEMO_MEMBERS = [
+  { id: 'demo-1', name: 'Spieler 1', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-2', name: 'Spieler 2', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-3', name: 'Spieler 3', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-4', name: 'Spieler 4', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-5', name: 'Spieler 5', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-6', name: 'Spieler 6', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-7', name: 'Spieler 7', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-8', name: 'Spieler 8', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-9', name: 'Spieler 9', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-10', name: 'Spieler 10', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-11', name: 'Spieler 11', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-12', name: 'Spieler 12', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-13', name: 'Spieler 13', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-14', name: 'Spieler 14', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-15', name: 'Spieler 15', email: '', role: 'Spieler', team: 'Team A' },
+];
 async function loadMembers() {
   if (!isAdmin()) {
     el('membersList').innerHTML = '';
