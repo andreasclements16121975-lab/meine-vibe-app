@@ -299,7 +299,16 @@
 </section>
 
     <section data-tab-panel="aufstellung" class="hidden bg-white rounded-xl border p-4">
-      <h2 class="font-semibold mb-3">Aufstellung</h2>
+      <div class="mb-3 flex items-center justify-between gap-3">
+  <h2 class="font-semibold">Aufstellung</h2>
+  <button
+    id="openFormationModalBtn"
+    type="button"
+    class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+  >
+    Spielsysteme
+  </button>
+</div>
       <div class="bg-white rounded-xl">
         <div class="grid grid-cols-2 gap-2 mb-2">
           <input id="nomEventId" class="border rounded p-2" placeholder="Event-ID" />
