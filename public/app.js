@@ -643,7 +643,20 @@ async function loadMembers() {
     .filter((m) => m.role === 'Spieler')
     .map((m) => `<option value="${m.id}">${m.name} (${m.team || '-'})</option>`)
     .join('');
-
+el('nomPlayerButtons').innerHTML = members
+  .filter((m) => m.role === 'Spieler')
+  .map(
+    (m) => `
+      <button
+        type="button"
+        class="rounded border px-3 py-2 text-sm"
+        data-player-id="${m.id}"
+      >
+        ${m.name}
+      </button>
+    `
+  )
+  .join('');
   el('membersList').innerHTML = members
     .map(
       (m) => `<div class="border rounded p-2 flex justify-between items-center gap-2">
