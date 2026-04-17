@@ -316,7 +316,17 @@
   <option value="">Spieler wählen</option>
 </select>
         </div>
-        <div id="nomPlayerButtons" class="mt-2 flex flex-wrap gap-2"></div>
+        <div class="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] items-start">
+  <div>
+    <div id="nomPlayerButtons" class="mt-2 flex flex-wrap gap-2"></div>
+  </div>
+  <div class="relative">
+    <div id="lineupCanvasWrap" class="w-full max-w-full overflow-x-auto overflow-y-hidden">
+      <canvas id="lineupCanvas" class="block max-w-none"></canvas>
+    </div>
+    <div id="lineupPitchSlots" class="absolute inset-0"></div>
+  </div>
+</div>
         <div id="lineupCanvasWrap" class="w-full max-w-full overflow-x-auto overflow-y-hidden">
   <canvas id="lineupCanvas" class="block max-w-none"></canvas>
 </div>
