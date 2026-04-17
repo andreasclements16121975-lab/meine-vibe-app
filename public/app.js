@@ -657,6 +657,11 @@ el('nomPlayerButtons').innerHTML = members
     `
   )
   .join('');
+  el('nomPlayerButtons')?.querySelectorAll('[data-player-id]').forEach((button) => {
+  button.addEventListener('click', () => {
+    el('nomPlayerId').value = button.dataset.playerId || '';
+  });
+});
   el('membersList').innerHTML = members
     .map(
       (m) => `<div class="border rounded p-2 flex justify-between items-center gap-2">
