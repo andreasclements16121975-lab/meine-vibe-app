@@ -621,7 +621,9 @@ async function loadMembers() {
 
   const members = await api('/api/members');
 
-  el('nomPlayerId').innerHTML = members
+  el('nomPlayerId').innerHTML =
+  '<option value="">Spieler wählen</option>' +
+  members
     .filter((m) => m.role === 'Spieler')
     .map((m) => `<option value="${m.id}">${m.name} (${m.team || '-'})</option>`)
     .join('');
