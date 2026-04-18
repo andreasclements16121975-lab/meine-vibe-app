@@ -2666,29 +2666,31 @@ async function bootstrapData() {
   await Promise.all([loadMembers(), loadBranding(), loadEvents(), loadLedger(), loadAgeGroups(), loadMaterials(), loadExercises(), loadVideos()]);
 }
 
-el('loginBtn')?.addEventListener('click', login);
-el('forgotBtn')?.addEventListener('click', forgotPassword);
-el('saveMemberBtn')?.addEventListener('click', saveMember);
-el('uploadLogoBtn')?.addEventListener('click', uploadLogo);
-el('createEventBtn')?.addEventListener('click', createEvent);
-el('deleteEventBtn')?.addEventListener('click', openDeleteEventsModal);
-el('createNomBtn')?.addEventListener('click', createNomination);
-el('answerNomBtn')?.addEventListener('click', answerNomination);
-el('addLedgerBtn')?.addEventListener('click', addLedger);
-el('filterExercisesBtn')?.addEventListener('click', loadExercises);
-el('materialSelect')?.addEventListener('change', updateMaterialInfo);
-el('bibColor')?.addEventListener('change', updateMaterialInfo);
-el('dummyColor')?.addEventListener('change', updateMaterialInfo);
-el('uploadVideoBtn')?.addEventListener('click', uploadVideo);
-el('addSocialBtn')?.addEventListener('click', addSocial);
-el('extractBtn')?.addEventListener('click', extractInstructions);
-el('eventEmailNotifyBtn')?.addEventListener('click', () => alert('E-Mail-Benachrichtigung wurde vorbereitet.'));
-el('eventTitle')?.addEventListener('change', updateTrainingSeriesVisibility);
-el('closeCalendarModalBtn')?.addEventListener('click', closeCalendarModal);
-el('modalDeleteEventBtn')?.addEventListener('click', deleteEvent);
-el('closeDeleteEventsModalBtn')?.addEventListener('click', closeDeleteEventsModal);
-el('confirmDeleteSelectedBtn')?.addEventListener('click', deleteSelectedEvents);
-el('calendarModal')?.addEventListener('click', (ev) => {
+const on = (id, event, handler) => el(id)?.addEventListener(event, handler);
+
+on('loginBtn', 'click', login);
+on('forgotBtn', 'click', forgotPassword);
+on('saveMemberBtn', 'click', saveMember);
+on('uploadLogoBtn', 'click', uploadLogo);
+on('createEventBtn', 'click', createEvent);
+on('deleteEventBtn', 'click', openDeleteEventsModal);
+on('createNomBtn', 'click', createNomination);
+on('answerNomBtn', 'click', answerNomination);
+on('addLedgerBtn', 'click', addLedger);
+on('filterExercisesBtn', 'click', loadExercises);
+on('materialSelect', 'change', updateMaterialInfo);
+on('bibColor', 'change', updateMaterialInfo);
+on('dummyColor', 'change', updateMaterialInfo);
+on('uploadVideoBtn', 'click', uploadVideo);
+on('addSocialBtn', 'click', addSocial);
+on('extractBtn', 'click', extractInstructions);
+on('eventEmailNotifyBtn', 'click', () => alert('E-Mail-Benachrichtigung wurde vorbereitet.'));
+on('eventTitle', 'change', updateTrainingSeriesVisibility);
+on('closeCalendarModalBtn', 'click', closeCalendarModal);
+on('modalDeleteEventBtn', 'click', deleteEvent);
+on('closeDeleteEventsModalBtn', 'click', closeDeleteEventsModal);
+on('confirmDeleteSelectedBtn', 'click', deleteSelectedEvents);
+on('calendarModal', 'click', (ev) => {
   if (ev.target.id === 'calendarModal') closeCalendarModal();
 });
 currentUser = getStoredUser();
