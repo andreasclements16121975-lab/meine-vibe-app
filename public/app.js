@@ -2682,7 +2682,7 @@ el('dummyColor')?.addEventListener('change', updateMaterialInfo);
 el('uploadVideoBtn').addEventListener('click', uploadVideo);
 el('addSocialBtn').addEventListener('click', addSocial);
 el('extractBtn').addEventListener('click', extractInstructions);
-el('eventEmailNotifyBtn').addEventListener('click', () => alert('E-Mail-Benachrichtigung wurde vorbereitet.'));
+el('eventEmailNotifyBtn')?.addEventListener('click', () => alert('E-Mail-Benachrichtigung wurde vorbereitet.'));
 el('eventTitle').addEventListener('change', updateTrainingSeriesVisibility);
 el('closeCalendarModalBtn').addEventListener('click', closeCalendarModal);
 el('modalDeleteEventBtn').addEventListener('click', deleteEvent);
