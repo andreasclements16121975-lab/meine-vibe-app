@@ -2706,6 +2706,7 @@ initCoachingAreaDragAndDrop();
 window.addEventListener('load', () => {
   setTimeout(() => {
     setupCanvas();
+    setupLineupCanvas();
   }, 100);
 });
 if (token && currentUser) {
