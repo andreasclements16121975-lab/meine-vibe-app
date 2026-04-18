@@ -299,32 +299,35 @@
 </section>
 
     <section data-tab-panel="aufstellung" class="hidden bg-white rounded-xl border p-4">
-      <div class="mb-3 flex items-center justify-between gap-3">
+      <div class="mb-3">
   <h2 class="font-semibold">Aufstellung</h2>
-  <button
-    id="openFormationModalBtn"
-    type="button"
-    class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
-  >
-    Spielsysteme
-  </button>
 </div>
-      <div class="bg-white rounded-xl">
-        <div class="grid grid-cols-2 gap-2 mb-2">
-          <input id="nomEventId" class="border rounded p-2" placeholder="Event-ID oder Spiel-ID" />
-          <select id="nomPlayerId" class="border rounded p-2">
-  <option value="">Spieler wählen</option>
-</select>
-        </div>
-        <div class="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)] items-start">
-  <div>
-    <div id="nomPlayerButtons" class="mt-2 flex flex-wrap gap-2"></div>
-  </div>
-  <div class="relative">
-    <div id="lineupCanvasWrap" class="w-full max-w-full overflow-x-auto overflow-y-hidden">
-      <canvas id="lineupCanvas" class="block max-w-none"></canvas>
+
+<div class="bg-white rounded-xl">
+  <div class="grid gap-4 xl:grid-cols-[260px_140px_minmax(0,1fr)] items-start">
+    <div>
+      <div class="mb-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+        Spieler hier auswählen und danach im Spielfeld platzieren
+      </div>
+      <div id="nomPlayerButtons" class="flex flex-wrap gap-2"></div>
     </div>
-    <div id="lineupPitchSlots" class="absolute inset-0"></div>
+
+    <div class="flex justify-center xl:pt-1">
+      <button
+        id="openFormationModalBtn"
+        type="button"
+        class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+      >
+        Spielsysteme
+      </button>
+    </div>
+
+    <div class="relative">
+      <div id="lineupCanvasWrap" class="flex w-full justify-end overflow-x-auto overflow-y-hidden">
+        <canvas id="lineupCanvas" class="block max-w-none"></canvas>
+      </div>
+      <div id="lineupPitchSlots" class="absolute inset-0"></div>
+    </div>
   </div>
 </div>
         
