@@ -559,6 +559,13 @@ function initDashboardTabs() {
     if (button.dataset.adminOnly && !isAdmin()) return;
     activateDashboardTab(button.dataset.tabButton);
   });
+
+  el('dashboardHome')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-home-target]');
+    if (!button) return;
+    activateDashboardTab(button.dataset.homeTarget);
+    document.querySelector(`[data-tab-panel="${button.dataset.homeTarget}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
