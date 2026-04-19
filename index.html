@@ -131,6 +131,72 @@
     </button>
   </div>
 </section>
+    <section id="dashboardMiniNav" class="hidden space-y-3">
+  <div class="flex items-center justify-between gap-3">
+    <h3 id="dashboardMiniNavTitle" class="text-lg font-semibold text-slate-900">Bereich</h3>
+    <button type="button" id="backToDashboardBtn" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700">
+      Dashboard
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+    <button type="button" data-mini-target="aufstellung" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#5EA1E5,#4B89D4)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Team</span>
+        <span class="text-xl font-bold leading-tight">Aufstellung</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="create-event" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#F9A147,#F68032)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Planung</span>
+        <span class="text-xl font-bold leading-tight">Termine</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="members" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#71D586,#58C278)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Verein</span>
+        <span class="text-xl font-bold leading-tight">Kader</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="training" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#8B7AE4,#7059D6)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Einheiten</span>
+        <span class="text-xl font-bold leading-tight">Training</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="coaching" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#60CAE1,#48B0D0)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Taktik</span>
+        <span class="text-xl font-bold leading-tight">Coaching</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="overview" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#7EA1B6,#6388A1)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Kalender</span>
+        <span class="text-xl font-bold leading-tight">Übersicht</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="video" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#818EF7,#676FEA)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Inhalte</span>
+        <span class="text-xl font-bold leading-tight">Medien</span>
+      </div>
+    </button>
+
+    <button type="button" data-mini-target="ledger" class="h-24 rounded-[22px] bg-[linear-gradient(135deg,#F0A73E,#E98829)] px-4 py-3 text-left text-white">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-xs font-medium text-white/80">Verein</span>
+        <span class="text-xl font-bold leading-tight">Finanzen</span>
+      </div>
+    </button>
+  </div>
+</section>
     <div class="sticky top-3 z-20 rounded-2xl border bg-white/95 p-2 shadow-sm backdrop-blur overflow-x-auto max-w-full">
       <div id="dashboardTabs" class="flex gap-2 w-max">
         <button type="button" data-tab-button="overview" class="whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition bg-emerald-600 text-white">Terminübersicht</button>
