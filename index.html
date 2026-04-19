@@ -67,6 +67,70 @@
   </section>
 
   <section id="dashboardShell" class="hidden space-y-4">
+    <section id="dashboardHome" class="space-y-4">
+  <div>
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900">Dashboard</h2>
+    <p class="text-sm text-slate-500">Schnellzugriff auf die wichtigsten Bereiche</p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
+    <button type="button" data-home-target="aufstellung" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#5EA1E5,#4B89D4)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Team</span>
+        <span class="text-2xl font-bold leading-tight">Aufstellung</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="create-event" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#F9A147,#F68032)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Planung</span>
+        <span class="text-2xl font-bold leading-tight">Termine</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="members" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#71D586,#58C278)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Verein</span>
+        <span class="text-2xl font-bold leading-tight">Kader</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="training" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#8B7AE4,#7059D6)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Einheiten</span>
+        <span class="text-2xl font-bold leading-tight">Training</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="coaching" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#60CAE1,#48B0D0)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Taktik</span>
+        <span class="text-2xl font-bold leading-tight">Coaching</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="overview" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#7EA1B6,#6388A1)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Kalender</span>
+        <span class="text-2xl font-bold leading-tight">Übersicht</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="video" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#818EF7,#676FEA)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Inhalte</span>
+        <span class="text-2xl font-bold leading-tight">Medien</span>
+      </div>
+    </button>
+
+    <button type="button" data-home-target="ledger" class="group h-40 rounded-[28px] bg-[linear-gradient(135deg,#F0A73E,#E98829)] p-5 text-left text-white shadow-sm transition hover:scale-[1.02]">
+      <div class="flex h-full flex-col justify-between">
+        <span class="text-sm font-medium text-white/80">Verein</span>
+        <span class="text-2xl font-bold leading-tight">Finanzen</span>
+      </div>
+    </button>
+  </div>
+</section>
     <div class="bg-white rounded-xl border p-2 overflow-x-auto max-w-full">
       <div id="dashboardTabs" class="flex gap-2 w-max">
         <button type="button" data-tab-button="overview" class="whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition bg-emerald-600 text-white">Terminübersicht</button>
