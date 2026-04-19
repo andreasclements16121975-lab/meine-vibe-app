@@ -197,6 +197,42 @@
     </button>
   </div>
 </section>
+    <style>
+  #dashboardMiniNav {
+    gap: 0.75rem;
+  }
+
+  #dashboardMiniNav .grid {
+    gap: 0.75rem;
+  }
+
+  #dashboardMiniNavTitle {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+
+  #dashboardMiniNav [data-mini-target] {
+    height: 84px;
+    border-radius: 18px;
+    padding: 12px 14px;
+  }
+
+  #dashboardMiniNav [data-mini-target] span:first-child {
+    font-size: 11px;
+    line-height: 1rem;
+  }
+
+  #dashboardMiniNav [data-mini-target] span:last-child {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  #backToDashboardBtn {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+  }
+</style>
     <div class="sticky top-3 z-20 rounded-2xl border bg-white/95 p-2 shadow-sm backdrop-blur overflow-x-auto max-w-full">
       <div id="dashboardTabs" class="flex gap-2 w-max">
         <button type="button" data-tab-button="overview" class="whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition bg-emerald-600 text-white">Terminübersicht</button>
