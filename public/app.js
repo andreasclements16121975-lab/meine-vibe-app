@@ -555,18 +555,39 @@ document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList
 }
 
 function initDashboardTabs() {
+  const showDashboardHome = () => {
+    el('dashboardHome')?.classList.remove('hidden');
+    el('dashboardMiniNav')?.classList.add('hidden');
+    document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
+  };
+
+  const openDashboardSection = (tabKey) => {
+    el('dashboardHome')?.classList.add('hidden');
+    el('dashboardMiniNav')?.classList.remove('hidden');
+    activateDashboardTab(tabKey);
+  };
+
   el('dashboardTabs')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-tab-button]');
     if (!button) return;
     if (button.dataset.adminOnly && !isAdmin()) return;
-    activateDashboardTab(button.dataset.tabButton);
+    openDashboardSection(button.dataset.tabButton);
   });
 
   el('dashboardHome')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-home-target]');
     if (!button) return;
-    el('dashboardHome')?.classList.add('hidden');
-    activateDashboardTab(button.dataset.homeTarget);
+    openDashboardSection(button.dataset.homeTarget);
+  });
+
+  el('dashboardMiniNav')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-mini-target]');
+    if (!button) return;
+    openDashboardSection(button.dataset.miniTarget);
+  });
+
+  el('backToDashboardBtn')?.addEventListener('click', () => {
+    showDashboardHome();
   });
 }
 function setAuthInfo(text) {
