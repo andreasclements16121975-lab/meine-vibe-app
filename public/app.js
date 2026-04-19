@@ -549,7 +549,9 @@ function renderSessionUi() {
   }
 
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
-  activateDashboardTab(activeDashboardTab);
+  el('dashboardHome')?.classList.remove('hidden');
+el('dashboardTabs')?.parentElement?.classList.add('hidden');
+document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 }
 
 function initDashboardTabs() {
