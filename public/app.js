@@ -2937,6 +2937,7 @@ function initFormationModal() {
   const goalAreaDepthPx = goalAreaDepth * scale;
   const penaltyAreaWidthPx = penaltyAreaWidth * scale;
   const penaltyAreaDepthPx = penaltyAreaDepth * scale;
+  const spotRadius = Math.max(3, scale * 0.22);
 
   ctx.strokeRect(goalAreaX, fieldY, goalAreaWidthPx, goalAreaDepthPx);
   ctx.strokeRect(penaltyAreaX, fieldY, penaltyAreaWidthPx, penaltyAreaDepthPx);
@@ -2945,7 +2946,7 @@ function initFormationModal() {
   const spotY = fieldY + penaltySpotDistance * scale;
 
   ctx.beginPath();
-  ctx.arc(centerX, spotY, centerSpotRadius, 0, Math.PI * 2);
+  ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
   ctx.fill();
 
   drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, fieldY + penaltyAreaDepthPx, true);
