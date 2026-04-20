@@ -2987,10 +2987,12 @@ function initFormationModal() {
 };
 
   const openModal = () => {
+  modal?.classList.remove('hidden');
+  modal?.classList.add('flex');
+  requestAnimationFrame(() => {
     renderFormationPreview();
-    modal?.classList.remove('hidden');
-    modal?.classList.add('flex');
-  };
+  });
+};
 
   const closeModal = () => {
     modal?.classList.add('hidden');
