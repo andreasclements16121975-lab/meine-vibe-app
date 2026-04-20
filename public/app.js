@@ -2734,10 +2734,33 @@ updateTrainingSeriesVisibility();
 initGooglePlacesForEventFields();
 renderTacticsMaterialFields();
 initCoachingAreaDragAndDrop();
+function initFormationModal() {
+  const modal = el('formationModal');
+
+  const openModal = () => {
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+  };
+
+  const closeModal = () => {
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+  };
+
+  el('openFormationModalBtn')?.addEventListener('click', openModal);
+  el('closeFormationModalBtn')?.addEventListener('click', closeModal);
+  el('cancelFormationModalBtn')?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (event) => {
+    if (event.target === modal) closeModal();
+  });
+}
+
 window.addEventListener('load', () => {
   setTimeout(() => {
     setupCanvas();
     setupLineupCanvas();
+    initFormationModal();
   }, 100);
 });
 if (token && currentUser) {
