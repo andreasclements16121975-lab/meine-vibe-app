@@ -2736,8 +2736,58 @@ renderTacticsMaterialFields();
 initCoachingAreaDragAndDrop();
 function initFormationModal() {
   const modal = el('formationModal');
+  const body = el('formationModalBody');
+
+  const renderFormationPreview = () => {
+    if (!body) return;
+
+    body.innerHTML = `
+      <div class="space-y-6">
+        <div class="mx-auto max-w-4xl">
+          <div class="relative overflow-hidden rounded-xl border-4 border-slate-300 bg-slate-100" style="aspect-ratio: 68 / 105;">
+            <svg viewBox="0 0 68 105" class="absolute inset-0 h-full w-full">
+              <rect x="1" y="1" width="66" height="103" fill="none" stroke="#b3b3b3" stroke-width="0.7"></rect>
+              <line x1="1" y1="52.5" x2="67" y2="52.5" stroke="#b3b3b3" stroke-width="0.7"></line>
+              <circle cx="34" cy="52.5" r="9.15" fill="none" stroke="#b3b3b3" stroke-width="0.7"></circle>
+              <circle cx="34" cy="52.5" r="0.45" fill="#b3b3b3"></circle>
+
+              <rect x="13.84" y="1" width="40.32" height="16.5" fill="none" stroke="#b3b3b3" stroke-width="0.7"></rect>
+              <rect x="24.84" y="1" width="18.32" height="5.5" fill="none" stroke="#b3b3b3" stroke-width="0.7"></rect>
+              <circle cx="34" cy="11" r="0.45" fill="#b3b3b3"></circle>
+
+              <rect x="13.84" y="87.5" width="40.32" height="16.5" fill="none" stroke="#b3b3b3" stroke-width="0.7"></rect>
+              <rect x="24.84" y="98.5" width="18.32" height="5.5" fill="none" stroke="#b3b3b3" stroke-width="0.7"></rect>
+              <circle cx="34" cy="94" r="0.45" fill="#b3b3b3"></circle>
+            </svg>
+
+            <div class="absolute inset-0">
+              <div class="absolute left-1/2 top-[84%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">TW</div>
+              <div class="absolute left-[14%] top-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">LV</div>
+              <div class="absolute left-[39%] top-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">IV</div>
+              <div class="absolute left-[61%] top-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">IV</div>
+              <div class="absolute left-[86%] top-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">RV</div>
+
+              <div class="absolute left-[38%] top-[45%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">DM</div>
+              <div class="absolute left-[62%] top-[45%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">DM</div>
+
+              <div class="absolute left-[38%] top-[27%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">OM</div>
+              <div class="absolute left-[62%] top-[27%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">OM</div>
+
+              <div class="absolute left-[38%] top-[10%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">ST</div>
+              <div class="absolute left-[62%] top-[10%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800 px-3 py-2 text-sm font-bold text-white">ST</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="text-3xl font-bold text-slate-900">4-2-2-2</div>
+        </div>
+      </div>
+    `;
+  };
 
   const openModal = () => {
+    renderFormationPreview();
     modal?.classList.remove('hidden');
     modal?.classList.add('flex');
   };
