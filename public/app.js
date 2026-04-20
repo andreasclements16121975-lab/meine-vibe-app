@@ -2742,62 +2742,251 @@ function initFormationModal() {
   if (!body) return;
 
   body.innerHTML = `
-    <div style="display:flex; flex-direction:column; align-items:center; gap:16px; width:100%;">
-      <svg viewBox="0 0 1000 690" style="display:block; width:100%; height:auto;" aria-label="Formation 4-2-2-2">
-        <rect x="10" y="15" width="980" height="620" rx="10" fill="#f8fafc" stroke="#b3b3b3" stroke-width="6"></rect>
-
-        <line x1="10" y1="315" x2="990" y2="315" stroke="#b3b3b3" stroke-width="6"></line>
-        <circle cx="500" cy="315" r="55" fill="none" stroke="#b3b3b3" stroke-width="6"></circle>
-        <circle cx="500" cy="315" r="4" fill="#b3b3b3"></circle>
-
-        <path d="M 390 15 A 110 110 0 0 0 610 15" fill="none" stroke="#b3b3b3" stroke-width="6"></path>
-        <rect x="320" y="15" width="360" height="70" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <rect x="450" y="15" width="100" height="25" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <circle cx="500" cy="165" r="4" fill="#b3b3b3"></circle>
-
-        <rect x="230" y="415" width="540" height="220" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <rect x="370" y="500" width="260" height="135" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <rect x="455" y="560" width="90" height="75" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <rect x="475" y="635" width="50" height="20" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
-        <circle cx="500" cy="545" r="4" fill="#b3b3b3"></circle>
-
-        <circle cx="500" cy="470" r="28" fill="#1f2937"></circle>
-        <text x="500" y="470" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">TW</text>
-
-        <circle cx="230" cy="385" r="24" fill="#1f2937"></circle>
-        <text x="230" y="385" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">LV</text>
-
-        <circle cx="430" cy="365" r="24" fill="#1f2937"></circle>
-        <text x="430" y="365" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">IV</text>
-
-        <circle cx="570" cy="365" r="24" fill="#1f2937"></circle>
-        <text x="570" y="365" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">IV</text>
-
-        <circle cx="770" cy="385" r="24" fill="#1f2937"></circle>
-        <text x="770" y="385" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">RV</text>
-
-        <circle cx="430" cy="285" r="24" fill="#1f2937"></circle>
-        <text x="430" y="285" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">DM</text>
-
-        <circle cx="570" cy="285" r="24" fill="#1f2937"></circle>
-        <text x="570" y="285" fill="#ffffff" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">DM</text>
-
-        <circle cx="430" cy="185" r="22" fill="#1f2937"></circle>
-        <text x="430" y="185" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">OM</text>
-
-        <circle cx="570" cy="185" r="22" fill="#1f2937"></circle>
-        <text x="570" y="185" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">OM</text>
-
-        <circle cx="430" cy="95" r="22" fill="#1f2937"></circle>
-        <text x="430" y="95" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">ST</text>
-
-        <circle cx="570" cy="95" r="22" fill="#1f2937"></circle>
-        <text x="570" y="95" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">ST</text>
-      </svg>
-
-      <div style="font:700 34px Arial; color:#0f172a;">4-2-2-2</div>
+    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
+      <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:560px; border-radius:14px;"></canvas>
+      <div style="margin-top:14px; font:700 34px Arial; color:#0f172a;">4-2-2-2</div>
     </div>
   `;
+
+  const canvas = el('formationPreviewCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const getPitchGreen = () => {
+    const selectors = [
+      '#createEventBtn',
+      '#saveMemberBtn',
+      '#saveEventBtn',
+      'button.bg-green-600',
+      'button.bg-green-500',
+      'button.bg-emerald-600',
+      'button.bg-emerald-500'
+    ];
+
+    for (const selector of selectors) {
+      const node = document.querySelector(selector);
+      if (!node) continue;
+      const color = getComputedStyle(node).backgroundColor;
+      if (color && color !== 'rgba(0, 0, 0, 0)' && color !== 'transparent') {
+        return color;
+      }
+    }
+
+    return '#16a34a';
+  };
+
+  const drawCornerArc = (x, y, radius, startAngle, endAngle) => {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, startAngle, endAngle);
+    ctx.stroke();
+  };
+
+  const drawPenaltyArc = (x, y, radius, penaltyLineY, topSide) => {
+    const offset = Math.min(radius, Math.abs(penaltyLineY - y));
+    const angle = Math.asin(offset / radius);
+
+    ctx.beginPath();
+
+    if (topSide) {
+      ctx.arc(x, y, radius, angle, Math.PI - angle);
+    } else {
+      ctx.arc(x, y, radius, Math.PI + angle, Math.PI * 2 - angle);
+    }
+
+    ctx.stroke();
+  };
+
+  const drawEnd = (isTop, fieldX, fieldY, fieldWidth, fieldHeight, scale) => {
+    const goalWidth = 7.32;
+    const goalDepth = 2.4;
+    const goalAreaWidth = 18.32;
+    const goalAreaDepth = 5.5;
+    const penaltyAreaWidth = 40.32;
+    const penaltyAreaDepth = 16.5;
+    const penaltySpotDistance = 11;
+    const penaltyArcRadius = 9.15;
+
+    const centerX = fieldX + fieldWidth / 2;
+
+    const goalX = centerX - (goalWidth * scale) / 2;
+    const goalAreaX = centerX - (goalAreaWidth * scale) / 2;
+    const penaltyAreaX = centerX - (penaltyAreaWidth * scale) / 2;
+
+    const goalWidthPx = goalWidth * scale;
+    const goalDepthPx = goalDepth * scale;
+    const goalAreaWidthPx = goalAreaWidth * scale;
+    const goalAreaDepthPx = goalAreaDepth * scale;
+    const penaltyAreaWidthPx = penaltyAreaWidth * scale;
+    const penaltyAreaDepthPx = penaltyAreaDepth * scale;
+    const spotRadius = Math.max(3, scale * 0.22);
+
+    if (isTop) {
+      ctx.strokeRect(goalAreaX, fieldY, goalAreaWidthPx, goalAreaDepthPx);
+      ctx.strokeRect(penaltyAreaX, fieldY, penaltyAreaWidthPx, penaltyAreaDepthPx);
+      ctx.strokeRect(goalX, fieldY - goalDepthPx, goalWidthPx, goalDepthPx);
+
+      const spotY = fieldY + penaltySpotDistance * scale;
+
+      ctx.beginPath();
+      ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, fieldY + penaltyAreaDepthPx, true);
+      return;
+    }
+
+    const goalAreaY = fieldY + fieldHeight - goalAreaDepthPx;
+    const penaltyAreaY = fieldY + fieldHeight - penaltyAreaDepthPx;
+    const goalY = fieldY + fieldHeight;
+
+    ctx.strokeRect(goalAreaX, goalAreaY, goalAreaWidthPx, goalAreaDepthPx);
+    ctx.strokeRect(penaltyAreaX, penaltyAreaY, penaltyAreaWidthPx, penaltyAreaDepthPx);
+    ctx.strokeRect(goalX, goalY, goalWidthPx, goalDepthPx);
+
+    const spotY = fieldY + fieldHeight - penaltySpotDistance * scale;
+
+    ctx.beginPath();
+    ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, penaltyAreaY, false);
+  };
+
+  const drawBadge = (x, y, label) => {
+    const radius = 20;
+
+    ctx.fillStyle = '#1e293b';
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '700 17px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, x, y + 1);
+  };
+
+  const draw = () => {
+    const dpr = window.devicePixelRatio || 1;
+    const drawWidth = Math.max(320, body.clientWidth || 760);
+    const drawHeight = 560;
+
+    canvas.style.width = `${drawWidth}px`;
+    canvas.style.height = `${drawHeight}px`;
+
+    canvas.width = Math.round(drawWidth * dpr);
+    canvas.height = Math.round(drawHeight * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, drawWidth, drawHeight);
+
+    const padding = 14;
+    const fieldX = padding;
+    const fieldY = padding;
+    const fieldWidth = drawWidth - padding * 2;
+    const fieldHeight = drawHeight - padding * 2;
+    const scale = fieldWidth / 68;
+    const centerX = fieldX + fieldWidth / 2;
+    const centerY = fieldY + fieldHeight / 2;
+    const centerCircleRadius = 9.15 * scale;
+    const centerSpotRadius = Math.max(3, scale * 0.22);
+    const cornerRadius = Math.max(8, scale);
+
+    const stripeCount = 12;
+    const base = getPitchGreen();
+
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, drawWidth, drawHeight);
+
+    for (let i = 0; i < stripeCount; i += 1) {
+      ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+      const stripeHeight = fieldHeight / stripeCount;
+      ctx.fillRect(fieldX, fieldY + i * stripeHeight, fieldWidth, stripeHeight);
+    }
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.96)';
+    ctx.fillStyle = 'rgba(255,255,255,0.96)';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
+
+    ctx.beginPath();
+    ctx.moveTo(fieldX, centerY);
+    ctx.lineTo(fieldX + fieldWidth, centerY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, centerSpotRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawEnd(true, fieldX, fieldY, fieldWidth, fieldHeight, scale);
+    drawEnd(false, fieldX, fieldY, fieldWidth, fieldHeight, scale);
+
+    drawCornerArc(fieldX, fieldY, cornerRadius, 0, Math.PI / 2);
+    drawCornerArc(fieldX + fieldWidth, fieldY, cornerRadius, Math.PI / 2, Math.PI);
+    drawCornerArc(fieldX, fieldY + fieldHeight, cornerRadius, -Math.PI / 2, 0);
+    drawCornerArc(fieldX + fieldWidth, fieldY + fieldHeight, cornerRadius, Math.PI, Math.PI * 1.5);
+
+    const coverY = centerY + 2;
+    ctx.fillStyle = 'rgba(0,0,0,0)';
+    ctx.clearRect(0, coverY, drawWidth, drawHeight - coverY);
+
+    ctx.fillStyle = base;
+    ctx.fillRect(0, coverY, drawWidth, drawHeight - coverY);
+
+    for (let i = 0; i < stripeCount; i += 1) {
+      const stripeHeight = fieldHeight / stripeCount;
+      const stripeY = fieldY + i * stripeHeight;
+      const overlapTop = Math.max(stripeY, coverY);
+      const overlapBottom = Math.min(stripeY + stripeHeight, drawHeight);
+
+      if (overlapBottom <= overlapTop) continue;
+
+      ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+      ctx.fillRect(fieldX, overlapTop, fieldWidth, overlapBottom - overlapTop);
+    }
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.96)';
+    ctx.fillStyle = 'rgba(255,255,255,0.96)';
+    ctx.lineWidth = 2.5;
+
+    ctx.beginPath();
+    ctx.moveTo(fieldX, centerY);
+    ctx.lineTo(fieldX + fieldWidth, centerY);
+    ctx.stroke();
+
+    drawEnd(false, fieldX, fieldY, fieldWidth, fieldHeight, scale);
+
+    drawCornerArc(fieldX, fieldY + fieldHeight, cornerRadius, -Math.PI / 2, 0);
+    drawCornerArc(fieldX + fieldWidth, fieldY + fieldHeight, cornerRadius, Math.PI, Math.PI * 1.5);
+
+    drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.18, 'ST');
+    drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.18, 'ST');
+
+    drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.34, 'OM');
+    drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.34, 'OM');
+
+    drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.50, 'DM');
+    drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.50, 'DM');
+
+    drawBadge(fieldX + fieldWidth * 0.23, fieldY + fieldHeight * 0.66, 'LV');
+    drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.62, 'IV');
+    drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.62, 'IV');
+    drawBadge(fieldX + fieldWidth * 0.77, fieldY + fieldHeight * 0.66, 'RV');
+
+    drawBadge(centerX, fieldY + fieldHeight * 0.82, 'TW');
+  };
+
+  draw();
 };
 
   const openModal = () => {
