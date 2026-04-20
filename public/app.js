@@ -2742,8 +2742,8 @@ function initFormationModal() {
   if (!body) return;
 
   body.innerHTML = `
-    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; width:100%; min-height:560px; padding:16px 20px;">
-<svg viewBox="0 0 1000 760" style="display:block; width:100%; height:520px;" aria-label="Formation 4-2-2-2">
+    <div style="position:relative; width:100%; height:560px;">
+<svg viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid meet" style="display:block; width:100%; height:100%;" aria-label="Formation 4-2-2-2">
         <rect x="30" y="40" width="940" height="620" rx="10" fill="#f8fafc" stroke="#b3b3b3" stroke-width="6"></rect>
 
         <rect x="250" y="455" width="500" height="205" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
@@ -2795,7 +2795,7 @@ function initFormationModal() {
         <text x="570" y="145" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle" dominant-baseline="middle">ST</text>
       </svg>
 
-      <div style="font:700 34px Arial; color:#0f172a;">4-2-2-2</div>
+      <div style="position:absolute; left:50%; bottom:14px; transform:translateX(-50%); font:700 34px Arial; color:#0f172a; background:rgba(248,250,252,0.92); padding:4px 14px; border-radius:12px;">4-2-2-2</div>
     </div>
   `;
 };
