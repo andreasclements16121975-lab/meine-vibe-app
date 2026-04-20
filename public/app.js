@@ -2742,11 +2742,8 @@ function initFormationModal() {
   if (!body) return;
 
   body.innerHTML = `
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
-      <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:560px; border-radius:14px;"></canvas>
-      <div style="margin-top:14px; font:700 34px Arial; color:#0f172a;">4-2-2-2</div>
-    </div>
-  `;
+  <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
+`;
 
   const canvas = el('formationPreviewCanvas');
   if (!canvas) return;
