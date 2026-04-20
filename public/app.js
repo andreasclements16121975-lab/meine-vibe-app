@@ -2869,7 +2869,7 @@ function initFormationModal() {
   const draw = () => {
     const dpr = window.devicePixelRatio || 1;
     const drawWidth = Math.max(320, body.clientWidth || 760);
-    const drawHeight = 560;
+    const drawHeight = Math.max(320, body.clientHeight || 560);
 
     canvas.style.width = `${drawWidth}px`;
     canvas.style.height = `${drawHeight}px`;
