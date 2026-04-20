@@ -2743,7 +2743,7 @@ function initFormationModal() {
 
   body.innerHTML = `
     <div style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%;">
-<svg viewBox="0 0 680 1120" style="display:block; width:100%; max-width:760px; height:560px;" aria-label="Formation 4-2-2-2">
+<svg viewBox="0 0 680 1120" preserveAspectRatio="none" style="display:block; width:100%; height:420px;" aria-label="Formation 4-2-2-2">
         <rect x="15" y="15" width="650" height="1030" rx="10" fill="#f8fafc" stroke="#b3b3b3" stroke-width="6"></rect>
         <line x1="15" y1="530" x2="665" y2="530" stroke="#b3b3b3" stroke-width="6"></line>
         <circle cx="340" cy="530" r="90" fill="none" stroke="#b3b3b3" stroke-width="6"></circle>
