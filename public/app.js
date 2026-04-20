@@ -2742,56 +2742,56 @@ function initFormationModal() {
   if (!body) return;
 
   body.innerHTML = `
-    <div style="display:flex; flex-direction:column; align-items:center; gap:24px;">
-      <svg viewBox="0 0 680 1050" style="display:block; width:100%; max-width:760px; height:auto; background:#f8fafc; border:4px solid #b3b3b3; border-radius:16px;">
-        <rect x="10" y="10" width="660" height="1030" fill="none" stroke="#b3b3b3" stroke-width="7"></rect>
-        <line x1="10" y1="525" x2="670" y2="525" stroke="#b3b3b3" stroke-width="7"></line>
-        <circle cx="340" cy="525" r="91.5" fill="none" stroke="#b3b3b3" stroke-width="7"></circle>
-        <circle cx="340" cy="525" r="5" fill="#b3b3b3"></circle>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <svg viewBox="0 0 680 1120" style="display:block; width:100%; max-width:760px; height:auto;" aria-label="Formation 4-2-2-2">
+        <rect x="15" y="15" width="650" height="1030" rx="10" fill="#f8fafc" stroke="#b3b3b3" stroke-width="6"></rect>
+        <line x1="15" y1="530" x2="665" y2="530" stroke="#b3b3b3" stroke-width="6"></line>
+        <circle cx="340" cy="530" r="90" fill="none" stroke="#b3b3b3" stroke-width="6"></circle>
+        <circle cx="340" cy="530" r="5" fill="#b3b3b3"></circle>
 
-        <rect x="138.4" y="10" width="403.2" height="165" fill="none" stroke="#b3b3b3" stroke-width="7"></rect>
-        <rect x="248.4" y="10" width="183.2" height="55" fill="none" stroke="#b3b3b3" stroke-width="7"></rect>
+        <rect x="140" y="15" width="400" height="165" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
+        <rect x="250" y="15" width="180" height="55" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
         <circle cx="340" cy="110" r="5" fill="#b3b3b3"></circle>
 
-        <rect x="138.4" y="875" width="403.2" height="165" fill="none" stroke="#b3b3b3" stroke-width="7"></rect>
-        <rect x="248.4" y="985" width="183.2" height="55" fill="none" stroke="#b3b3b3" stroke-width="7"></rect>
-        <circle cx="340" cy="940" r="5" fill="#b3b3b3"></circle>
+        <rect x="140" y="880" width="400" height="165" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
+        <rect x="250" y="990" width="180" height="55" fill="none" stroke="#b3b3b3" stroke-width="6"></rect>
+        <circle cx="340" cy="945" r="5" fill="#b3b3b3"></circle>
 
-        <circle cx="340" cy="882" r="30" fill="#1f2937"></circle>
-        <text x="340" y="882" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">TW</text>
+        <circle cx="340" cy="890" r="30" fill="#1f2937"></circle>
+        <text x="340" y="890" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">TW</text>
 
-        <circle cx="95" cy="672" r="30" fill="#1f2937"></circle>
-        <text x="95" y="672" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">LV</text>
+        <circle cx="100" cy="680" r="30" fill="#1f2937"></circle>
+        <text x="100" y="680" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">LV</text>
 
-        <circle cx="265" cy="693" r="30" fill="#1f2937"></circle>
-        <text x="265" y="693" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">IV</text>
+        <circle cx="265" cy="700" r="30" fill="#1f2937"></circle>
+        <text x="265" y="700" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">IV</text>
 
-        <circle cx="415" cy="693" r="30" fill="#1f2937"></circle>
-        <text x="415" y="693" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">IV</text>
+        <circle cx="415" cy="700" r="30" fill="#1f2937"></circle>
+        <text x="415" y="700" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">IV</text>
 
-        <circle cx="585" cy="672" r="30" fill="#1f2937"></circle>
-        <text x="585" y="672" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">RV</text>
+        <circle cx="580" cy="680" r="30" fill="#1f2937"></circle>
+        <text x="580" y="680" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">RV</text>
 
-        <circle cx="258" cy="472" r="30" fill="#1f2937"></circle>
-        <text x="258" y="472" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">DM</text>
+        <circle cx="260" cy="470" r="30" fill="#1f2937"></circle>
+        <text x="260" y="470" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">DM</text>
 
-        <circle cx="422" cy="472" r="30" fill="#1f2937"></circle>
-        <text x="422" y="472" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">DM</text>
+        <circle cx="420" cy="470" r="30" fill="#1f2937"></circle>
+        <text x="420" y="470" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">DM</text>
 
-        <circle cx="258" cy="283" r="30" fill="#1f2937"></circle>
-        <text x="258" y="283" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">OM</text>
+        <circle cx="260" cy="280" r="30" fill="#1f2937"></circle>
+        <text x="260" y="280" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">OM</text>
 
-        <circle cx="422" cy="283" r="30" fill="#1f2937"></circle>
-        <text x="422" y="283" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">OM</text>
+        <circle cx="420" cy="280" r="30" fill="#1f2937"></circle>
+        <text x="420" y="280" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">OM</text>
 
-        <circle cx="258" cy="105" r="30" fill="#1f2937"></circle>
-        <text x="258" y="105" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">ST</text>
+        <circle cx="260" cy="110" r="30" fill="#1f2937"></circle>
+        <text x="260" y="110" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">ST</text>
 
-        <circle cx="422" cy="105" r="30" fill="#1f2937"></circle>
-        <text x="422" y="105" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="24" font-weight="700">ST</text>
+        <circle cx="420" cy="110" r="30" fill="#1f2937"></circle>
+        <text x="420" y="110" fill="#ffffff" font-size="24" font-weight="700" text-anchor="middle" dominant-baseline="middle">ST</text>
       </svg>
 
-      <div style="text-align:center; font:700 36px Arial; color:#0f172a;">4-2-2-2</div>
+      <div style="font:700 36px Arial; color:#0f172a;">4-2-2-2</div>
     </div>
   `;
 };
