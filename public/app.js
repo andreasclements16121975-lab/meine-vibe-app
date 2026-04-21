@@ -2821,7 +2821,14 @@ const getFormationPositions = (formation) => {
 function initFormationModal() {
   const modal = el('formationModal');
   const body = el('formationModalBody');
+const currentNameLabel = el('formationModalCurrentName');
+const prevFormationBtn = el('prevFormationBtn');
+const nextFormationBtn = el('nextFormationBtn');
 
+const updateFormationLabel = () => {
+  if (!currentNameLabel) return;
+  currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
+};
   const renderFormationPreview = () => {
   if (!body) return;
 
