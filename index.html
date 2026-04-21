@@ -539,7 +539,17 @@
     <div id="formationModalBody" class="w-full min-h-[560px] overflow-hidden rounded-xl"></div>
   </div>
 
-  <div class="flex justify-end gap-3 px-6 pt-4 pb-6">
+  <div class="flex items-center justify-between gap-3 px-6 pt-4 pb-6">
+  <div class="flex gap-3">
+    <button id="prevFormationBtn" type="button" class="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-sm font-medium text-white">
+      ← Zurück
+    </button>
+    <button id="nextFormationBtn" type="button" class="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-sm font-medium text-white">
+      Weiter →
+    </button>
+  </div>
+
+  <div class="flex gap-3">
     <button id="cancelFormationModalBtn" type="button" class="rounded-xl border border-white/30 bg-white/90 px-5 py-3 text-sm font-medium text-slate-700">
       Abbrechen
     </button>
@@ -550,6 +560,7 @@
       Spielsystem übernehmen
     </button>
   </div>
+</div>
 </div>
 </div>
     <section data-tab-panel="training" class="hidden bg-white rounded-xl border p-4">
