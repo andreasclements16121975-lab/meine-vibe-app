@@ -2943,19 +2943,47 @@ function updateFormationLabel() {
   };
 
   const drawBadge = (x, y, label) => {
-    const radius = 20;
+  const radius = 20;
 
-    ctx.fillStyle = '#1e293b';
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fill();
+  const colors = {
+    TW: '#2d8a2d',
 
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '700 17px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, x, y + 1);
+    LV: '#1a6fc4',
+    RV: '#1a6fc4',
+    IV: '#1a6fc4',
+    DM: '#1a6fc4',
+
+    ZM: '#d4860f',
+    LM: '#d4860f',
+    RM: '#d4860f',
+    OM: '#d4860f',
+
+    ST: '#e8350a',
+    LF: '#e8350a',
+    RF: '#e8350a',
+    LA: '#e8350a',
+    RA: '#e8350a'
   };
+
+  ctx.save();
+
+  ctx.fillStyle = colors[label] || '#1e293b';
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 3.5;
+  ctx.stroke();
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 13px Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(label, x, y + 1);
+
+  ctx.restore();
+};
 
   const draw = () => {
   const dpr = window.devicePixelRatio || 1;
