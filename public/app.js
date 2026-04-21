@@ -2877,30 +2877,32 @@ function initFormationModal() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, drawWidth, drawHeight);
 
-  const padding        = 18;
-  const halfPitchRatio = 68 / 52.5;
-  let fieldWidth  = drawWidth  - padding * 2;
-  let fieldHeight = fieldWidth / halfPitchRatio;
-  if (fieldHeight > drawHeight - padding * 2) {
-    fieldHeight = drawHeight  - padding * 2;
-    fieldWidth  = fieldHeight * halfPitchRatio;
-  }
-  const fieldX    = (drawWidth  - fieldWidth)  / 2;
-  const fieldY    = (drawHeight - fieldHeight) / 2;
-  const scale     = fieldWidth / 68;
-  const centerX   = fieldX + fieldWidth / 2;
-  const halfLineY = fieldY;
-  const goalLineY = fieldY + fieldHeight;
+  const padding = 0;
+const halfPitchRatio = 68 / 52.5;
+let fieldWidth = drawWidth;
+let fieldHeight = fieldWidth / halfPitchRatio;
+
+if (fieldHeight > drawHeight) {
+  fieldHeight = drawHeight;
+  fieldWidth = fieldHeight * halfPitchRatio;
+}
+
+const fieldX = (drawWidth - fieldWidth) / 2;
+const fieldY = (drawHeight - fieldHeight) / 2;
+const scale = fieldWidth / 68;
+const centerX = fieldX + fieldWidth / 2;
+const halfLineY = fieldY;
+const goalLineY = fieldY + fieldHeight;
 
   ctx.fillStyle = getPitchGreen();
-  ctx.fillRect(0, 0, drawWidth, drawHeight);
+ctx.fillRect(0, 0, drawWidth, drawHeight);
 
-  const stripeCount = 8;
-  for (let i = 0; i < stripeCount; i++) {
-    ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
-    const sh = fieldHeight / stripeCount;
-    ctx.fillRect(fieldX, fieldY + i * sh, fieldWidth, sh);
-  }
+const stripeCount = 12;
+for (let i = 0; i < stripeCount; i++) {
+  ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
+  const sh = drawHeight / stripeCount;
+  ctx.fillRect(0, i * sh, drawWidth, sh);
+}
 
   ctx.strokeStyle = 'rgba(255,255,255,0.96)';
   ctx.fillStyle   = 'rgba(255,255,255,0.96)';
