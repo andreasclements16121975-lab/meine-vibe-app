@@ -3045,6 +3045,18 @@ for (const position of positions) {
 };
 draw();
 };
+  const changeFormation = (step) => {
+  if (!formationCatalog.length) return;
+
+  formationIndex = (formationIndex + step + formationCatalog.length) % formationCatalog.length;
+  updateFormationLabel();
+  renderFormationPreview();
+};
+
+prevFormationBtn?.addEventListener('click', () => changeFormation(-1));
+nextFormationBtn?.addEventListener('click', () => changeFormation(1));
+
+updateFormationLabel();
   const openModal = () => {
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
