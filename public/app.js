@@ -2868,118 +2868,102 @@ function initFormationModal() {
 
   const draw = () => {
   const dpr = window.devicePixelRatio || 1;
-  const drawWidth = Math.max(320, body.clientWidth || 760);
+  const drawWidth  = Math.max(320, body.clientWidth  || 760);
   const drawHeight = Math.max(360, body.clientHeight || 560);
-
-  canvas.style.width = `${drawWidth}px`;
+  canvas.style.width  = `${drawWidth}px`;
   canvas.style.height = `${drawHeight}px`;
-
-  canvas.width = Math.round(drawWidth * dpr);
+  canvas.width  = Math.round(drawWidth  * dpr);
   canvas.height = Math.round(drawHeight * dpr);
-
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, drawWidth, drawHeight);
 
-  const padding = 18;
+  const padding        = 18;
   const halfPitchRatio = 68 / 52.5;
-  let fieldWidth = drawWidth - padding * 2;
+  let fieldWidth  = drawWidth  - padding * 2;
   let fieldHeight = fieldWidth / halfPitchRatio;
-
   if (fieldHeight > drawHeight - padding * 2) {
-    fieldHeight = drawHeight - padding * 2;
-    fieldWidth = fieldHeight * halfPitchRatio;
+    fieldHeight = drawHeight  - padding * 2;
+    fieldWidth  = fieldHeight * halfPitchRatio;
   }
+  const fieldX    = (drawWidth  - fieldWidth)  / 2;
+  const fieldY    = (drawHeight - fieldHeight) / 2;
+  const scale     = fieldWidth / 68;
+  const centerX   = fieldX + fieldWidth / 2;
+  const halfLineY = fieldY;
+  const goalLineY = fieldY + fieldHeight;
 
-  const fieldX = (drawWidth - fieldWidth) / 2;
-  const fieldY = (drawHeight - fieldHeight) / 2;
-  const scale = fieldWidth / 68;
-  const centerX = fieldX + fieldWidth / 2;
-  const halfLineY = fieldY + fieldHeight;
-  const centerCircleRadius = 9.15 * scale;
-  const centerSpotRadius = Math.max(3, scale * 0.22);
-  const cornerRadius = Math.max(8, scale);
-  const stripeCount = 12;
-  const base = getPitchGreen();
-
-  ctx.fillStyle = base;
+  ctx.fillStyle = getPitchGreen();
   ctx.fillRect(0, 0, drawWidth, drawHeight);
 
-  for (let i = 0; i < stripeCount; i += 1) {
+  const stripeCount = 8;
+  for (let i = 0; i < stripeCount; i++) {
     ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
-    const stripeHeight = drawHeight / stripeCount;
-    ctx.fillRect(0, i * stripeHeight, drawWidth, stripeHeight);
+    const sh = fieldHeight / stripeCount;
+    ctx.fillRect(fieldX, fieldY + i * sh, fieldWidth, sh);
   }
 
   ctx.strokeStyle = 'rgba(255,255,255,0.96)';
-  ctx.fillStyle = 'rgba(255,255,255,0.96)';
-  ctx.lineWidth = 2.5;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
+  ctx.fillStyle   = 'rgba(255,255,255,0.96)';
+  ctx.lineWidth   = 2.5;
+  ctx.lineCap     = 'round';
+  ctx.lineJoin    = 'round';
 
   ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
 
-  const goalWidth = 7.32;
-  const goalDepth = 2.4;
-  const goalAreaWidth = 18.32;
-  const goalAreaDepth = 5.5;
-  const penaltyAreaWidth = 40.32;
-  const penaltyAreaDepth = 16.5;
-  const penaltySpotDistance = 11;
-  const penaltyArcRadius = 9.15;
-
-  const goalX = centerX - (goalWidth * scale) / 2;
-  const goalAreaX = centerX - (goalAreaWidth * scale) / 2;
-  const penaltyAreaX = centerX - (penaltyAreaWidth * scale) / 2;
-
-  const goalWidthPx = goalWidth * scale;
-  const goalDepthPx = goalDepth * scale;
-  const goalAreaWidthPx = goalAreaWidth * scale;
-  const goalAreaDepthPx = goalAreaDepth * scale;
-  const penaltyAreaWidthPx = penaltyAreaWidth * scale;
-  const penaltyAreaDepthPx = penaltyAreaDepth * scale;
-  const spotRadius = Math.max(3, scale * 0.22);
-
-  ctx.strokeRect(goalAreaX, fieldY, goalAreaWidthPx, goalAreaDepthPx);
-  ctx.strokeRect(penaltyAreaX, fieldY, penaltyAreaWidthPx, penaltyAreaDepthPx);
-  ctx.strokeRect(goalX, fieldY - goalDepthPx, goalWidthPx, goalDepthPx);
-
-  const spotY = fieldY + penaltySpotDistance * scale;
-
   ctx.beginPath();
-  ctx.arc(centerX, spotY, spotRadius, 0, Math.PI * 2);
-  ctx.fill();
-
-  drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, fieldY + penaltyAreaDepthPx, true);
-
-  ctx.beginPath();
-  ctx.arc(centerX, halfLineY, centerCircleRadius, Math.PI, Math.PI * 2);
+  ctx.moveTo(fieldX, halfLineY);
+  ctx.lineTo(fieldX + fieldWidth, halfLineY);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.arc(centerX, halfLineY, centerSpotRadius, 0, Math.PI * 2);
+  ctx.arc(centerX, halfLineY, 9.15 * scale, 0, Math.PI);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(centerX, halfLineY, Math.max(3, scale * 0.22), 0, Math.PI * 2);
   ctx.fill();
 
-  drawCornerArc(fieldX, fieldY, cornerRadius, 0, Math.PI / 2);
-  drawCornerArc(fieldX + fieldWidth, fieldY, cornerRadius, Math.PI / 2, Math.PI);
+  const goalWidth        =  7.32 * scale;
+  const goalDepth        =  2.4  * scale;
+  const goalAreaWidth    = 18.32 * scale;
+  const goalAreaDepth    =  5.5  * scale;
+  const penaltyAreaWidth = 40.32 * scale;
+  const penaltyAreaDepth = 16.5  * scale;
+
+  ctx.strokeRect(centerX - goalWidth / 2,        goalLineY,             goalWidth,        goalDepth);
+  ctx.strokeRect(centerX - goalAreaWidth / 2,    goalLineY - goalAreaDepth,    goalAreaWidth,    goalAreaDepth);
+  ctx.strokeRect(centerX - penaltyAreaWidth / 2, goalLineY - penaltyAreaDepth, penaltyAreaWidth, penaltyAreaDepth);
+
+  const spotY = goalLineY - 11 * scale;
+  ctx.beginPath();
+  ctx.arc(centerX, spotY, Math.max(3, scale * 0.22), 0, Math.PI * 2);
+  ctx.fill();
+
+  const penaltyArcRadius = 9.15 * scale;
+  const penaltyLineY     = goalLineY - penaltyAreaDepth;
+  const offset = Math.abs(penaltyLineY - spotY);
+  if (offset < penaltyArcRadius) {
+    const angle = Math.acos(offset / penaltyArcRadius);
+    ctx.beginPath();
+    ctx.arc(centerX, spotY, penaltyArcRadius, Math.PI + angle, Math.PI * 2 - angle);
+    ctx.stroke();
+  }
+
+  const cornerRadius = Math.max(8, scale);
+  drawCornerArc(fieldX,              goalLineY, cornerRadius, -Math.PI / 2, 0);
+  drawCornerArc(fieldX + fieldWidth, goalLineY, cornerRadius,  Math.PI,     Math.PI * 1.5);
 
   drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.16, 'ST');
   drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.16, 'ST');
-
   drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.34, 'OM');
   drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.34, 'OM');
-
   drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.52, 'DM');
   drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.52, 'DM');
-
   drawBadge(fieldX + fieldWidth * 0.23, fieldY + fieldHeight * 0.70, 'LV');
   drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.66, 'IV');
   drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.66, 'IV');
   drawBadge(fieldX + fieldWidth * 0.77, fieldY + fieldHeight * 0.70, 'RV');
-
   drawBadge(centerX, fieldY + fieldHeight * 0.88, 'TW');
-};
-
-  draw();
 };
 
   const openModal = () => {
