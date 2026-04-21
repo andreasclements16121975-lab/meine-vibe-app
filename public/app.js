@@ -2825,10 +2825,10 @@ const currentNameLabel = el('formationModalCurrentName');
 const prevFormationBtn = el('prevFormationBtn');
 const nextFormationBtn = el('nextFormationBtn');
 
-const updateFormationLabel = () => {
+function updateFormationLabel() {
   if (!currentNameLabel) return;
   currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
-};
+}
   const renderFormationPreview = () => {
   if (!body) return;
 
