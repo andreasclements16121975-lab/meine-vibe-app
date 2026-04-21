@@ -2773,6 +2773,51 @@ const formationCatalog = [
 ];
 
 let formationIndex = 0;
+const getLineYPositions = (lineCount) => {
+  if (lineCount === 4) return [0.18, 0.44, 0.72, 0.88];
+  if (lineCount === 5) return [0.16, 0.32, 0.50, 0.70, 0.88];
+  if (lineCount === 6) return [0.14, 0.26, 0.40, 0.56, 0.72, 0.88];
+  return [0.16, 0.32, 0.50, 0.70, 0.88];
+};
+
+const getLineXPositions = (labels) => {
+  const count = labels.length;
+
+  if (count === 1) return [0.50];
+
+  if (count === 2) {
+    if (labels.every((label) => label === 'ST')) return [0.43, 0.57];
+    if (labels.every((label) => label === 'IV')) return [0.39, 0.61];
+    if (labels.some((label) => ['DM', 'ZM', 'OM'].includes(label))) return [0.42, 0.58];
+    return [0.28, 0.72];
+  }
+
+  if (count === 3) {
+    if (labels.includes('LF') || labels.includes('RF')) return [0.22, 0.50, 0.78];
+    if (labels.includes('LV') || labels.includes('RV')) return [0.18, 0.50, 0.82];
+    return [0.30, 0.50, 0.70];
+  }
+
+  if (count === 4) return [0.18, 0.39, 0.61, 0.82];
+  if (count === 5) return [0.12, 0.31, 0.50, 0.69, 0.88];
+
+  return labels.map((_, index) => (index + 1) / (count + 1));
+};
+
+const getFormationPositions = (formation) => {
+  const yPositions = getLineYPositions(formation.lines.length);
+
+  return formation.lines.flatMap((line, lineIndex) => {
+    const xPositions = getLineXPositions(line);
+
+    return line.map((label, playerIndex) => ({
+      key: `${formation.id}-${lineIndex}-${playerIndex}`,
+      label,
+      x: xPositions[playerIndex],
+      y: yPositions[lineIndex]
+    }));
+  });
+};
 function initFormationModal() {
   const modal = el('formationModal');
   const body = el('formationModalBody');
