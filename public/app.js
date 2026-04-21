@@ -2894,15 +2894,8 @@ const centerX = fieldX + fieldWidth / 2;
 const halfLineY = fieldY;
 const goalLineY = fieldY + fieldHeight;
 
-  ctx.fillStyle = getPitchGreen();
+  ctx.fillStyle = '#16a34a';
 ctx.fillRect(0, 0, drawWidth, drawHeight);
-
-const stripeCount = 12;
-for (let i = 0; i < stripeCount; i++) {
-  ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.04)';
-  const sh = drawHeight / stripeCount;
-  ctx.fillRect(0, i * sh, drawWidth, sh);
-}
 
   ctx.strokeStyle = 'rgba(255,255,255,0.96)';
   ctx.fillStyle   = 'rgba(255,255,255,0.96)';
