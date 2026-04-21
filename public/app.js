@@ -2965,7 +2965,8 @@ function initFormationModal() {
   drawBadge(fieldX + fieldWidth * 0.77, fieldY + fieldHeight * 0.70, 'RV');
   drawBadge(centerX, fieldY + fieldHeight * 0.88, 'TW');
 };
-
+draw();
+};
   const openModal = () => {
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
