@@ -2734,6 +2734,45 @@ updateTrainingSeriesVisibility();
 initGooglePlacesForEventFields();
 renderTacticsMaterialFields();
 initCoachingAreaDragAndDrop();
+const formationCatalog = [
+  { id: '3-2-1', name: '3-2-1', lines: [['ST'], ['LM', 'RM'], ['LV', 'IV', 'RV'], ['TW']] },
+  { id: '2-3-1', name: '2-3-1', lines: [['ST'], ['LM', 'ZM', 'RM'], ['LV', 'RV'], ['TW']] },
+  { id: '3-1-2', name: '3-1-2', lines: [['ST', 'ST'], ['ZM'], ['LV', 'IV', 'RV'], ['TW']] },
+  { id: '2-2-2', name: '2-2-2', lines: [['ST', 'ST'], ['ZM', 'ZM'], ['LV', 'RV'], ['TW']] },
+  { id: '1-3-2', name: '1-3-2', lines: [['ST', 'ST'], ['LM', 'ZM', 'RM'], ['IV'], ['TW']] },
+
+  { id: '3-2-3', name: '3-2-3', lines: [['LF', 'ST', 'RF'], ['DM', 'ZM'], ['LV', 'IV', 'RV'], ['TW']] },
+  { id: '4-3-1', name: '4-3-1', lines: [['ST'], ['LM', 'ZM', 'RM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '3-3-2', name: '3-3-2', lines: [['ST', 'ST'], ['LM', 'ZM', 'RM'], ['LV', 'IV', 'RV'], ['TW']] },
+  { id: '3-4-1', name: '3-4-1', lines: [['ST'], ['LM', 'ZM', 'ZM', 'RM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '4-1-3', name: '4-1-3', lines: [['ST'], ['LM', 'ZM', 'RM'], ['DM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '2-4-2', name: '2-4-2', lines: [['ST', 'ST'], ['LM', 'ZM', 'ZM', 'RM'], ['IV', 'IV'], ['TW']] },
+  { id: '3-1-3-1', name: '3-1-3-1', lines: [['ST'], ['LM', 'ZM', 'RM'], ['DM'], ['LV', 'IV', 'RV'], ['TW']] },
+  { id: '4-2-2', name: '4-2-2', lines: [['ST', 'ST'], ['ZM', 'ZM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+
+  { id: '4-2-3-1', name: '4-2-3-1', lines: [['ST'], ['LM', 'OM', 'RM'], ['DM', 'DM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '4-3-3', name: '4-3-3', lines: [['LF', 'ST', 'RF'], ['DM', 'ZM', 'ZM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '3-4-2-1', name: '3-4-2-1', lines: [['ST'], ['OM', 'OM'], ['LM', 'ZM', 'ZM', 'RM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '3-5-2', name: '3-5-2', lines: [['ST', 'ST'], ['LM', 'DM', 'ZM', 'ZM', 'RM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '4-2-2-2', name: '4-2-2-2', lines: [['ST', 'ST'], ['OM', 'OM'], ['DM', 'DM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '4-4-2', name: '4-4-2', lines: [['ST', 'ST'], ['LM', 'ZM', 'ZM', 'RM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '4-1-2-1-2', name: '4-1-2-1-2', lines: [['ST', 'ST'], ['OM'], ['ZM', 'ZM'], ['DM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '4-1-4-1', name: '4-1-4-1', lines: [['ST'], ['LM', 'ZM', 'ZM', 'RM'], ['DM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '3-4-3', name: '3-4-3', lines: [['LF', 'ST', 'RF'], ['LM', 'ZM', 'ZM', 'RM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '5-3-2', name: '5-3-2', lines: [['ST', 'ST'], ['ZM', 'ZM', 'ZM'], ['LV', 'IV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '5-4-1', name: '5-4-1', lines: [['ST'], ['LM', 'ZM', 'ZM', 'RM'], ['LV', 'IV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '4-3-2-1', name: '4-3-2-1', lines: [['ST'], ['OM', 'OM'], ['ZM', 'ZM', 'ZM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '3-4-1-2', name: '3-4-1-2', lines: [['ST', 'ST'], ['OM'], ['LM', 'ZM', 'ZM', 'RM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '3-1-4-2', name: '3-1-4-2', lines: [['ST', 'ST'], ['LM', 'ZM', 'ZM', 'RM'], ['DM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '4-2-4', name: '4-2-4', lines: [['LF', 'ST', 'ST', 'RF'], ['ZM', 'ZM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '5-2-3', name: '5-2-3', lines: [['LF', 'ST', 'RF'], ['ZM', 'ZM'], ['LV', 'IV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '3-3-3-1', name: '3-3-3-1', lines: [['ST'], ['OM', 'OM', 'OM'], ['DM', 'ZM', 'ZM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '3-2-4-1', name: '3-2-4-1', lines: [['ST'], ['ZM', 'ZM', 'OM', 'OM'], ['DM', 'DM'], ['IV', 'IV', 'IV'], ['TW']] },
+  { id: '4-5-1', name: '4-5-1', lines: [['ST'], ['LM', 'ZM', 'ZM', 'ZM', 'RM'], ['LV', 'IV', 'IV', 'RV'], ['TW']] },
+  { id: '2-3-5', name: '2-3-5', lines: [['LF', 'ZM', 'ST', 'ZM', 'RF'], ['DM', 'DM', 'DM'], ['IV', 'IV'], ['TW']] }
+];
+
+let formationIndex = 0;
 function initFormationModal() {
   const modal = el('formationModal');
   const body = el('formationModalBody');
