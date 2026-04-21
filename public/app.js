@@ -3032,17 +3032,16 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
   drawCornerArc(fieldX,              goalLineY, cornerRadius, -Math.PI / 2, 0);
   drawCornerArc(fieldX + fieldWidth, goalLineY, cornerRadius,  Math.PI,     Math.PI * 1.5);
 
-  drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.16, 'ST');
-  drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.16, 'ST');
-  drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.34, 'OM');
-  drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.34, 'OM');
-  drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.52, 'DM');
-  drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.52, 'DM');
-  drawBadge(fieldX + fieldWidth * 0.23, fieldY + fieldHeight * 0.70, 'LV');
-  drawBadge(fieldX + fieldWidth * 0.43, fieldY + fieldHeight * 0.66, 'IV');
-  drawBadge(fieldX + fieldWidth * 0.57, fieldY + fieldHeight * 0.66, 'IV');
-  drawBadge(fieldX + fieldWidth * 0.77, fieldY + fieldHeight * 0.70, 'RV');
-  drawBadge(centerX, fieldY + fieldHeight * 0.88, 'TW');
+  const currentFormation = formationCatalog[formationIndex];
+const positions = getFormationPositions(currentFormation);
+
+for (const position of positions) {
+  drawBadge(
+    fieldX + fieldWidth * position.x,
+    fieldY + fieldHeight * position.y,
+    position.label
+  );
+}
 };
 draw();
 };
