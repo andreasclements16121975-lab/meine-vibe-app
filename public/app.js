@@ -3295,7 +3295,19 @@ draw();
 
 prevFormationBtn?.addEventListener('click', () => changeFormation(-1));
 nextFormationBtn?.addEventListener('click', () => changeFormation(1));
+pickPlayersFromFormationBtn?.addEventListener('click', () => {
+  playerPickMode = !playerPickMode;
 
+  if (!playerPickMode) {
+    closePlayerPicker();
+  }
+
+  pickPlayersFromFormationBtn.textContent = playerPickMode
+    ? 'Auswahl beenden'
+    : 'Spieler auswählen';
+
+  renderFormationPreview();
+});
 updateFormationLabel();
   const openModal = () => {
   modal?.classList.remove('hidden');
