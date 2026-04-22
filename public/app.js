@@ -2866,6 +2866,38 @@ const getPlayerName = (player) => {
     'Unbekannt'
   );
 };
+  const getAssignedPlayer = (positionKey) => formationAssignments.get(positionKey) || null;
+
+const closePlayerPicker = () => {
+  activePositionKey = null;
+};
+
+const openPlayerPickerForPosition = (positionKey) => {
+  activePositionKey = positionKey;
+};
+
+const getCanvasPoint = (canvas, clientX, clientY) => {
+  const rect = canvas.getBoundingClientRect();
+
+  return {
+    x: clientX - rect.left,
+    y: clientY - rect.top
+  };
+};
+
+const getHitBadge = (x, y) => {
+  for (const area of badgeHitAreas) {
+    const dx = x - area.x;
+    const dy = y - area.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance <= area.radius) {
+      return area;
+    }
+  }
+
+  return null;
+};
 function updateFormationLabel() {
   if (!currentNameLabel) return;
   currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
