@@ -3143,12 +3143,25 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
   const currentFormation = formationCatalog[formationIndex];
 const positions = getFormationPositions(currentFormation);
 
+badgeHitAreas = [];
+
 for (const position of positions) {
+  const badgeX = fieldX + fieldWidth * position.x;
+  const badgeY = fieldY + fieldHeight * position.y;
+
   drawBadge(
-    fieldX + fieldWidth * position.x,
-    fieldY + fieldHeight * position.y,
+    badgeX,
+    badgeY,
     position.label
   );
+
+  badgeHitAreas.push({
+    key: position.key,
+    label: position.label,
+    x: badgeX,
+    y: badgeY,
+    radius: 28
+  });
 }
 };
 draw();
