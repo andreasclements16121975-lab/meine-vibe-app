@@ -3027,7 +3027,11 @@ function updateFormationLabel() {
 
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+const playerSelect = el('formationPlayerSelect');
 
+playerSelect?.addEventListener('change', (event) => {
+  assignPlayerToActivePosition(event.target.value);
+});
   const getPitchGreen = () => {
     const selectors = [
       '#createEventBtn',
