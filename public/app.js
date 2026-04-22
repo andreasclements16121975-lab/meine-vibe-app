@@ -2934,6 +2934,71 @@ const updateApplyButtonState = () => {
   applyFormationModalBtn.classList.toggle('opacity-50', !isComplete);
   applyFormationModalBtn.classList.toggle('cursor-not-allowed', !isComplete);
 };
+  const renderPlayerPicker = () => {
+  const pickerWrap = el('formationPlayerPicker');
+  const pickerHint = el('formationPlayerPickerHint');
+  const playerSelect = el('formationPlayerSelect');
+
+  if (!pickerWrap || !pickerHint || !playerSelect) return;
+
+  if (!playerPickMode) {
+    pickerWrap.classList.add('hidden');
+    return;
+  }
+
+  pickerWrap.classList.remove('hidden');
+
+  if (!activePositionKey) {
+    pickerHint.textContent = 'Position antippen oder anklicken.';
+    playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
+    playerSelect.disabled = true;
+    return;
+  }
+
+  const positions = getCurrentPositions();
+  const activePosition = positions.find((position) => position.key === activePositionKey);
+  const assignedPlayer = getAssignedPlayer(activePositionKey);
+  const availablePlayers = getAvailablePlayers(activePositionKey);
+
+  pickerHint.textContent = activePosition
+    ? `Spieler für ${activePosition.label} auswählen`
+    : 'Spieler auswählen';
+
+  const options = [
+    '<option value="">— Spieler wählen —</option>',
+    assignedPlayer ? '<option value="__clear__">Zuweisung entfernen</option>' : '',
+    ...availablePlayers.map((player) => {
+      const playerId = getPlayerId(player);
+      const playerName = getPlayerName(player);
+      const isSelected =
+        assignedPlayer && getPlayerId(assignedPlayer) === playerId ? 'selected' : '';
+
+      return `<option value="${String(playerId).replace(/"/g, '&quot;')}" ${isSelected}>${playerName}</option>`;
+    })
+  ];
+
+  playerSelect.innerHTML = options.join('');
+  playerSelect.disabled = false;
+};
+
+const assignPlayerToActivePosition = (playerId) => {
+  if (!activePositionKey) return;
+
+  if (playerId === '__clear__') {
+    formationAssignments.delete(activePositionKey);
+    renderFormationPreview();
+    return;
+  }
+
+  const selectedPlayer = (Array.isArray(players) ? players : []).find(
+    (player) => getPlayerId(player) === playerId
+  );
+
+  if (!selectedPlayer) return;
+
+  formationAssignments.set(activePositionKey, selectedPlayer);
+  renderFormationPreview();
+};
 function updateFormationLabel() {
   if (!currentNameLabel) return;
   currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
