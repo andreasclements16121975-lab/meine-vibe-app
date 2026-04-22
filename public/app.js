@@ -2824,7 +2824,48 @@ function initFormationModal() {
 const currentNameLabel = el('formationModalCurrentName');
 const prevFormationBtn = el('prevFormationBtn');
 const nextFormationBtn = el('nextFormationBtn');
+const pickPlayersFromFormationBtn = el('pickPlayersFromFormationBtn');
+const applyFormationModalBtn = el('applyFormationModalBtn');
 
+let playerPickMode = false;
+let activePositionKey = null;
+let badgeHitAreas = [];
+
+const formationAssignments = new Map();
+
+const getCurrentFormation = () => formationCatalog[formationIndex] || null;
+
+const getCurrentPositions = () => {
+  const formation = getCurrentFormation();
+  return formation ? getFormationPositions(formation) : [];
+};
+
+const getPlayerId = (player) => {
+  if (player == null) return '';
+  if (typeof player === 'string') return player;
+
+  return String(
+    player.id ??
+    player.playerId ??
+    player.uuid ??
+    player.name ??
+    `${player.firstName || ''}-${player.lastName || ''}`
+  );
+};
+
+const getPlayerName = (player) => {
+  if (player == null) return '';
+  if (typeof player === 'string') return player;
+
+  return (
+    player.displayName ||
+    player.name ||
+    player.fullName ||
+    [player.firstName, player.lastName].filter(Boolean).join(' ') ||
+    player.nickname ||
+    'Unbekannt'
+  );
+};
 function updateFormationLabel() {
   if (!currentNameLabel) return;
   currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
