@@ -2961,8 +2961,8 @@ const updateApplyButtonState = () => {
   const availablePlayers = getAvailablePlayers(activePositionKey);
 
   pickerHint.textContent = activePosition
-    ? `Spieler für ${activePosition.label} auswählen`
-    : 'Spieler auswählen';
+  ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
+  : 'Spieler auswählen';
 
   const options = [
     '<option value="">— Spieler wählen —</option>',
