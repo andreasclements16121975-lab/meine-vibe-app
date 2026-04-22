@@ -2898,6 +2898,42 @@ const getHitBadge = (x, y) => {
 
   return null;
 };
+  const getUsedPlayerIds = (excludePositionKey = null) => {
+  const usedIds = new Set();
+
+  for (const [positionKey, player] of formationAssignments.entries()) {
+    if (!player || positionKey === excludePositionKey) continue;
+    usedIds.add(getPlayerId(player));
+  }
+
+  return usedIds;
+};
+
+const getAvailablePlayers = (positionKey = null) => {
+  const usedIds = getUsedPlayerIds(positionKey);
+
+  return (Array.isArray(players) ? players : []).filter((player) => {
+    const playerId = getPlayerId(player);
+    return !usedIds.has(playerId);
+  });
+};
+
+const isCurrentFormationComplete = () => {
+  const positions = getCurrentPositions();
+  if (!positions.length) return false;
+
+  return positions.every((position) => formationAssignments.has(position.key));
+};
+
+const updateApplyButtonState = () => {
+  if (!applyFormationModalBtn) return;
+
+  const isComplete = isCurrentFormationComplete();
+
+  applyFormationModalBtn.disabled = !isComplete;
+  applyFormationModalBtn.classList.toggle('opacity-50', !isComplete);
+  applyFormationModalBtn.classList.toggle('cursor-not-allowed', !isComplete);
+};
 function updateFormationLabel() {
   if (!currentNameLabel) return;
   currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
