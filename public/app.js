@@ -2906,7 +2906,19 @@ function updateFormationLabel() {
   if (!body) return;
 
   body.innerHTML = `
-  <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
+  <div class="flex flex-col gap-3">
+    <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
+
+    <div id="formationPlayerPicker" class="hidden rounded-xl border border-white/20 bg-white/95 p-3 text-slate-800 shadow-lg">
+      <div id="formationPlayerPickerHint" class="mb-2 text-sm font-medium text-slate-700">
+        Position antippen oder anklicken.
+      </div>
+
+      <select id="formationPlayerSelect" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800">
+        <option value="">— Spieler wählen —</option>
+      </select>
+    </div>
+  </div>
 `;
 
   const canvas = el('formationPreviewCanvas');
