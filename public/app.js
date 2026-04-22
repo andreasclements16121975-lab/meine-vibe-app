@@ -3280,6 +3280,8 @@ for (const position of positions) {
     radius: 28
   });
 }
+    renderPlayerPicker();
+updateApplyButtonState();
 };
 draw();
 };
