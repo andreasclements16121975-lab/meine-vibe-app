@@ -3284,6 +3284,17 @@ for (const position of positions) {
 updateApplyButtonState();
 };
 draw();
+    canvas.addEventListener('click', (event) => {
+  if (!playerPickMode) return;
+
+  const point = getCanvasPoint(canvas, event.clientX, event.clientY);
+  const hitBadge = getHitBadge(point.x, point.y);
+
+  if (!hitBadge) return;
+
+  openPlayerPickerForPosition(hitBadge.key);
+  renderFormationPreview();
+});
 };
   const changeFormation = (step) => {
   if (!formationCatalog.length) return;
