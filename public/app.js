@@ -2866,6 +2866,21 @@ const getPlayerName = (player) => {
     'Unbekannt'
   );
 };
+  const getPlayerSource = () => {
+  if (Array.isArray(lineupState?.players) && lineupState.players.length) {
+    return lineupState.players;
+  }
+
+  if (Array.isArray(lineupMembersCache) && lineupMembersCache.length) {
+    return lineupMembersCache;
+  }
+
+  if (typeof players !== 'undefined' && Array.isArray(players) && players.length) {
+    return players;
+  }
+
+  return [];
+};
   const getAssignedPlayer = (positionKey) => formationAssignments.get(positionKey) || null;
 
 const closePlayerPicker = () => {
