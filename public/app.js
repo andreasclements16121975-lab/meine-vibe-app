@@ -2892,6 +2892,7 @@ const closePlayerPicker = () => {
 
 const openPlayerPickerForPosition = (positionKey) => {
   activePositionKey = positionKey;
+lineupState.selectedSlotId = positionKey;
 };
 
 const getCanvasPoint = (canvas, clientX, clientY) => {
