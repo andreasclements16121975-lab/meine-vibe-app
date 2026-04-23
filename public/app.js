@@ -3319,8 +3319,17 @@ draw();
 
   if (!hitBadge) return;
 
+  activePositionKey = hitBadge.key;
+lineupState.selectedSlotId = hitBadge.key;
+
+if (lineupState.selectedPlayerId) {
+  assignPlayerToActivePosition(lineupState.selectedPlayerId);
+  lineupState.selectedPlayerId = null;
+} else {
   openPlayerPickerForPosition(hitBadge.key);
-  renderFormationPreview();
+}
+
+renderFormationPreview();
 });
 };
   const changeFormation = (step) => {
