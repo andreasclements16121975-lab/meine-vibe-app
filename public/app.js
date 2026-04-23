@@ -336,13 +336,27 @@ function renderLineupPitch() {
 
   Array.from(host.querySelectorAll('[data-lineup-slot]')).forEach((button) => {
     button.addEventListener('click', (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  lineupState.selectedSlotId = button.dataset.lineupSlot || '';
-  console.log('slot clicked:', lineupState.selectedSlotId);
-  renderLineupBuilder();
-  setLineupStatus('Position gewählt. Jetzt einen Spieler aus dem Pool antippen.');
-});
+      event.preventDefault();
+      event.stopPropagation();
+
+      const slotId = button.dataset.lineupSlot || '';
+
+      if (!lineupState.selectedPlayerId) {
+        setLineupStatus('Bitte zuerst einen Spieler auswählen.');
+        return;
+      }
+
+      Object.keys(lineupState.assigned).forEach((sid) => {
+        if (lineupState.assigned[sid] === lineupState.selectedPlayerId) {
+          delete lineupState.assigned[sid];
+        }
+      });
+
+      lineupState.assigned[slotId] = lineupState.selectedPlayerId;
+      lineupState.selectedPlayerId = null;
+      renderLineupBuilder();
+      setLineupStatus('Spieler wurde zugewiesen.');
+    });
   });
 }
 
