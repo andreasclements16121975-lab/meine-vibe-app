@@ -371,28 +371,13 @@ function renderLineupPlayerPool() {
     : `<div class="text-sm text-slate-500 border rounded-xl bg-white px-3 py-3">Keine freien Spieler mehr.</div>`;
 
   Array.from(host.querySelectorAll('[data-lineup-player]')).forEach((button) => {
-    button.addEventListener('click', () => {
-      const playerId = button.dataset.lineupPlayer || '';
-lineupState.selectedPlayerId = playerId;
-lineupState.selectedSlotId = null;
-setLineupStatus('Spieler gewählt. Jetzt eine Position auf dem Spielfeld auswählen.');
-return;
-      if (!lineupState.selectedSlotId) {
-        setLineupStatus('Bitte zuerst eine Position auf dem Spielfeld auswählen.');
-        return;
-      }
-
-    
-      Object.keys(lineupState.assigned).forEach((slotId) => {
-        if (lineupState.assigned[slotId] === playerId) {
-          delete lineupState.assigned[slotId];
-        }
-      });
-
-      lineupState.assigned[lineupState.selectedSlotId] = playerId;
-      renderLineupBuilder();
-      setLineupStatus('Spieler wurde zugewiesen.');
-    });
+  button.addEventListener('click', () => {
+    const playerId = button.dataset.lineupPlayer || '';
+    lineupState.selectedPlayerId = playerId;
+    renderLineupBuilder();
+    setLineupStatus('Spieler gewählt. Jetzt eine Position auf dem Spielfeld auswählen.');
+  });
+});
   });
 }
 
