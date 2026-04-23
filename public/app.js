@@ -2937,7 +2937,7 @@ const getHitBadge = (x, y) => {
 const getAvailablePlayers = (positionKey = null) => {
   const usedIds = getUsedPlayerIds(positionKey);
 
-  return (Array.isArray(players) ? players : []).filter((player) => {
+  return getPlayerSource().filter((player) => {
     const playerId = getPlayerId(player);
     return !usedIds.has(playerId);
   });
