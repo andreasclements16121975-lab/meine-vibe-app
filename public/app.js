@@ -3364,13 +3364,19 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
 
   renderFormationPreview();
 });
-const openModal = async () => {
-  await refreshLineupBuilderData();
+const openModal = () => {
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
   requestAnimationFrame(() => {
     renderFormationPreview();
   });
+  refreshLineupBuilderData()
+    .then(() => {
+      renderFormationPreview();
+    })
+    .catch((err) => {
+      console.warn('Spieler konnten nicht geladen werden:', err);
+    });
 };
 
   const closeModal = () => {
