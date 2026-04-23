@@ -3300,7 +3300,7 @@ for (const position of positions) {
   );
 
   badgeHitAreas.push({
-    key: position.key,
+    key: position.slotId || position.key,
     label: position.label,
     x: badgeX,
     y: badgeY,
