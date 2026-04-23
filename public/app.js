@@ -2972,41 +2972,69 @@ const updateApplyButtonState = () => {
   }
 
   pickerWrap.classList.remove('hidden');
-const selectedSlotId = lineupState.selectedSlotId || '';
-console.log('selectedSlotId before picker render:', selectedSlotId);
 
-if (!selectedSlotId) {
-  pickerHint.textContent = 'Position antippen oder anklicken.';
-  playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
-  playerSelect.disabled = true;
-  return;
-}
+  const selectedPositionKey = activePositionKey || lineupState.selectedSlotId || '';
 
-const positions = getCurrentPositions();
-const activePosition =
-  positions.find((position) => position.slotId === selectedSlotId) || null;
-const assignedPlayer = getAssignedPlayer(selectedSlotId);
-const availablePlayers = getAvailablePlayers(selectedSlotId);
+  if (!selectedPositionKey) {
+    pickerHint.textContent = 'Position antippen oder anklicken.';
+    playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
+    playerSelect.disabled = true;
+    return;
+  }
+
+  const positions = getCurrentPositions();
+  const activePosition =
+    positions.find(
+      (position) => String(position.slotId || position.key) === String(selectedPositionKey)
+    ) || null;
+
+  const assignedPlayer = getAssignedPlayer(selectedPositionKey);
+
+  const sourcePlayers = (() => {
+    const lineupPlayers = Array.isArray(lineupState.players) ? lineupState.players : [];
+    if (lineupPlayers.length) return lineupPlayers;
+
+    const fallbackPlayers =
+      typeof getPlayerSource === 'function' ? getPlayerSource() : [];
+
+    return Array.isArray(fallbackPlayers) ? fallbackPlayers : [];
+  })();
+
+  const usedIds = new Set(
+    Array.from(getUsedPlayerIds(selectedPositionKey)).map((id) => String(id))
+  );
+
+  const availablePlayers = sourcePlayers.filter((player) => {
+    const playerId = String(getPlayerId(player) ?? '');
+    return playerId && !usedIds.has(playerId);
+  });
 
   pickerHint.textContent = activePosition
-  ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
-  : 'Spieler auswählen';
+    ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
+    : `Spieler auswählen (${availablePlayers.length} Spieler)`;
 
   const options = [
     '<option value="">— Spieler wählen —</option>',
     assignedPlayer ? '<option value="__clear__">Zuweisung entfernen</option>' : '',
     ...availablePlayers.map((player) => {
-      const playerId = getPlayerId(player);
-      const playerName = getPlayerName(player);
+      const playerId = String(getPlayerId(player) ?? '');
+      const playerName = getPlayerName(player) || 'Unbekannter Spieler';
       const isSelected =
-        assignedPlayer && getPlayerId(assignedPlayer) === playerId ? 'selected' : '';
+        assignedPlayer &&
+        String(getPlayerId(assignedPlayer) ?? '') === playerId
+          ? 'selected'
+          : '';
 
-      return `<option value="${String(playerId).replace(/"/g, '&quot;')}" ${isSelected}>${playerName}</option>`;
-    })
+      return `<option value="${playerId.replace(/"/g, '&quot;')}" ${isSelected}>${playerName}</option>`;
+    }),
   ];
 
   playerSelect.innerHTML = options.join('');
   playerSelect.disabled = false;
+
+  if (assignedPlayer) {
+    playerSelect.value = String(getPlayerId(assignedPlayer) ?? '');
+  }
 };
 
 const assignPlayerToActivePosition = (playerId) => {
