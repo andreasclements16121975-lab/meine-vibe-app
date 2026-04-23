@@ -3309,10 +3309,12 @@ for (const position of positions) {
   const badgeX = fieldX + fieldWidth * position.x;
   const badgeY = fieldY + fieldHeight * position.y;
 
+  const assignedPlayer = getAssignedPlayer(position.slotId || position.key);
   drawBadge(
     badgeX,
     badgeY,
-    position.label
+    position.label,
+    assignedPlayer ? getPlayerName(assignedPlayer) : null
   );
 
   badgeHitAreas.push({
