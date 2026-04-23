@@ -3175,8 +3175,8 @@ playerSelect?.addEventListener('change', (event) => {
     drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, penaltyAreaY, false);
   };
 
-  const drawBadge = (x, y, label) => {
-  const radius = 20;
+  const drawBadge = (x, y, label, playerName = null) => {
+  const radius = 22;
 
   const colors = {
     TW: '#2d8a2d',
@@ -3210,10 +3210,19 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.stroke();
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 13px Arial, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(label, x, y + 1);
+
+  if (playerName) {
+    ctx.font = '700 11px Arial, sans-serif';
+    ctx.fillText(label, x, y - 5);
+    ctx.font = '600 10px Arial, sans-serif';
+    const shortName = playerName.length > 10 ? playerName.slice(0, 9) + '…' : playerName;
+    ctx.fillText(shortName, x, y + 8);
+  } else {
+    ctx.font = '700 13px Arial, sans-serif';
+    ctx.fillText(label, x, y + 1);
+  }
 
   ctx.restore();
 };
