@@ -3365,7 +3365,8 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
   renderFormationPreview();
 });
 updateFormationLabel();
-  const openModal = () => {
+  const openModal = async () => {
+  await refreshLineupBuilderData();
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
   requestAnimationFrame(() => {
