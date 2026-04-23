@@ -2962,7 +2962,7 @@ const updateApplyButtonState = () => {
   }
 
   pickerWrap.classList.remove('hidden');
-
+console.log('activePositionKey before picker render:', activePositionKey);
   if (!activePositionKey) {
     pickerHint.textContent = 'Position antippen oder anklicken.';
     playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
