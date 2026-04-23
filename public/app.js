@@ -393,7 +393,7 @@ return;
         return;
       }
 
-      const playerId = button.dataset.lineupPlayer;
+    
       Object.keys(lineupState.assigned).forEach((slotId) => {
         if (lineupState.assigned[slotId] === playerId) {
           delete lineupState.assigned[slotId];
