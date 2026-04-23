@@ -3018,10 +3018,9 @@ const assignPlayerToActivePosition = (playerId) => {
     return;
   }
 
-  const selectedPlayer = (Array.isArray(players) ? players : []).find(
-    (player) => getPlayerId(player) === playerId
-  );
-
+  const selectedPlayer = getPlayerSource().find(
+  (player) => getPlayerId(player) === playerId
+);
   if (!selectedPlayer) return;
 
   formationAssignments.set(activePositionKey, selectedPlayer);
