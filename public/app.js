@@ -392,7 +392,6 @@ function renderLineupPlayerPool() {
     setLineupStatus('Spieler gewählt. Jetzt eine Position auf dem Spielfeld auswählen.');
   });
 });
-  });
 }
 
 function renderLineupBuilder() {
