@@ -2962,18 +2962,21 @@ const updateApplyButtonState = () => {
   }
 
   pickerWrap.classList.remove('hidden');
-console.log('activePositionKey before picker render:', activePositionKey);
-  if (!activePositionKey) {
-    pickerHint.textContent = 'Position antippen oder anklicken.';
-    playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
-    playerSelect.disabled = true;
-    return;
-  }
+const selectedSlotId = lineupState.selectedSlotId || '';
+console.log('selectedSlotId before picker render:', selectedSlotId);
 
-  const positions = getCurrentPositions();
-  const activePosition = positions.find((position) => position.key === activePositionKey);
-  const assignedPlayer = getAssignedPlayer(activePositionKey);
-  const availablePlayers = getAvailablePlayers(activePositionKey);
+if (!selectedSlotId) {
+  pickerHint.textContent = 'Position antippen oder anklicken.';
+  playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
+  playerSelect.disabled = true;
+  return;
+}
+
+const positions = getCurrentPositions();
+const activePosition =
+  positions.find((position) => position.slotId === selectedSlotId) || null;
+const assignedPlayer = getAssignedPlayer(selectedSlotId);
+const availablePlayers = getAvailablePlayers(selectedSlotId);
 
   pickerHint.textContent = activePosition
   ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
