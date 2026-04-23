@@ -300,12 +300,19 @@ function renderLineupSelectedInfo() {
   const selectedPosition = formation.positions.find((position) => position.slotId === lineupState.selectedSlotId) || null;
   const selectedPlayer = getSelectedLineupPlayer();
 
-  el('lineupSelectedSlotLabel').textContent = selectedPosition ? selectedPosition.label : 'Keine Position gewählt';
-  el('lineupSelectedPlayerLabel').textContent = selectedPlayer ? selectedPlayer.name : 'Niemand zugewiesen';
+  const slotLabel = el('lineupSelectedSlotLabel');
+  if (slotLabel) slotLabel.textContent = selectedPosition ? selectedPosition.label : 'Keine Position gewählt';
+
+  const playerLabel = el('lineupSelectedPlayerLabel');
+  if (playerLabel) playerLabel.textContent = selectedPlayer ? selectedPlayer.name : 'Niemand zugewiesen';
 
   const assignedCount = Object.keys(lineupState.assigned).length;
-  el('lineupAssignedCount').textContent = `${assignedCount}/${formation.positions.length} besetzt`;
-  el('lineupPlayerCount').textContent = `${lineupState.players.length} Spieler`;
+
+  const countLabel = el('lineupAssignedCount');
+  if (countLabel) countLabel.textContent = `${assignedCount}/${formation.positions.length} besetzt`;
+
+  const playerCountLabel = el('lineupPlayerCount');
+  if (playerCountLabel) playerCountLabel.textContent = `${lineupState.players.length} Spieler`;
 }
 function renderLineupPitch() {
   const host = el('lineupPitchSlots');
