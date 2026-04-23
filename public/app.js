@@ -2988,24 +2988,7 @@ const updateApplyButtonState = () => {
 
   const assignedPlayer = getAssignedPlayer(selectedPositionKey);
 
-  const sourcePlayers = (() => {
-    const lineupPlayers = Array.isArray(lineupState.players) ? lineupState.players : [];
-    if (lineupPlayers.length) return lineupPlayers;
-
-    const fallbackPlayers =
-      typeof getPlayerSource === 'function' ? getPlayerSource() : [];
-
-    return Array.isArray(fallbackPlayers) ? fallbackPlayers : [];
-  })();
-
-  const usedIds = new Set(
-    Array.from(getUsedPlayerIds(selectedPositionKey)).map((id) => String(id))
-  );
-
-  const availablePlayers = sourcePlayers.filter((player) => {
-    const playerId = String(getPlayerId(player) ?? '');
-    return playerId && !usedIds.has(playerId);
-  });
+  const availablePlayers = getAvailablePlayers(selectedPositionKey);
 
   pickerHint.textContent = activePosition
     ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
