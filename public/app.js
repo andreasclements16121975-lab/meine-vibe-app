@@ -3176,7 +3176,7 @@ playerSelect?.addEventListener('change', (event) => {
   };
 
   const drawBadge = (x, y, label, playerName = null) => {
-  const radius = playerName ? 30 : 22;
+  const radius = playerName ? 42 : 26;
 
   const colors = {
     TW: '#2d8a2d',
@@ -3206,7 +3206,7 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.fill();
 
   ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 3.5;
+  ctx.lineWidth = 4;
   ctx.stroke();
 
   ctx.fillStyle = '#ffffff';
@@ -3215,12 +3215,12 @@ playerSelect?.addEventListener('change', (event) => {
 
   if (playerName) {
     const shortName = playerName.length > 12 ? playerName.slice(0, 11) + '…' : playerName;
-    ctx.font = '700 12px Arial, sans-serif';
-    ctx.fillText(shortName, x, y - 7);
-    ctx.font = '600 11px Arial, sans-serif';
-    ctx.fillText(label, x, y + 9);
+    ctx.font = '700 16px Arial, sans-serif';
+    ctx.fillText(shortName, x, y - 10);
+    ctx.font = '600 14px Arial, sans-serif';
+    ctx.fillText(label, x, y + 12);
   } else {
-    ctx.font = '700 13px Arial, sans-serif';
+    ctx.font = '700 15px Arial, sans-serif';
     ctx.fillText(label, x, y + 1);
   }
 
