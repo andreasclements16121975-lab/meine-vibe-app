@@ -3364,8 +3364,7 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
 
   renderFormationPreview();
 });
-updateFormationLabel();
-  const openModal = async () => {
+const openModal = async () => {
   await refreshLineupBuilderData();
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
