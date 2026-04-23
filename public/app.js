@@ -3176,7 +3176,7 @@ playerSelect?.addEventListener('change', (event) => {
   };
 
   const drawBadge = (x, y, label, playerName = null) => {
-  const radius = playerName ? 42 : 26;
+  const radius = 32;
 
   const colors = {
     TW: '#2d8a2d',
@@ -3200,6 +3200,7 @@ playerSelect?.addEventListener('change', (event) => {
 
   ctx.save();
 
+  // Trikot-Kreis (Badge)
   ctx.fillStyle = colors[label] || '#1e293b';
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -3209,19 +3210,25 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.lineWidth = 4;
   ctx.stroke();
 
+  // Position im Kreis
   ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  ctx.font = '800 18px Arial, sans-serif';
+  ctx.fillText(label, x, y + 1);
 
+  // Spielername UNTER dem Kreis
   if (playerName) {
-    const shortName = playerName.length > 12 ? playerName.slice(0, 11) + '…' : playerName;
-    ctx.font = '700 16px Arial, sans-serif';
-    ctx.fillText(shortName, x, y - 10);
-    ctx.font = '600 14px Arial, sans-serif';
-    ctx.fillText(label, x, y + 12);
-  } else {
-    ctx.font = '700 15px Arial, sans-serif';
-    ctx.fillText(label, x, y + 1);
+    const shortName = playerName.length > 14 ? playerName.slice(0, 13) + '…' : playerName;
+    
+    // Hintergrund-Schatten für Lesbarkeit
+    ctx.font = '700 14px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillText(shortName, x + 1, y + radius + 17);
+    
+    // Weißer Name
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(shortName, x, y + radius + 16);
   }
 
   ctx.restore();
