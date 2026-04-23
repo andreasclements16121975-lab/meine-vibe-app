@@ -321,7 +321,7 @@ function renderLineupPitch() {
         <button
           type="button"
           data-lineup-slot="${position.slotId}"
-          class="absolute -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl border px-1 py-1 text-center shadow-md ${
+          class="absolute z-20 cursor-pointer pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl border px-1 py-1 text-center shadow-md ${
             assignedPlayer ? 'bg-white text-slate-900 border-white/90' : 'bg-white/15 text-white border-white/35'
           } ${isSelected ? 'ring-4 ring-amber-300' : 'ring-2 ring-white/10'}"
           style="left:${position.x}%; top:${position.y}%"
