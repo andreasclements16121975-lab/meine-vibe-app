@@ -345,18 +345,7 @@ function renderLineupPitch() {
 });
   });
 }
-Array.from(host.querySelectorAll('[data-lineup-player]')).forEach((button) => {
-  button.addEventListener('click', () => {
-    const playerId = button.dataset.lineupPlayer || '';
-    lineupState.selectedPlayerId = playerId;
-    lineupState.selectedSlotId = null;
-    setLineupStatus('Spieler gewählt. Jetzt eine Position auf dem Spielfeld auswählen.');
-    return;
 
-    if (!lineupState.selectedSlotId) {
-      setLineupStatus('Bitte zuerst eine Position auf dem Spielfeld auswählen.');
-      return;
-    }
 function renderLineupPlayerPool() {
   const host = el('lineupPlayerPool');
   if (!host) return;
