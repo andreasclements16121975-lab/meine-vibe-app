@@ -12,6 +12,7 @@ const lineupState = {
   scenarioName: 'Freies Szenario',
   players: [],
   assigned: {},
+  selectedPlayerId: null,
   selectedSlotId: null
 };
 
