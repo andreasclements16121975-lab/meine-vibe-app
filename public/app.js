@@ -3176,7 +3176,7 @@ playerSelect?.addEventListener('change', (event) => {
   };
 
   const drawBadge = (x, y, label, playerName = null) => {
-  const radius = 22;
+  const radius = playerName ? 30 : 22;
 
   const colors = {
     TW: '#2d8a2d',
@@ -3214,11 +3214,11 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.textBaseline = 'middle';
 
   if (playerName) {
-    ctx.font = '700 11px Arial, sans-serif';
-    ctx.fillText(label, x, y - 5);
-    ctx.font = '600 10px Arial, sans-serif';
-    const shortName = playerName.length > 10 ? playerName.slice(0, 9) + '…' : playerName;
-    ctx.fillText(shortName, x, y + 8);
+    const shortName = playerName.length > 12 ? playerName.slice(0, 11) + '…' : playerName;
+    ctx.font = '700 12px Arial, sans-serif';
+    ctx.fillText(shortName, x, y - 7);
+    ctx.font = '600 11px Arial, sans-serif';
+    ctx.fillText(label, x, y + 9);
   } else {
     ctx.font = '700 13px Arial, sans-serif';
     ctx.fillText(label, x, y + 1);
