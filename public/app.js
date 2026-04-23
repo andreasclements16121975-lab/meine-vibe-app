@@ -334,11 +334,14 @@ function renderLineupPitch() {
     .join('');
 
   Array.from(host.querySelectorAll('[data-lineup-slot]')).forEach((button) => {
-    button.addEventListener('click', () => {
-      lineupState.selectedSlotId = button.dataset.lineupSlot;
-      renderLineupBuilder();
-      setLineupStatus('Position gewählt. Jetzt einen Spieler aus dem Pool antippen.');
-    });
+    button.addEventListener('click', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  lineupState.selectedSlotId = button.dataset.lineupSlot || '';
+  console.log('slot clicked:', lineupState.selectedSlotId);
+  renderLineupBuilder();
+  setLineupStatus('Position gewählt. Jetzt einen Spieler aus dem Pool antippen.');
+});
   });
 }
 
