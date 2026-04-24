@@ -2971,6 +2971,8 @@ const updateApplyButtonState = () => {
   const chipsContainer = el('formationPlayerChips');
   const selectedWrap = el('formationPlayerPickerSelected');
   const selectedValue = el('formationPlayerPickerSelectedValue');
+  const scrollLeftBtn = el('formationChipsScrollLeft');
+  const scrollRightBtn = el('formationChipsScrollRight');
 
   if (!pickerWrap || !pickerHint || !chipsContainer) return;
 
@@ -3085,6 +3087,34 @@ const updateApplyButtonState = () => {
         assignPlayerToActivePosition(playerId);
       });
     });
+
+    const updateScrollArrows = () => {
+      if (!scrollLeftBtn || !scrollRightBtn) return;
+      const canScroll = chipsContainer.scrollWidth > chipsContainer.clientWidth + 1;
+      if (!canScroll) {
+        scrollLeftBtn.classList.add('hidden');
+        scrollRightBtn.classList.add('hidden');
+        return;
+      }
+      const atStart = chipsContainer.scrollLeft <= 2;
+      const atEnd = chipsContainer.scrollLeft + chipsContainer.clientWidth >= chipsContainer.scrollWidth - 2;
+      scrollLeftBtn.classList.toggle('hidden', atStart);
+      scrollRightBtn.classList.toggle('hidden', atEnd);
+    };
+
+    requestAnimationFrame(updateScrollArrows);
+    chipsContainer.onscroll = updateScrollArrows;
+
+    if (scrollLeftBtn) {
+      scrollLeftBtn.onclick = () => {
+        chipsContainer.scrollBy({ left: -200, behavior: 'smooth' });
+      };
+    }
+    if (scrollRightBtn) {
+      scrollRightBtn.onclick = () => {
+        chipsContainer.scrollBy({ left: 200, behavior: 'smooth' });
+      };
+    }
   };
 
 const assignPlayerToActivePosition = (playerId) => {
@@ -3135,8 +3165,16 @@ function updateFormationLabel() {
           <div id="formationPlayerPickerCounter" class="text-xs text-white/60 fm-mono whitespace-nowrap"></div>
         </div>
 
-        <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%); mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);">
-          <div class="text-xs text-white/60 self-center">Bitte zuerst eine Position wählen</div>
+        <div class="relative">
+          <button type="button" id="formationChipsScrollLeft" class="hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-emerald-950/80 text-white/80 hover:text-white hover:bg-emerald-950 flex items-center justify-center transition" aria-label="Nach links scrollen">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" id="formationChipsScrollRight" class="hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-emerald-950/80 text-white/80 hover:text-white hover:bg-emerald-950 flex items-center justify-center transition" aria-label="Nach rechts scrollen">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none; -ms-overflow-style: none;">
+            <div class="text-xs text-white/60 self-center px-1">Bitte zuerst eine Position wählen</div>
+          </div>
         </div>
 
         <div id="formationPlayerPickerSelected" class="hidden mt-3 pt-3 border-t border-white/5 flex items-center gap-2 text-xs">
