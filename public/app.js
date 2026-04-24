@@ -2967,9 +2967,9 @@ const updateApplyButtonState = () => {
   const renderPlayerPicker = () => {
   const pickerWrap = el('formationPlayerPicker');
   const pickerHint = el('formationPlayerPickerHint');
-  const playerSelect = el('formationPlayerSelect');
+  const chipsContainer = el('formationPlayerChips');
 
-  if (!pickerWrap || !pickerHint || !playerSelect) return;
+  if (!pickerWrap || !pickerHint || !chipsContainer) return;
 
   if (!playerPickMode) {
     pickerWrap.classList.add('hidden');
@@ -2982,8 +2982,7 @@ const updateApplyButtonState = () => {
 
   if (!selectedPositionKey) {
     pickerHint.textContent = 'Position antippen oder anklicken.';
-    playerSelect.innerHTML = '<option value="">Bitte zuerst eine Position wählen</option>';
-    playerSelect.disabled = true;
+    chipsContainer.innerHTML = '<div class="text-xs text-white/70 self-center">Bitte zuerst eine Position wählen</div>';
     return;
   }
 
@@ -2994,35 +2993,49 @@ const updateApplyButtonState = () => {
     ) || null;
 
   const assignedPlayer = getAssignedPlayer(selectedPositionKey);
-
   const availablePlayers = getAvailablePlayers(selectedPositionKey);
 
   pickerHint.textContent = activePosition
-    ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} Spieler)`
-    : `Spieler auswählen (${availablePlayers.length} Spieler)`;
+    ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} verfügbar)`
+    : `Spieler auswählen (${availablePlayers.length} verfügbar)`;
 
-  const options = [
-    '<option value="">— Spieler wählen —</option>',
-    assignedPlayer ? '<option value="__clear__">Zuweisung entfernen</option>' : '',
-    ...availablePlayers.map((player) => {
-      const playerId = String(getPlayerId(player) ?? '');
-      const playerName = getPlayerName(player) || 'Unbekannter Spieler';
-      const isSelected =
-        assignedPlayer &&
-        String(getPlayerId(assignedPlayer) ?? '') === playerId
-          ? 'selected'
-          : '';
-
-      return `<option value="${playerId.replace(/"/g, '&quot;')}" ${isSelected}>${playerName}</option>`;
-    }),
-  ];
-
-  playerSelect.innerHTML = options.join('');
-  playerSelect.disabled = false;
+  const chips = [];
 
   if (assignedPlayer) {
-    playerSelect.value = String(getPlayerId(assignedPlayer) ?? '');
+    chips.push(
+      `<button type="button" data-player-id="__clear__" class="flex-shrink-0 rounded-full bg-red-500/90 px-3 py-1.5 text-xs font-medium text-white whitespace-nowrap hover:bg-red-600">✕ Entfernen</button>`
+    );
   }
+
+  availablePlayers.forEach((player) => {
+    const playerId = String(getPlayerId(player) ?? '');
+    const playerName = getPlayerName(player) || 'Unbekannter Spieler';
+    const isSelected =
+      assignedPlayer && String(getPlayerId(assignedPlayer) ?? '') === playerId;
+
+    const baseClass = 'flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition';
+    const stateClass = isSelected
+      ? 'bg-slate-900 text-white'
+      : 'bg-white/95 text-slate-800 hover:bg-white';
+
+    chips.push(
+      `<button type="button" data-player-id="${playerId.replace(/"/g, '&quot;')}" class="${baseClass} ${stateClass}">${playerName}${isSelected ? ' ✓' : ''}</button>`
+    );
+  });
+
+  if (chips.length === 0) {
+    chipsContainer.innerHTML = '<div class="text-xs text-white/70 self-center">Keine Spieler verfügbar</div>';
+    return;
+  }
+
+  chipsContainer.innerHTML = chips.join('');
+
+  Array.from(chipsContainer.querySelectorAll('[data-player-id]')).forEach((button) => {
+    button.addEventListener('click', () => {
+      const playerId = button.dataset.playerId || '';
+      assignPlayerToActivePosition(playerId);
+    });
+  });
 };
 
 const assignPlayerToActivePosition = (playerId) => {
