@@ -3177,6 +3177,7 @@ playerSelect?.addEventListener('change', (event) => {
 
   const drawBadge = (x, y, label, playerName = null, scale = 1) => {
   const radius = 22 * scale;
+  const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
   const colors = {
     TW: '#2d8a2d',
@@ -3215,22 +3216,22 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const labelSize = Math.round(13 * scale);
-  ctx.font = `800 ${labelSize}px Arial, sans-serif`;
+  ctx.font = `700 ${labelSize}px ${fontFamily}`;
   ctx.fillText(label, x, y + 1);
 
-  // Spielername UNTER dem Kreis - GROSS und gut lesbar
+  // Spielername UNTER dem Kreis - 15px mit weichem Schatten
   if (playerName) {
     const shortName = playerName.length > 14 ? playerName.slice(0, 13) + '…' : playerName;
-    const nameSize = Math.max(14, Math.round(16 * scale));
+    const nameSize = Math.max(15, Math.round(17 * scale));
 
-    ctx.font = `800 ${nameSize}px Arial, sans-serif`;
+    ctx.font = `600 ${nameSize}px ${fontFamily}`;
 
-    // Dicker schwarzer Schatten (als Outline) für Lesbarkeit auf Rasen
-    ctx.strokeStyle = 'rgba(0,0,0,0.9)';
-    ctx.lineWidth = 4;
-    ctx.strokeText(shortName, x, y + radius + nameSize - 2);
+    // Weicher Schatten (blur) statt harter Outline
+    ctx.shadowColor = 'rgba(0,0,0,0.7)';
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1;
 
-    // Weißer Name darüber
     ctx.fillStyle = '#ffffff';
     ctx.fillText(shortName, x, y + radius + nameSize - 2);
   }
