@@ -3010,7 +3010,82 @@ const updateApplyButtonState = () => {
   const label = activePosition ? activePosition.label : '';
   const longLabel = positionToLongLabel[label] || label || 'Position';
 
-  pickerHint.innerHTML =
+  pickerHint.innerHTML = `
+      <span class="fm-pos-badge">${label}</span>
+      <span>${longLabel} auswählen</span>
+    `;
+
+    const assignedCount = (formationAssignments && formationAssignments.size) || 0;
+
+    if (pickerCounter) {
+      pickerCounter.innerHTML = `
+        <span class="text-emerald-300 font-semibold">${assignedCount}</span>
+        <span class="text-white/40"> / ${positions.length} belegt</span>
+        <span class="mx-2 text-white/20">·</span>
+        <span class="text-emerald-300 font-semibold">${availablePlayers.length}</span>
+        <span class="text-white/50"> verfügbar</span>
+      `;
+    }
+
+    const chips = [];
+
+    if (assignedPlayer) {
+      chips.push(
+        `<button type="button" data-player-id="__clear__" class="fm-chip fm-chip-clear" title="Zuweisung entfernen">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-2 14H7L5 6"></path></svg>
+          <span>Zurücksetzen</span>
+        </button>`
+      );
+    }
+
+    availablePlayers.forEach((player, index) => {
+      const playerId = String(getPlayerId(player) ?? '');
+      const playerName = getPlayerName(player) || 'Unbekannter Spieler';
+      const isSelected =
+        assignedPlayer && String(getPlayerId(assignedPlayer) ?? '') === playerId;
+
+      const number = String(index + 1).padStart(2, '0');
+      const chipClass = isSelected ? 'fm-chip fm-chip-active' : 'fm-chip';
+      const checkmark = isSelected
+        ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+        : '';
+
+      chips.push(
+        `<button type="button" data-player-id="${playerId.replace(/"/g, '&quot;')}" class="${chipClass}">
+          <span class="fm-chip-num">#${number}</span>
+          <span>${playerName}</span>
+          ${checkmark}
+        </button>`
+      );
+    });
+
+    if (chips.length === 0) {
+      chipsContainer.innerHTML = '<div class="text-xs text-white/60 self-center px-1">Keine Spieler verfügbar</div>';
+      if (selectedWrap) selectedWrap.classList.add('hidden');
+      return;
+    }
+
+    chipsContainer.innerHTML = chips.join('');
+
+    if (assignedPlayer && selectedWrap && selectedValue) {
+      const assignedIndex = availablePlayers.findIndex(
+        (p) => String(getPlayerId(p) ?? '') === String(getPlayerId(assignedPlayer) ?? '')
+      );
+      const assignedNumber = assignedIndex >= 0 ? String(assignedIndex + 1).padStart(2, '0') : '--';
+      const assignedName = getPlayerName(assignedPlayer) || 'Unbekannt';
+      selectedValue.textContent = `#${assignedNumber} ${assignedName}`;
+      selectedWrap.classList.remove('hidden');
+    } else if (selectedWrap) {
+      selectedWrap.classList.add('hidden');
+    }
+
+    Array.from(chipsContainer.querySelectorAll('[data-player-id]')).forEach((button) => {
+      button.addEventListener('click', () => {
+        const playerId = button.dataset.playerId || '';
+        assignPlayerToActivePosition(playerId);
+      });
+    });
+  };
 
 const assignPlayerToActivePosition = (playerId) => {
   if (!activePositionKey) return;
