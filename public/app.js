@@ -3326,7 +3326,7 @@ for (const position of positions) {
   const badgeY = fieldY + fieldHeight * position.y;
 
   const assignedPlayer = getAssignedPlayer(position.slotId || position.key);
-    const badgeScale = Math.max(1.4, Math.min(2.2, fieldWidth / 350));
+    const badgeScale = fieldWidth < 400 ? 1.3 : fieldWidth < 700 ? 1.1 : 1.0;
     drawBadge(
       badgeX,
       badgeY,
