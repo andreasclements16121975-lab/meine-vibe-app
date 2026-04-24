@@ -3053,15 +3053,15 @@ function updateFormationLabel() {
   <div class="flex flex-col gap-3">
     <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
 
-    <div id="formationPlayerPicker" class="hidden rounded-xl border border-white/20 bg-white/95 p-3 text-slate-800 shadow-lg">
-      <div id="formationPlayerPickerHint" class="mb-2 text-sm font-medium text-slate-700">
-        Position antippen oder anklicken.
-      </div>
+    <div id="formationPlayerPicker" class="hidden rounded-xl bg-black/25 p-3 backdrop-blur-sm">
+        <div id="formationPlayerPickerHint" class="mb-2 text-xs font-medium text-white/90">
+          Position antippen oder anklicken.
+        </div>
 
-      <select id="formationPlayerSelect" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800">
-        <option value="">— Spieler wählen —</option>
-      </select>
-    </div>
+        <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1">
+          <div class="text-xs text-white/70">Bitte zuerst eine Position wählen</div>
+        </div>
+      </div>
   </div>
 `;
 
