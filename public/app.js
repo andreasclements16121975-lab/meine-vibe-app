@@ -3215,20 +3215,24 @@ playerSelect?.addEventListener('change', (event) => {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const labelSize = Math.round(13 * scale);
-  ctx.font = `700 ${labelSize}px Arial, sans-serif`;
+  ctx.font = `800 ${labelSize}px Arial, sans-serif`;
   ctx.fillText(label, x, y + 1);
 
-  // Spielername UNTER dem Kreis
+  // Spielername UNTER dem Kreis - GROSS und gut lesbar
   if (playerName) {
-    const shortName = playerName.length > 12 ? playerName.slice(0, 11) + '…' : playerName;
-    const nameSize = Math.round(13 * scale);
+    const shortName = playerName.length > 14 ? playerName.slice(0, 13) + '…' : playerName;
+    const nameSize = Math.max(14, Math.round(16 * scale));
 
-    ctx.font = `700 ${nameSize}px Arial, sans-serif`;
-    ctx.fillStyle = 'rgba(0,0,0,0.8)';
-    ctx.fillText(shortName, x + 1, y + radius + nameSize + 2);
+    ctx.font = `800 ${nameSize}px Arial, sans-serif`;
 
+    // Dicker schwarzer Schatten (als Outline) für Lesbarkeit auf Rasen
+    ctx.strokeStyle = 'rgba(0,0,0,0.9)';
+    ctx.lineWidth = 4;
+    ctx.strokeText(shortName, x, y + radius + nameSize - 2);
+
+    // Weißer Name darüber
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(shortName, x, y + radius + nameSize + 1);
+    ctx.fillText(shortName, x, y + radius + nameSize - 2);
   }
 
   ctx.restore();
