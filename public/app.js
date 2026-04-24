@@ -3175,8 +3175,8 @@ playerSelect?.addEventListener('change', (event) => {
     drawPenaltyArc(centerX, spotY, penaltyArcRadius * scale, penaltyAreaY, false);
   };
 
-  const drawBadge = (x, y, label, playerName = null) => {
-  const radius = 22;
+  const drawBadge = (x, y, label, playerName = null, scale = 1) => {
+  const radius = 22 * scale;
 
   const colors = {
     TW: '#2d8a2d',
@@ -3200,35 +3200,35 @@ playerSelect?.addEventListener('change', (event) => {
 
   ctx.save();
 
-  // Badge-Kreis (immer gleich groß)
+  // Badge-Kreis
   ctx.fillStyle = colors[label] || '#1e293b';
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 3.5;
+  ctx.lineWidth = 3.5 * scale;
   ctx.stroke();
 
   // Position IM Kreis
   ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = '700 13px Arial, sans-serif';
+  const labelSize = Math.round(13 * scale);
+  ctx.font = `700 ${labelSize}px Arial, sans-serif`;
   ctx.fillText(label, x, y + 1);
 
-  // Spielername UNTER dem Kreis mit Schatten für Lesbarkeit
+  // Spielername UNTER dem Kreis
   if (playerName) {
     const shortName = playerName.length > 12 ? playerName.slice(0, 11) + '…' : playerName;
+    const nameSize = Math.round(13 * scale);
 
-    // Schwarzer Schatten hinter dem Text
-    ctx.font = '700 12px Arial, sans-serif';
-    ctx.fillStyle = 'rgba(0,0,0,0.75)';
-    ctx.fillText(shortName, x + 1, y + radius + 13);
+    ctx.font = `700 ${nameSize}px Arial, sans-serif`;
+    ctx.fillStyle = 'rgba(0,0,0,0.8)';
+    ctx.fillText(shortName, x + 1, y + radius + nameSize + 2);
 
-    // Weißer Name darüber
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(shortName, x, y + radius + 12);
+    ctx.fillText(shortName, x, y + radius + nameSize + 1);
   }
 
   ctx.restore();
