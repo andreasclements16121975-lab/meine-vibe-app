@@ -3066,12 +3066,13 @@ function updateFormationLabel() {
   <div class="flex flex-col gap-3">
     <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
 
-    <div id="formationPlayerPicker" class="hidden rounded-xl bg-black/25 p-3 backdrop-blur-sm">
+    <style>#formationPlayerChips::-webkit-scrollbar{display:none;}</style>
+      <div id="formationPlayerPicker" class="hidden rounded-xl bg-black/25 p-3 backdrop-blur-sm">
         <div id="formationPlayerPickerHint" class="mb-2 text-xs font-medium text-white/90">
           Position antippen oder anklicken.
         </div>
 
-        <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1">
+        <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%); mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);">
           <div class="text-xs text-white/70">Bitte zuerst eine Position wählen</div>
         </div>
       </div>
@@ -3083,11 +3084,7 @@ function updateFormationLabel() {
 
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-const playerSelect = el('formationPlayerSelect');
 
-playerSelect?.addEventListener('change', (event) => {
-  assignPlayerToActivePosition(event.target.value);
-});
   const getPitchGreen = () => {
     const selectors = [
       '#createEventBtn',
