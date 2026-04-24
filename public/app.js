@@ -3326,12 +3326,14 @@ for (const position of positions) {
   const badgeY = fieldY + fieldHeight * position.y;
 
   const assignedPlayer = getAssignedPlayer(position.slotId || position.key);
-  drawBadge(
-    badgeX,
-    badgeY,
-    position.label,
-    assignedPlayer ? getPlayerName(assignedPlayer) : null
-  );
+    const badgeScale = Math.max(1.4, Math.min(2.2, fieldWidth / 350));
+    drawBadge(
+      badgeX,
+      badgeY,
+      position.label,
+      assignedPlayer ? getPlayerName(assignedPlayer) : null,
+      badgeScale
+    );
 
   badgeHitAreas.push({
     key: position.slotId || position.key,
