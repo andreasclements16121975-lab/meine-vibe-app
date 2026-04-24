@@ -2967,7 +2967,10 @@ const updateApplyButtonState = () => {
   const renderPlayerPicker = () => {
   const pickerWrap = el('formationPlayerPicker');
   const pickerHint = el('formationPlayerPickerHint');
+  const pickerCounter = el('formationPlayerPickerCounter');
   const chipsContainer = el('formationPlayerChips');
+  const selectedWrap = el('formationPlayerPickerSelected');
+  const selectedValue = el('formationPlayerPickerSelectedValue');
 
   if (!pickerWrap || !pickerHint || !chipsContainer) return;
 
@@ -2979,64 +2982,35 @@ const updateApplyButtonState = () => {
   pickerWrap.classList.remove('hidden');
 
   const selectedPositionKey = activePositionKey || lineupState.selectedSlotId || '';
+  const positions = getCurrentPositions();
+
+  const positionToLongLabel = {
+    TW: 'Torwart', LV: 'Linksverteidiger', RV: 'Rechtsverteidiger',
+    IV: 'Innenverteidiger', DM: 'Defensives Mittelfeld', ZM: 'Zentrales Mittelfeld',
+    LM: 'Linkes Mittelfeld', RM: 'Rechtes Mittelfeld', OM: 'Offensives Mittelfeld',
+    ST: 'Stürmer', LF: 'Linker Flügel', RF: 'Rechter Flügel',
+    LA: 'Linksaußen', RA: 'Rechtsaußen'
+  };
 
   if (!selectedPositionKey) {
-    pickerHint.textContent = 'Position antippen oder anklicken.';
-    chipsContainer.innerHTML = '<div class="text-xs text-white/70 self-center">Bitte zuerst eine Position wählen</div>';
+    pickerHint.innerHTML = '<span class="text-white/90">Position antippen oder anklicken</span>';
+    if (pickerCounter) pickerCounter.textContent = `${positions.length} Positionen`;
+    chipsContainer.innerHTML = '<div class="text-xs text-white/60 self-center px-1">Bitte zuerst eine Position wählen</div>';
+    if (selectedWrap) selectedWrap.classList.add('hidden');
     return;
   }
 
-  const positions = getCurrentPositions();
-  const activePosition =
-    positions.find(
-      (position) => String(position.slotId || position.key) === String(selectedPositionKey)
-    ) || null;
+  const activePosition = positions.find(
+    (position) => String(position.slotId || position.key) === String(selectedPositionKey)
+  ) || null;
 
   const assignedPlayer = getAssignedPlayer(selectedPositionKey);
   const availablePlayers = getAvailablePlayers(selectedPositionKey);
 
-  pickerHint.textContent = activePosition
-    ? `Spieler für ${activePosition.label} auswählen (${availablePlayers.length} verfügbar)`
-    : `Spieler auswählen (${availablePlayers.length} verfügbar)`;
+  const label = activePosition ? activePosition.label : '';
+  const longLabel = positionToLongLabel[label] || label || 'Position';
 
-  const chips = [];
-
-  if (assignedPlayer) {
-    chips.push(
-      `<button type="button" data-player-id="__clear__" class="flex-shrink-0 rounded-full bg-red-500/90 px-3 py-1.5 text-xs font-medium text-white whitespace-nowrap hover:bg-red-600">✕ Entfernen</button>`
-    );
-  }
-
-  availablePlayers.forEach((player) => {
-    const playerId = String(getPlayerId(player) ?? '');
-    const playerName = getPlayerName(player) || 'Unbekannter Spieler';
-    const isSelected =
-      assignedPlayer && String(getPlayerId(assignedPlayer) ?? '') === playerId;
-
-    const baseClass = 'flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition';
-    const stateClass = isSelected
-      ? 'bg-slate-900 text-white'
-      : 'bg-white/95 text-slate-800 hover:bg-white';
-
-    chips.push(
-      `<button type="button" data-player-id="${playerId.replace(/"/g, '&quot;')}" class="${baseClass} ${stateClass}">${playerName}${isSelected ? ' ✓' : ''}</button>`
-    );
-  });
-
-  if (chips.length === 0) {
-    chipsContainer.innerHTML = '<div class="text-xs text-white/70 self-center">Keine Spieler verfügbar</div>';
-    return;
-  }
-
-  chipsContainer.innerHTML = chips.join('');
-
-  Array.from(chipsContainer.querySelectorAll('[data-player-id]')).forEach((button) => {
-    button.addEventListener('click', () => {
-      const playerId = button.dataset.playerId || '';
-      assignPlayerToActivePosition(playerId);
-    });
-  });
-};
+  pickerHint.innerHTML =
 
 const assignPlayerToActivePosition = (playerId) => {
   if (!activePositionKey) return;
@@ -3066,14 +3040,33 @@ function updateFormationLabel() {
   <div class="flex flex-col gap-3">
     <canvas id="formationPreviewCanvas" style="display:block; width:100%; height:100%; border-radius:14px;"></canvas>
 
-    <style>#formationPlayerChips::-webkit-scrollbar{display:none;}</style>
-      <div id="formationPlayerPicker" class="hidden rounded-xl bg-black/25 p-3 backdrop-blur-sm">
-        <div id="formationPlayerPickerHint" class="mb-2 text-xs font-medium text-white/90">
-          Position antippen oder anklicken.
+    <style>
+        #formationPlayerChips::-webkit-scrollbar{display:none;}
+        .fm-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;background:rgba(255,255,255,0.92);color:#0f1f17;font-size:12px;font-weight:500;white-space:nowrap;flex-shrink:0;transition:all 0.15s ease;cursor:pointer;border:2px solid transparent;}
+        .fm-chip:hover{background:#ffffff;}
+        .fm-chip-num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#6b7280;font-weight:600;}
+        .fm-chip-active{background:rgba(190,242,100,0.15);color:#d9f99d;border-color:#bef264;box-shadow:0 0 0 3px rgba(190,242,100,0.15);}
+        .fm-chip-active .fm-chip-num{color:#bef264;}
+        .fm-chip-clear{background:transparent;color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.15);}
+        .fm-chip-clear:hover{background:rgba(255,255,255,0.08);color:#ffffff;}
+        .fm-pos-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:#bef264;color:#052e16;font-weight:700;font-size:11px;letter-spacing:0.5px;}
+        .fm-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+      </style>
+      <div id="formationPlayerPicker" class="hidden rounded-xl bg-emerald-900/40 border border-white/5 p-3">
+        <div class="flex items-center justify-between gap-3 mb-3 pb-3 border-b border-white/5">
+          <div id="formationPlayerPickerHint" class="flex items-center gap-2 text-sm font-semibold text-white">
+            Position antippen oder anklicken.
+          </div>
+          <div id="formationPlayerPickerCounter" class="text-xs text-white/60 fm-mono whitespace-nowrap"></div>
         </div>
 
         <div id="formationPlayerChips" class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%); mask-image: linear-gradient(to right, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);">
-          <div class="text-xs text-white/70">Bitte zuerst eine Position wählen</div>
+          <div class="text-xs text-white/60 self-center">Bitte zuerst eine Position wählen</div>
+        </div>
+
+        <div id="formationPlayerPickerSelected" class="hidden mt-3 pt-3 border-t border-white/5 flex items-center gap-2 text-xs">
+          <span class="text-white/50 font-semibold uppercase tracking-wider">Ausgewählt</span>
+          <span id="formationPlayerPickerSelectedValue" class="px-2 py-1 rounded-md bg-emerald-900/60 fm-mono text-emerald-200"></span>
         </div>
       </div>
   </div>
