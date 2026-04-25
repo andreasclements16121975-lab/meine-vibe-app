@@ -3364,7 +3364,7 @@ const centerX = fieldX + fieldWidth / 2;
 const halfLineY = fieldY;
 const goalLineY = fieldY + fieldHeight;
 
-  ctx.fillStyle = '#047857';
+  ctx.fillStyle = '#0a2e1f';
 ctx.fillRect(0, 0, drawWidth, drawHeight);
 
   ctx.strokeStyle = 'rgba(255,255,255,0.96)';
