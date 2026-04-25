@@ -2151,7 +2151,7 @@ const getPlacedItemAtPoint = (clientX, clientY) => {
       }
     }
 
-    return '#16a34a';
+    return '#0a2e1f';
   };
 
   const resizeCanvas = () => {
