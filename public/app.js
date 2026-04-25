@@ -329,13 +329,15 @@ function renderLineupPitch() {
         <button
           type="button"
           data-lineup-slot="${position.slotId}"
-          class="absolute z-20 cursor-pointer pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl border px-1 py-1 text-center shadow-md ${
-            assignedPlayer ? 'bg-white text-slate-900 border-white/90' : 'bg-white/15 text-white border-white/35'
-          } ${isSelected ? 'ring-4 ring-amber-300' : 'ring-2 ring-white/10'}"
+          class="absolute z-20 cursor-pointer pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl px-2 transition ${
+            assignedPlayer
+              ? 'bg-white text-slate-900 border border-white/90'
+              : 'bg-transparent text-white/70 border border-dashed border-white/25 hover:bg-white/5 hover:border-white/40'
+          } ${isSelected ? 'ring-4 ring-lime-300' : ''}"
           style="left:${position.x}%; top:${position.y}%"
         >
-          <div class="text-[10px] font-bold uppercase ${assignedPlayer ? 'text-emerald-700' : 'text-white/90'}">${position.label}</div>
-          <div class="text-[11px] sm:text-xs font-medium leading-tight truncate">${assignedPlayer ? assignedPlayer.name : 'frei'}</div>
+          <div class="text-[10px] font-bold uppercase ${assignedPlayer ? 'text-emerald-700' : 'text-white/80'}">${position.label}</div>
+          <div class="text-[11px] sm:text-xs font-medium leading-tight truncate">${assignedPlayer ? assignedPlayer.name : ''}</div>
         </button>
       `;
     })
@@ -1838,7 +1840,7 @@ function setupLineupCanvas() {
       }
     }
 
-    return '#16a34a';
+    return '#0a2e1f';
   };
 
   const resizeCanvas = () => {
