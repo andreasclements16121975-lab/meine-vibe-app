@@ -3019,7 +3019,8 @@ const updateApplyButtonState = () => {
 
     const assignedCount = (formationAssignments && formationAssignments.size) || 0;
 
-    pickerCounter.innerHTML = `
+    if (pickerCounter) {
+      pickerCounter.innerHTML = `
         <span class="text-white font-bold text-sm">${assignedCount}</span>
         <span class="text-white/70 text-sm"> / ${positions.length} belegt</span>
         <span class="mx-2 text-white/30">·</span>
