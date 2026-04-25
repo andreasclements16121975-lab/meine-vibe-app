@@ -3192,27 +3192,8 @@ function updateFormationLabel() {
   if (!ctx) return;
 
   const getPitchGreen = () => {
-    const selectors = [
-      '#createEventBtn',
-      '#saveMemberBtn',
-      '#saveEventBtn',
-      'button.bg-green-600',
-      'button.bg-green-500',
-      'button.bg-emerald-600',
-      'button.bg-emerald-500'
-    ];
-
-    for (const selector of selectors) {
-      const node = document.querySelector(selector);
-      if (!node) continue;
-      const color = getComputedStyle(node).backgroundColor;
-      if (color && color !== 'rgba(0, 0, 0, 0)' && color !== 'transparent') {
-        return color;
-      }
-    }
-
-    return '#16a34a';
-  };
+  return '#0a2e1f';
+};
 
   const drawCornerArc = (x, y, radius, startAngle, endAngle) => {
     ctx.beginPath();
