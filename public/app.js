@@ -1886,7 +1886,7 @@ function setupLineupCanvas() {
 
   const drawGrass = (drawWidth, drawHeight, fieldX, fieldY, fieldWidth, fieldHeight) => {
     const stripeCount = 12;
-    const base = getPitchGreen();
+    const base = '#0a2e1f';
 
     ctx.fillStyle = base;
     ctx.fillRect(0, 0, drawWidth, drawHeight);
@@ -2197,7 +2197,7 @@ const getPlacedItemAtPoint = (clientX, clientY) => {
 
   const drawGrass = (drawWidth, drawHeight, fieldX, fieldY, fieldWidth, fieldHeight) => {
     const stripeCount = 12;
-    const base = getPitchGreen();
+    const base = '#0a2e1f';
 
     ctx.fillStyle = base;
     ctx.fillRect(0, 0, drawWidth, drawHeight);
