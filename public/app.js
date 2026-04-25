@@ -3019,13 +3019,12 @@ const updateApplyButtonState = () => {
 
     const assignedCount = (formationAssignments && formationAssignments.size) || 0;
 
-    if (pickerCounter) {
-      pickerCounter.innerHTML = `
-        <span class="text-emerald-300 font-semibold">${assignedCount}</span>
-        <span class="text-white/40"> / ${positions.length} belegt</span>
-        <span class="mx-2 text-white/20">·</span>
-        <span class="text-emerald-300 font-semibold">${availablePlayers.length}</span>
-        <span class="text-white/50"> verfügbar</span>
+    pickerCounter.innerHTML = `
+        <span class="text-white font-bold text-sm">${assignedCount}</span>
+        <span class="text-white/70 text-sm"> / ${positions.length} belegt</span>
+        <span class="mx-2 text-white/30">·</span>
+        <span class="text-white font-bold text-sm">${availablePlayers.length}</span>
+        <span class="text-white/70 text-sm"> verfügbar</span>
       `;
     }
 
@@ -3162,7 +3161,7 @@ function updateFormationLabel() {
           <div id="formationPlayerPickerHint" class="flex items-center gap-2 text-sm font-semibold text-white">
             Position antippen oder anklicken.
           </div>
-          <div id="formationPlayerPickerCounter" class="text-xs text-white/60 fm-mono whitespace-nowrap"></div>
+          <div id="formationPlayerPickerCounter" class="fm-mono whitespace-nowrap"></div>
         </div>
 
         <div class="relative">
@@ -3319,7 +3318,7 @@ function updateFormationLabel() {
   // Spielername UNTER dem Kreis - 15px mit weichem Schatten
   if (playerName) {
     const shortName = playerName.length > 14 ? playerName.slice(0, 13) + '…' : playerName;
-    const nameSize = Math.max(15, Math.round(17 * scale));
+    const nameSize = Math.max(17, Math.round(18 * scale));
 
     ctx.font = `600 ${nameSize}px ${fontFamily}`;
 
@@ -3428,7 +3427,7 @@ for (const position of positions) {
   const badgeY = fieldY + fieldHeight * position.y;
 
   const assignedPlayer = getAssignedPlayer(position.slotId || position.key);
-    const badgeScale = fieldWidth < 400 ? 0.75 : fieldWidth < 700 ? 0.95 : 1.0;
+    const badgeScale = fieldWidth < 400 ? 0.95 : fieldWidth < 700 ? 1.0 : 1.0;
     drawBadge(
       badgeX,
       badgeY,
