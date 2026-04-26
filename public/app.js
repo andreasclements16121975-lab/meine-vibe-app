@@ -3090,18 +3090,18 @@ const getLineXPositions = (labels) => {
 };
 
 const getFormationPositions = (formation) => {
-  const yPositions = getLineYPositions(formation.lines.length);
-
-  return formation.lines.flatMap((line, lineIndex) => {
-    const xPositions = getLineXPositions(line);
-
-    return line.map((label, playerIndex) => ({
-      key: `${formation.id}-${lineIndex}-${playerIndex}`,
-      label,
-      x: xPositions[playerIndex],
-      y: yPositions[lineIndex]
+  // Neues Format: formation.positions enthält bereits alle Daten
+  if (formation && formation.positions) {
+    return formation.positions.map((pos) => ({
+      key: pos.slotId,           // Eindeutige slotId (z.B. 'IV1', 'TW')
+      slotId: pos.slotId,        // Für späteren Zugriff
+      label: pos.label,          // Anzeige-Label (z.B. 'IV', 'TW')
+      x: pos.x,
+      y: pos.y
     }));
-  });
+  }
+  // Fallback (sollte mit FORMATIONS_UNIFIED nicht mehr eintreten)
+  return [];
 };
 function initFormationModal() {
   const modal = el('formationModal');
