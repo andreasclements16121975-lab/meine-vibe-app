@@ -3495,6 +3495,55 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
 
   renderFormationPreview();
 });
+  applyFormationModalBtn?.addEventListener('click', () => {
+      const currentFormation = formationCatalog[formationIndex];
+      if (!currentFormation) return;
+
+      // 1. Formation auf großes Feld übernehmen
+      lineupState.formationId = currentFormation.id || currentFormation.key;
+
+      // 2. Spielerzuweisungen aus Modal in Lineup übertragen
+      lineupState.assigned = lineupState.assigned || {};
+
+      // Erst alle bisherigen Zuweisungen für diese Formation leeren
+      const positions = getCurrentPositions();
+      positions.forEach((position) => {
+        const slotId = position.slotId || position.key;
+        if (slotId) {
+          delete lineupState.assigned[slotId];
+        }
+      });
+
+      // Dann die neuen Zuweisungen aus formationAssignments übernehmen
+      // WICHTIG: lineupState.assigned speichert nur Player-IDs (nicht ganze Objekte)
+      if (formationAssignments && formationAssignments.size > 0) {
+        formationAssignments.forEach((player, slotId) => {
+          if (player && slotId) {
+            const playerId = getPlayerId(player);
+            if (playerId !== null && playerId !== undefined) {
+              lineupState.assigned[slotId] = playerId;
+            }
+          }
+        });
+      }
+
+      // 3. Modal schließen
+      closeModal();
+
+      // 4. Großes Feld neu rendern
+      if (typeof renderLineupBuilder === 'function') {
+        renderLineupBuilder();
+      } else if (typeof renderLineup === 'function') {
+        renderLineup();
+      }
+
+      // 5. State persistieren falls Funktion existiert
+      if (typeof persistLineup === 'function') {
+        persistLineup();
+      } else if (typeof saveLineupState === 'function') {
+        saveLineupState();
+      }
+    });
 const openModal = () => {
   modal?.classList.remove('hidden');
   modal?.classList.add('flex');
