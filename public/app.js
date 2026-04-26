@@ -307,6 +307,26 @@ const getFormationById = (id) => {
   return FORMATIONS_UNIFIED.find(f => f.id === id) || null;
 };
 
+// ============================================================
+// TEMPORÄR: Selbst-Test (kann später entfernt werden)
+// Gibt einmal beim App-Start eine Übersicht in die Konsole
+// ============================================================
+(function testFormationsCatalog() {
+  console.log('🧪 [FORMATIONS_UNIFIED Test] Insgesamt:', FORMATIONS_UNIFIED.length, 'Formationen');
+
+  const sieben = getFormationsByCategory('7er');
+  const neun = getFormationsByCategory('9er');
+  const elf = getFormationsByCategory('11er');
+
+  console.log('   📊 7er:', sieben.length, '–', sieben.map(f => f.name).join(', '));
+  console.log('   📊 9er:', neun.length, '–', neun.map(f => f.name).join(', '));
+  console.log('   📊 11er:', elf.length, '–', elf.map(f => f.name).join(', '));
+
+  let issues = 0;
+  FORMATIONS_UNIFIED.forEach(f => {
+    const slotIds = f.positions.map(p => p.slotId);
+    const unique = new Set(slotIds);
+    if (s
 const LINEUP_FORMATIONS = [
   createFormation('442', '4-4-2', [
     { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
