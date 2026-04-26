@@ -326,7 +326,21 @@ const getFormationById = (id) => {
   FORMATIONS_UNIFIED.forEach(f => {
     const slotIds = f.positions.map(p => p.slotId);
     const unique = new Set(slotIds);
-    if (s
+    if (slotIds.length !== unique.size) {
+      console.warn('   ⚠️ Doppelte slotId in', f.name, ':', slotIds);
+      issues++;
+    }
+  });
+
+  if (issues === 0) {
+    console.log('   ✅ Alle slotIds eindeutig');
+  }
+
+  const beispiel = getFormationById('433');
+  if (beispiel) {
+    console.log('   📋 Beispiel 4-3-3:', beispiel.positions.map(p => p.slotId).join(', '));
+  }
+})();
 const LINEUP_FORMATIONS = [
   createFormation('442', '4-4-2', [
     { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
