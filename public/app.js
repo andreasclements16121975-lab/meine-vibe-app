@@ -69,14 +69,22 @@ const POSITION_CATALOG = {
 
 // Hilfsfunktion: Anzahl Feldspieler aus Formation berechnen
 const countOutfieldPlayers = (formation) => {
-  if (!formation || !formation.lines) return 0;
-  let total = 0;
-  formation.lines.forEach(line => {
-    line.forEach(label => {
-      if (label !== 'TW') total++;
+  if (!formation) return 0;
+  // Neues Format (FORMATIONS_UNIFIED): direkt positions auswerten
+  if (formation.positions && Array.isArray(formation.positions)) {
+    return formation.positions.filter(p => p.label !== 'TW').length;
+  }
+  // Altes Format (Fallback für eventuelle Reste mit lines)
+  if (formation.lines && Array.isArray(formation.lines)) {
+    let total = 0;
+    formation.lines.forEach(line => {
+      line.forEach(label => {
+        if (label !== 'TW') total++;
+      });
     });
-  });
-  return total;
+    return total;
+  }
+  return 0;
 };
 
 // Hilfsfunktion: Hinweis "X Feldspieler + TW" für Formation
