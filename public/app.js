@@ -135,6 +135,177 @@ const buildUnifiedFormation = (id, name, lines) => {
     sizeHint: `${outfield} Feldspieler + TW`
   };
 };
+// ============================================================
+// EINHEITLICHER FORMATIONS-KATALOG — alle 23 Formationen
+// Sortierung: 7er → 9er → 11er, innerhalb nach taktischer Logik
+// Format: lines[0] = oberste Reihe (Angriff), lines[letzte] = TW
+// ============================================================
+
+const FORMATIONS_UNIFIED = [
+  // ============================================================
+  // 7er-FUSSBALL (E-Jugend)
+  // ============================================================
+  buildUnifiedFormation('321', '3-2-1', [
+    ['ST'],
+    ['LM', 'RM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('231', '2-3-1', [
+    ['ST'],
+    ['LM', 'ZM', 'RM'],
+    ['LV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('312', '3-1-2', [
+    ['LA', 'RA'],
+    ['ZM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('222', '2-2-2', [
+    ['LA', 'RA'],
+    ['LM', 'RM'],
+    ['LV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('132', '1-3-2', [
+    ['LA', 'RA'],
+    ['LM', 'ZM', 'RM'],
+    ['IV'],
+    ['TW']
+  ]),
+
+  // ============================================================
+  // 9er-FUSSBALL (D-Jugend)
+  // ============================================================
+  buildUnifiedFormation('332', '3-3-2', [
+    ['LA', 'RA'],
+    ['LM', 'ZM', 'RM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('323', '3-2-3', [
+    ['LA', 'ST', 'RA'],
+    ['LM', 'RM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('242', '2-4-2', [
+    ['LA', 'RA'],
+    ['LM', 'ZM', 'ZM', 'RM'],
+    ['LV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('341', '3-4-1', [
+    ['ST'],
+    ['LM', 'ZM', 'ZM', 'RM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('431', '4-3-1', [
+    ['ST'],
+    ['LM', 'ZM', 'RM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('413', '4-1-3', [
+    ['LA', 'ST', 'RA'],
+    ['ZM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('422', '4-2-2', [
+    ['LA', 'RA'],
+    ['ZM', 'ZM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('3131', '3-1-3-1', [
+    ['ST'],
+    ['LM', 'ZM', 'RM'],
+    ['ZDM'],
+    ['LV', 'IV', 'RV'],
+    ['TW']
+  ]),
+
+  // ============================================================
+  // 11er-FUSSBALL (C-Jugend +)
+  // ============================================================
+  buildUnifiedFormation('442', '4-4-2', [
+    ['ST', 'ST'],
+    ['LM', 'ZM', 'ZM', 'RM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('433', '4-3-3', [
+    ['LA', 'ST', 'RA'],
+    ['ZM', 'ZDM', 'ZM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('4231', '4-2-3-1', [
+    ['ST'],
+    ['LA', 'ZOM', 'RA'],
+    ['ZDM', 'ZDM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('4312', '4-3-1-2', [
+    ['ST', 'ST'],
+    ['ZOM'],
+    ['ZM', 'ZDM', 'ZM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('343', '3-4-3', [
+    ['LA', 'ST', 'RA'],
+    ['LM', 'ZM', 'ZM', 'RM'],
+    ['IV', 'IV', 'IV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('532', '5-3-2', [
+    ['ST', 'ST'],
+    ['ZM', 'ZDM', 'ZM'],
+    ['LAV', 'IV', 'IV', 'IV', 'RAV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('352', '3-5-2', [
+    ['ST', 'ST'],
+    ['LAV', 'ZM', 'ZDM', 'ZM', 'RAV'],
+    ['IV', 'IV', 'IV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('451', '4-5-1', [
+    ['ST'],
+    ['LM', 'ZM', 'ZDM', 'ZM', 'RM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('4141', '4-1-4-1', [
+    ['ST'],
+    ['LM', 'ZM', 'ZM', 'RM'],
+    ['ZDM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ]),
+  buildUnifiedFormation('424', '4-2-4', [
+    ['LA', 'ST', 'ST', 'RA'],
+    ['ZM', 'ZM'],
+    ['LV', 'IV', 'IV', 'RV'],
+    ['TW']
+  ])
+];
+
+// Hilfsfunktion: alle Formationen einer Spielgröße filtern
+const getFormationsByCategory = (category) => {
+  return FORMATIONS_UNIFIED.filter(f => f.sizeCategory === category);
+};
+
+// Hilfsfunktion: Formation per ID finden
+const getFormationById = (id) => {
+  return FORMATIONS_UNIFIED.find(f => f.id === id) || null;
+};
 
 const LINEUP_FORMATIONS = [
   createFormation('442', '4-4-2', [
