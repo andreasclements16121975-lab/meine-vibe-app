@@ -3500,24 +3500,35 @@ function updateFormationLabel() {
   const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
   const colors = {
-    TW: '#2d8a2d',
+      // Tor
+      TW: '#2d8a2d',
 
-    LV: '#1a6fc4',
-    RV: '#1a6fc4',
-    IV: '#1a6fc4',
-    DM: '#1a6fc4',
+      // Abwehr (alle Verteidiger blau)
+      LV: '#1a6fc4',
+      RV: '#1a6fc4',
+      LIV: '#1a6fc4',
+      IV: '#1a6fc4',
+      RIV: '#1a6fc4',
+      LAV: '#1a6fc4',
+      RAV: '#1a6fc4',
+      DM: '#1a6fc4',  // Alt-Kompatibilität
 
-    ZM: '#d4860f',
-    LM: '#d4860f',
-    RM: '#d4860f',
-    OM: '#d4860f',
+      // Mittelfeld (alle Mittelfeldspieler orange)
+      ZDM: '#d4860f',
+      ZM: '#d4860f',
+      ZOM: '#d4860f',
+      LM: '#d4860f',
+      RM: '#d4860f',
+      OM: '#d4860f',  // Alt-Kompatibilität
 
-    ST: '#e8350a',
-    LF: '#e8350a',
-    RF: '#e8350a',
-    LA: '#e8350a',
-    RA: '#e8350a'
-  };
+      // Angriff (alle Stürmer/Flügel rot)
+      LF: '#e8350a',
+      RF: '#e8350a',
+      LA: '#e8350a',
+      RA: '#e8350a',
+      MS: '#e8350a',
+      ST: '#e8350a'
+    };
 
   ctx.save();
 
