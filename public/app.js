@@ -3099,16 +3099,17 @@ const getLineXPositions = (labels) => {
 
 const getFormationPositions = (formation) => {
   // Neues Format: formation.positions enthält bereits alle Daten
+  // Wichtig: x/y sind im FORMATIONS_UNIFIED-Format als Prozent (0-100),
+  // der Render-Code erwartet aber 0-1 → wir teilen durch 100
   if (formation && formation.positions) {
     return formation.positions.map((pos) => ({
-      key: pos.slotId,           // Eindeutige slotId (z.B. 'IV1', 'TW')
-      slotId: pos.slotId,        // Für späteren Zugriff
-      label: pos.label,          // Anzeige-Label (z.B. 'IV', 'TW')
-      x: pos.x,
-      y: pos.y
+      key: pos.slotId,
+      slotId: pos.slotId,
+      label: pos.label,
+      x: pos.x / 100,
+      y: pos.y / 100
     }));
   }
-  // Fallback (sollte mit FORMATIONS_UNIFIED nicht mehr eintreten)
   return [];
 };
 function initFormationModal() {
