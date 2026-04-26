@@ -84,6 +84,58 @@ const getFormationSizeHint = (formation) => {
   const outfield = countOutfieldPlayers(formation);
   return `${outfield} Feldspieler + TW`;
 };
+// ============================================================
+// EINHEITLICHER FORMATIONS-KATALOG
+// (Modal + Großes Feld nutzen ab sofort dieselben Daten)
+// ============================================================
+
+// Hilfsfunktion: erzeugt eindeutige slotIds aus einer Reihe von Labels
+// Beispiel: ['LV', 'IV', 'IV', 'RV'] → ['LV', 'IV1', 'IV2', 'RV']
+const createSlotsForLine = (labels, y) => {
+  const counts = {};
+  labels.forEach(label => {
+    counts[label] = (counts[label] || 0) + 1;
+  });
+  const seen = {};
+  return labels.map((label, index) => {
+    const total = counts[label];
+    seen[label] = (seen[label] || 0) + 1;
+    const suffix = total > 1 ? String(seen[label]) : '';
+    const slotId = `${label}${suffix}`;
+    const x = labels.length === 1 ? 50 : 15 + (70 / (labels.length - 1)) * index;
+    return { slotId, label, x, y };
+  });
+};
+
+// Hilfsfunktion: erzeugt eine komplette Formation mit eindeutigen slotIds
+const buildUnifiedFormation = (id, name, lines) => {
+  const totalLines = lines.length;
+  const positions = [];
+
+  lines.forEach((line, lineIndex) => {
+    let y;
+    if (lineIndex === totalLines - 1) {
+      y = 90;
+    } else {
+      y = 25 + (53 / Math.max(totalLines - 2, 1)) * lineIndex;
+    }
+    const slots = createSlotsForLine(line, Math.round(y));
+    positions.push(...slots);
+  });
+
+  const outfield = positions.filter(p => p.label !== 'TW').length;
+  const playerCount = outfield + 1;
+
+  return {
+    id,
+    name,
+    playerCount,
+    sizeCategory: playerCount === 7 ? '7er' : playerCount === 9 ? '9er' : '11er',
+    positions,
+    sizeHint: `${outfield} Feldspieler + TW`
+  };
+};
+
 const LINEUP_FORMATIONS = [
   createFormation('442', '4-4-2', [
     { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
