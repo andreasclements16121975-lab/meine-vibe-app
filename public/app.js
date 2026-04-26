@@ -3807,19 +3807,53 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
       }
     });
 const openModal = () => {
-  modal?.classList.remove('hidden');
-  modal?.classList.add('flex');
-  requestAnimationFrame(() => {
-    renderFormationPreview();
-  });
-  refreshLineupBuilderData()
-    .then(() => {
-      renderFormationPreview();
-    })
-    .catch((err) => {
-      console.warn('Spieler konnten nicht geladen werden:', err);
-    });
-};
+      modal?.classList.remove('hidden');
+      modal?.classList.add('flex');
+
+      // 1. Modal startet bei der aktuellen Formation des großen Feldes
+      if (lineupState && lineupState.formationId) {
+        const matchingIndex = formationCatalog.findIndex(
+          (f) => f.id === lineupState.formationId
+        );
+        if (matchingIndex >= 0) {
+          formationIndex = matchingIndex;
+        }
+      }
+
+      // 2. Vorhandene Spielerzuweisungen vom großen Feld ins Modal übernehmen
+      if (formationAssignments && typeof formationAssignments.clear === 'function') {
+        formationAssignments.clear();
+
+        if (lineupState && lineupState.assigned) {
+          const currentFormation = formationCatalog[formationIndex];
+          if (currentFormation && currentFormation.positions) {
+            currentFormation.positions.forEach((pos) => {
+              const playerId = lineupState.assigned[pos.slotId];
+              if (playerId) {
+                const player = getLineupPlayerById(playerId);
+                if (player) {
+                  formationAssignments.set(pos.slotId, player);
+                }
+              }
+            });
+          }
+        }
+      }
+
+      // 3. Vorschau direkt rendern (mit den vorbefüllten Spielern)
+      requestAnimationFrame(() => {
+        renderFormationPreview();
+      });
+
+      // 4. Spielerdaten frisch laden, dann nochmal rendern
+      refreshLineupBuilderData()
+        .then(() => {
+          renderFormationPreview();
+        })
+        .catch((err) => {
+          console.warn('Spieler konnten nicht geladen werden:', err);
+        });
+    };
 
   const closeModal = () => {
     modal?.classList.add('hidden');
