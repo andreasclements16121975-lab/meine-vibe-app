@@ -110,7 +110,7 @@ const createSlotsForLine = (labels, y) => {
     seen[label] = (seen[label] || 0) + 1;
     const suffix = total > 1 ? String(seen[label]) : '';
     const slotId = `${label}${suffix}`;
-    const x = labels.length === 1 ? 50 : 15 + (70 / (labels.length - 1)) * index;
+    const x = labels.length === 1 ? 50 : 20 + (60 / (labels.length - 1)) * index;
     return { slotId, label, x, y };
   });
 };
