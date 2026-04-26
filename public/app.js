@@ -123,9 +123,9 @@ const buildUnifiedFormation = (id, name, lines) => {
   lines.forEach((line, lineIndex) => {
     let y;
     if (lineIndex === totalLines - 1) {
-      y = 88;
+      y = 90;
     } else {
-      y = 30 + (50 / Math.max(totalLines - 2, 1)) * lineIndex;
+      y = 25 + (53 / Math.max(totalLines - 2, 1)) * lineIndex;
     }
     const slots = createSlotsForLine(line, Math.round(y));
     positions.push(...slots);
