@@ -2110,7 +2110,7 @@ function setupLineupCanvas() {
   const resizeCanvas = () => {
     const pitchRatio = 68 / 105;
     const availableWidth = Math.min(wrap.clientWidth || 1100, 2060);
-    const maxHeight = Math.min(Math.max(window.innerHeight * 0.88, 900), 1370);
+    const maxHeight = Math.min(window.innerHeight * 0.88, 1370);
 
     let drawWidth = availableWidth;
     let drawHeight = drawWidth / pitchRatio;
