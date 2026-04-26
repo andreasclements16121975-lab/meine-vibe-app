@@ -3186,7 +3186,18 @@ const assignPlayerToActivePosition = (playerId) => {
 };
 function updateFormationLabel() {
   if (!currentNameLabel) return;
-  currentNameLabel.textContent = formationCatalog[formationIndex]?.name || '';
+  const formation = formationCatalog[formationIndex];
+  if (!formation) {
+    currentNameLabel.textContent = '';
+    return;
+  }
+  // Konvertiere lines-Format zu lines-Property für getFormationSizeHint
+  const formationForHint = formation.lines ? formation : { lines: [] };
+  const hint = getFormationSizeHint(formationForHint);
+  currentNameLabel.innerHTML = `
+    <span class="text-2xl font-bold">${formation.name}</span>
+    <span class="block text-xs font-medium text-white/60 mt-1">${hint}</span>
+  `;
 }
   const renderFormationPreview = () => {
   if (!body) return;
