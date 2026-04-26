@@ -3421,7 +3421,7 @@ function updateFormationLabel() {
     return;
   }
   // Konvertiere lines-Format zu lines-Property für getFormationSizeHint
-  const formationForHint = formation.lines ? formation : { lines: [] };
+  const formationForHint = formation;
   const hint = getFormationSizeHint(formationForHint);
   currentNameLabel.innerHTML = `
     <span class="text-2xl font-bold">${formation.name}</span>
