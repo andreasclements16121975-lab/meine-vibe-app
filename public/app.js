@@ -35,7 +35,55 @@ function createFormation(id, name, rows) {
 
   return { id, name, positions };
 }
+// ============================================================
+// STANDARD-POSITIONEN (zentrale Definition, App-weit verwendet)
+// ============================================================
+const POSITION_CATALOG = {
+  // Tor
+  TW:  { label: 'TW',  name: 'Torwart',                          group: 'gk' },
 
+  // Abwehr
+  LV:  { label: 'LV',  name: 'Linker Verteidiger',               group: 'def' },
+  RV:  { label: 'RV',  name: 'Rechter Verteidiger',              group: 'def' },
+  LIV: { label: 'LIV', name: 'Linker Innenverteidiger',          group: 'def' },
+  IV:  { label: 'IV',  name: 'Innenverteidiger',                 group: 'def' },
+  RIV: { label: 'RIV', name: 'Rechter Innenverteidiger',         group: 'def' },
+  LAV: { label: 'LAV', name: 'Linker Außenverteidiger',          group: 'def' },
+  RAV: { label: 'RAV', name: 'Rechter Außenverteidiger',         group: 'def' },
+
+  // Mittelfeld
+  ZDM: { label: 'ZDM', name: 'Zentrales defensives Mittelfeld',  group: 'mid' },
+  ZM:  { label: 'ZM',  name: 'Zentrales Mittelfeld',             group: 'mid' },
+  ZOM: { label: 'ZOM', name: 'Zentrales offensives Mittelfeld',  group: 'mid' },
+  LM:  { label: 'LM',  name: 'Linkes Mittelfeld',                group: 'mid' },
+  RM:  { label: 'RM',  name: 'Rechtes Mittelfeld',               group: 'mid' },
+
+  // Angriff
+  LF:  { label: 'LF',  name: 'Linker Flügel',                    group: 'att' },
+  RF:  { label: 'RF',  name: 'Rechter Flügel',                   group: 'att' },
+  LA:  { label: 'LA',  name: 'Linker Außenstürmer',              group: 'att' },
+  RA:  { label: 'RA',  name: 'Rechter Außenstürmer',             group: 'att' },
+  MS:  { label: 'MS',  name: 'Mittelstürmer',                    group: 'att' },
+  ST:  { label: 'ST',  name: 'Stürmer',                          group: 'att' }
+};
+
+// Hilfsfunktion: Anzahl Feldspieler aus Formation berechnen
+const countOutfieldPlayers = (formation) => {
+  if (!formation || !formation.lines) return 0;
+  let total = 0;
+  formation.lines.forEach(line => {
+    line.forEach(label => {
+      if (label !== 'TW') total++;
+    });
+  });
+  return total;
+};
+
+// Hilfsfunktion: Hinweis "X Feldspieler + TW" für Formation
+const getFormationSizeHint = (formation) => {
+  const outfield = countOutfieldPlayers(formation);
+  return `${outfield} Feldspieler + TW`;
+};
 const LINEUP_FORMATIONS = [
   createFormation('442', '4-4-2', [
     { y: 76, labels: ['LV', 'IV', 'IV', 'RV'] },
