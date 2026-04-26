@@ -125,7 +125,7 @@ const buildUnifiedFormation = (id, name, lines) => {
     if (lineIndex === totalLines - 1) {
       y = 90;
     } else {
-      y = 22 + (60 / Math.max(totalLines - 2, 1)) * lineIndex;
+      y = 18 + (62 / Math.max(totalLines - 2, 1)) * lineIndex;
     }
     const slots = createSlotsForLine(line, Math.round(y));
     positions.push(...slots);
