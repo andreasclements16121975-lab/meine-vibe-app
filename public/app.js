@@ -3516,16 +3516,27 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
 
       // Dann die neuen Zuweisungen aus formationAssignments übernehmen
       // WICHTIG: lineupState.assigned speichert nur Player-IDs (nicht ganze Objekte)
+      console.log('[Spielsystem übernehmen] formationAssignments:', formationAssignments);
+      console.log('[Spielsystem übernehmen] formationAssignments.size:', formationAssignments?.size);
       if (formationAssignments && formationAssignments.size > 0) {
         formationAssignments.forEach((player, slotId) => {
-          if (player && slotId) {
-            const playerId = getPlayerId(player);
-            if (playerId !== null && playerId !== undefined) {
-              lineupState.assigned[slotId] = playerId;
-            }
+          if (!player || !slotId) return;
+          let playerId = null;
+          if (typeof getPlayerId === 'function') {
+            playerId = getPlayerId(player);
+          }
+          if (playerId === null || playerId === undefined) {
+            playerId = player.id ?? player.playerId ?? player._id ?? player.uid ?? null;
+          }
+          console.log('[Spielsystem übernehmen] slot:', slotId, 'player:', player, 'extractedId:', playerId);
+          if (playerId !== null && playerId !== undefined) {
+            lineupState.assigned[slotId] = playerId;
           }
         });
       }
+
+      console.log('[Spielsystem übernehmen] Final lineupState.assigned:', lineupState.assigned);
+      console.log('[Spielsystem übernehmen] Final lineupState.formationId:', lineupState.formationId);
 
       // 3. Modal schließen
       closeModal();
