@@ -578,7 +578,7 @@ function renderLineupPitch() {
 
   host.innerHTML = formation.positions
     .map((position) => {
-      const assignedPlayer = getLineupPlayerByID(lineupState.assigned[position.slotId]);
+      const assignedPlayer = getLineupPlayerById(lineupState.assigned[position.slotId]);
       const isSelected = lineupState.selectedSlotId === position.slotId;
       const badgeColor = slotColors[position.label] || '#475569';
 
