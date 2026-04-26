@@ -565,24 +565,43 @@ function renderLineupPitch() {
 
   const formation = getCurrentLineupFormation();
 
+  // Position-Farben (gleich wie im Modal: drawBadge)
+  const slotColors = {
+    TW: '#2d8a2d',
+    LV: '#1a6fc4', RV: '#1a6fc4', LIV: '#1a6fc4', IV: '#1a6fc4', RIV: '#1a6fc4',
+    LAV: '#1a6fc4', RAV: '#1a6fc4', DM: '#1a6fc4',
+    ZDM: '#d4860f', ZM: '#d4860f', ZOM: '#d4860f',
+    LM: '#d4860f', RM: '#d4860f', OM: '#d4860f',
+    LF: '#e8350a', RF: '#e8350a', LA: '#e8350a', RA: '#e8350a',
+    MS: '#e8350a', ST: '#e8350a'
+  };
+
   host.innerHTML = formation.positions
     .map((position) => {
-      const assignedPlayer = getLineupPlayerById(lineupState.assigned[position.slotId]);
+      const assignedPlayer = getLineupPlayerByID(lineupState.assigned[position.slotId]);
       const isSelected = lineupState.selectedSlotId === position.slotId;
+      const badgeColor = slotColors[position.label] || '#475569';
 
       return `
         <button
           type="button"
           data-lineup-slot="${position.slotId}"
-          class="absolute z-20 cursor-pointer pointer-events-auto -translate-x-1/2 -translate-y-1/2 w-[74px] h-[52px] sm:w-[88px] sm:h-[58px] rounded-xl px-2 transition ${
-            assignedPlayer
-              ? 'bg-white text-slate-900 border border-white/90'
-              : 'bg-transparent text-white/70 border border-dashed border-white/25 hover:bg-white/5 hover:border-white/40'
-          } ${isSelected ? 'ring-4 ring-lime-300' : ''}"
+          class="absolute z-20 cursor-pointer pointer-events-auto -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 ${
+            isSelected ? 'scale-110' : ''
+          } transition-transform"
           style="left:${position.x}%; top:${position.y}%"
         >
-          <div class="text-[10px] font-bold uppercase ${assignedPlayer ? 'text-emerald-700' : 'text-white/80'}">${position.label}</div>
-          <div class="text-[11px] sm:text-xs font-medium leading-tight truncate">${assignedPlayer ? assignedPlayer.name : ''}</div>
+          <div
+            class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-[11px] font-bold uppercase text-white shadow-lg ${
+              assignedPlayer ? '' : 'opacity-40 border-2 border-dashed border-white/40'
+            } ${isSelected ? 'ring-4 ring-lime-300' : ''}"
+            style="background-color: ${assignedPlayer ? badgeColor : 'transparent'}; ${
+              !assignedPlayer ? `border-color: ${badgeColor}80;` : ''
+            }"
+          >${position.label}</div>
+          <div class="text-[11px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
+            ${assignedPlayer ? assignedPlayer.name : ''}
+          </div>
         </button>
       `;
     })
