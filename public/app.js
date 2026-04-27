@@ -2076,6 +2076,109 @@ if (!material || !value) return;
     coachingAreaDragState = null;
   });
 }
+function setupFormationSwitchButtons() {
+  const prevBtn = el('prevFormationSwitchBtn');
+  const nextBtn = el('nextFormationSwitchBtn');
+  if (!prevBtn || !nextBtn) return;
+
+  const findCurrentFormationIndex = () => {
+    if (!lineupState || !lineupState.formationId) return -1;
+    return FORMATIONS_UNIFIED.findIndex((f) => f.id === lineupState.formationId);
+  };
+
+  const getSamePlayerCountFormations = (referenceFormation) => {
+    if (!referenceFormation) return [];
+    const refCount = referenceFormation.positions.length;
+    return FORMATIONS_UNIFIED.filter((f) => f.positions.length === refCount);
+  };
+
+  const mapPlayersToNewFormation = (oldFormation, newFormation) => {
+    if (!oldFormation || !newFormation) return {};
+    if (!lineupState || !lineupState.assigned) return {};
+
+    const playersByLabel = {};
+    oldFormation.positions.forEach((pos) => {
+      const playerId = lineupState.assigned[pos.slotId];
+      if (playerId) {
+        if (!playersByLabel[pos.label]) playersByLabel[pos.label] = [];
+        playersByLabel[pos.label].push(playerId);
+      }
+    });
+
+    const groupOf = (label) => {
+      if (label === 'TW') return 'gk';
+      if (['LV', 'RV', 'LIV', 'IV', 'RIV', 'LAV', 'RAV', 'DM'].includes(label)) return 'def';
+      if (['ZDM', 'ZM', 'ZOM', 'LM', 'RM', 'OM'].includes(label)) return 'mid';
+      if (['LF', 'RF', 'LA', 'RA', 'MS', 'ST'].includes(label)) return 'att';
+      return 'other';
+    };
+
+    const playersByGroup = { gk: [], def: [], mid: [], att: [], other: [] };
+
+    const newAssigned = {};
+    const usedSlotIds = new Set();
+    newFormation.positions.forEach((pos) => {
+      if (playersByLabel[pos.label] && playersByLabel[pos.label].length > 0) {
+        newAssigned[pos.slotId] = playersByLabel[pos.label].shift();
+        usedSlotIds.add(pos.slotId);
+      }
+    });
+
+    Object.keys(playersByLabel).forEach((label) => {
+      const group = groupOf(label);
+      playersByLabel[label].forEach((playerId) => {
+        playersByGroup[group].push(playerId);
+      });
+    });
+
+    newFormation.positions.forEach((pos) => {
+      if (usedSlotIds.has(pos.slotId)) return;
+      const group = groupOf(pos.label);
+      if (playersByGroup[group] && playersByGroup[group].length > 0) {
+        newAssigned[pos.slotId] = playersByGroup[group].shift();
+        usedSlotIds.add(pos.slotId);
+      }
+    });
+
+    return newAssigned;
+  };
+
+  const switchFormation = (direction) => {
+    const currentIndex = findCurrentFormationIndex();
+    if (currentIndex < 0) {
+      setLineupStatus('Keine aktuelle Formation gefunden.');
+      return;
+    }
+
+    const currentFormation = FORMATIONS_UNIFIED[currentIndex];
+    const sameCountFormations = getSamePlayerCountFormations(currentFormation);
+    if (sameCountFormations.length < 2) {
+      setLineupStatus('Keine weitere Formation mit gleicher Spielerzahl.');
+      return;
+    }
+
+    const filteredIndex = sameCountFormations.findIndex((f) => f.id === currentFormation.id);
+    const newFilteredIndex = (filteredIndex + direction + sameCountFormations.length) % sameCountFormations.length;
+    const newFormation = sameCountFormations[newFilteredIndex];
+
+    const newAssigned = mapPlayersToNewFormation(currentFormation, newFormation);
+
+    lineupState.formationId = newFormation.id;
+    lineupState.assigned = newAssigned;
+    lineupState.selectedSlotId = null;
+
+    if (typeof renderLineupBuilder === 'function') {
+      renderLineupBuilder();
+    } else if (typeof renderLineup === 'function') {
+      renderLineup();
+    }
+
+    setLineupStatus(`Formation gewechselt zu ${newFormation.name}`);
+  };
+
+  prevBtn.addEventListener('click', () => switchFormation(-1));
+  nextBtn.addEventListener('click', () => switchFormation(1));
+}
 function setupLineupCanvas() {
   const canvas = el('lineupCanvas');
   const wrap = el('lineupCanvasWrap');
@@ -3880,6 +3983,7 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     setupCanvas();
     setupLineupCanvas();
+    setupFormationSwitchButtons();
     initFormationModal();
   }, 100);
 });
