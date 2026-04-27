@@ -953,8 +953,12 @@ async function loadMembers() {
     .filter((m) => m.role === 'Spieler')
     .map((m) => `<option value="${m.id}">${m.name} (${m.team || '-'})</option>`)
     .join('');
-el('nomPlayerButtons').innerHTML = members
-    .filter((m) => m.role === 'Spieler')
+const playerMembers = members.filter((m) => m.role === 'Spieler');
+    const tilesSource = playerMembers.length > 0
+      ? playerMembers
+      : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
+  
+el('nomPlayerButtons').innerHTML = tilesSource
     .map(
       (m) => `
         <button
