@@ -2113,8 +2113,19 @@ function setupFormationSwitchButtons() {
       return 'other';
     };
 
+    // Nachbar-Gruppen-Reihenfolge: Wenn keine Slots in eigener Gruppe frei,
+    // suche in Nachbar-Gruppen (defensiv-orientiert für Verteidiger, offensiv für Stürmer)
+    const neighborGroups = {
+      gk: ['gk'],
+      def: ['def', 'mid', 'att'],
+      mid: ['mid', 'def', 'att'],
+      att: ['att', 'mid', 'def'],
+      other: ['other', 'mid', 'def', 'att']
+    };
+
     const playersByGroup = { gk: [], def: [], mid: [], att: [], other: [] };
 
+    // Stufe 1: Exakter Label-Match
     const newAssigned = {};
     const usedSlotIds = new Set();
     newFormation.positions.forEach((pos) => {
@@ -2124,6 +2135,7 @@ function setupFormationSwitchButtons() {
       }
     });
 
+    // Restliche Spieler nach Gruppe sammeln
     Object.keys(playersByLabel).forEach((label) => {
       const group = groupOf(label);
       playersByLabel[label].forEach((playerId) => {
@@ -2131,12 +2143,20 @@ function setupFormationSwitchButtons() {
       });
     });
 
+    // Stufe 2 & 3: Gleiche Gruppe + Nachbar-Gruppen-Fallback
     newFormation.positions.forEach((pos) => {
       if (usedSlotIds.has(pos.slotId)) return;
       const group = groupOf(pos.label);
-      if (playersByGroup[group] && playersByGroup[group].length > 0) {
-        newAssigned[pos.slotId] = playersByGroup[group].shift();
-        usedSlotIds.add(pos.slotId);
+      const groupOrder = neighborGroups[group] || [group];
+
+      // Gehe Nachbar-Gruppen durch bis ein Spieler gefunden ist
+      for (let i = 0; i < groupOrder.length; i++) {
+        const tryGroup = groupOrder[i];
+        if (playersByGroup[tryGroup] && playersByGroup[tryGroup].length > 0) {
+          newAssigned[pos.slotId] = playersByGroup[tryGroup].shift();
+          usedSlotIds.add(pos.slotId);
+          break;
+        }
       }
     });
 
