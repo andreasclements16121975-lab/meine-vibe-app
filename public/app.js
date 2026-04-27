@@ -2079,7 +2079,20 @@ if (!material || !value) return;
 function setupFormationSwitchButtons() {
   const prevBtn = el('prevFormationSwitchBtn');
   const nextBtn = el('nextFormationSwitchBtn');
-  if (!prevBtn || !nextBtn) return;
+  if (!prevBtn || !nextBtn) return
+
+  // Aktualisiert das Label "currentFormationLabel" mit dem Namen der aktuellen Formation
+  const updateCurrentFormationLabel = () => {
+    const labelEl = el('currentFormationLabel');
+    if (!labelEl) return;
+    const idx = findCurrentFormationIndex();
+    if (idx < 0) {
+      labelEl.textContent = '–';
+      return;
+    }
+    const formation = FORMATIONS_UNIFIED[idx];
+    labelEl.textContent = formation ? formation.name : '–';
+  };
 
   const findCurrentFormationIndex = () => {
     if (!lineupState || !lineupState.formationId) return -1;
@@ -2194,10 +2207,12 @@ function setupFormationSwitchButtons() {
     }
 
     setLineupStatus(`Formation gewechselt zu ${newFormation.name}`);
+    updateCurrentFormationLabel();
   };
 
   prevBtn.addEventListener('click', () => switchFormation(-1));
   nextBtn.addEventListener('click', () => switchFormation(1));
+  setTimeout(updateCurrentFormationLabel, 200);
 }
 function setupLineupCanvas() {
   const canvas = el('lineupCanvas');
