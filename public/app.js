@@ -3675,7 +3675,7 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
 
   const currentFormation = formationCatalog[formationIndex];
 const positions = getFormationPositions(currentFormation);
-
+console.log('[Modal Render] formationIndex:', formationIndex, 'name:', currentFormation?.name, 'id:', currentFormation?.id, 'positions count:', positions?.length, 'first slot:', positions?.[0]?.slotId);
 badgeHitAreas = [];
 
 for (const position of positions) {
