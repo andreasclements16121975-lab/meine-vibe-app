@@ -3729,6 +3729,7 @@ renderFormationPreview();
   if (!formationCatalog.length) return;
 
   formationIndex = (formationIndex + step + formationCatalog.length) % formationCatalog.length;
+    formationAssignmentsDirty = true;
   updateFormationLabel();
   renderFormationPreview();
 };
@@ -3815,7 +3816,7 @@ const openModal = () => {
       modal?.classList.add('flex');
 
       // 1. Modal startet bei der aktuellen Formation des großen Feldes
-      if (lineupState && lineupState.formationId) {
+      if (!formationAssignmentsDirty && lineupState && lineupState.formationId) {
         const matchingIndex = formationCatalog.findIndex(
           (f) => f.id === lineupState.formationId
         );
