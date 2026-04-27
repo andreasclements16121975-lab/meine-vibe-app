@@ -3847,12 +3847,14 @@ const openModal = () => {
       // 3. Vorschau direkt rendern (mit den vorbefüllten Spielern)
       requestAnimationFrame(() => {
         renderFormationPreview();
+        updateFormationLabel(); 
       });
 
       // 4. Spielerdaten frisch laden, dann nochmal rendern
       refreshLineupBuilderData()
         .then(() => {
           renderFormationPreview();
+          updateFormationLabel();
         })
         .catch((err) => {
           console.warn('Spieler konnten nicht geladen werden:', err);
