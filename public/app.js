@@ -2267,6 +2267,15 @@ function setupLineupCanvas() {
     canvas.style.borderRadius = '14px';
     canvas.style.cursor = 'crosshair';
 
+    // Slots-Container an Canvas-Größe anpassen, damit Slots nicht außerhalb landen
+    const slotsHost = el('lineupPitchSlots');
+    if (slotsHost) {
+      slotsHost.style.width = `${Math.round(drawWidth)}px`;
+      slotsHost.style.height = `${Math.round(drawHeight)}px`;
+      slotsHost.style.left = 'auto';
+      slotsHost.style.right = '0';
+    }
+
     canvas.width = Math.round(drawWidth * dpr);
     canvas.height = Math.round(drawHeight * dpr);
 
