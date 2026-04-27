@@ -954,19 +954,19 @@ async function loadMembers() {
     .map((m) => `<option value="${m.id}">${m.name} (${m.team || '-'})</option>`)
     .join('');
 el('nomPlayerButtons').innerHTML = members
-  .filter((m) => m.role === 'Spieler')
-  .map(
-    (m) => `
-      <button
-        type="button"
-        class="rounded border px-3 py-2 text-sm"
-        data-player-id="${m.id}"
-      >
-        ${m.name}
-      </button>
-    `
-  )
-  .join('');
+    .filter((m) => m.role === 'Spieler')
+    .map(
+      (m) => `
+        <button
+          type="button"
+          class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]"
+          data-player-id="${m.id}"
+        >
+          <span class="text-center leading-tight">${m.name}</span>
+        </button>
+      `
+    )
+    .join('');
   el('nomPlayerButtons')?.querySelectorAll('[data-player-id]').forEach((button) => {
   button.addEventListener('click', () => {
     el('nomPlayerId').value = button.dataset.playerId || '';
