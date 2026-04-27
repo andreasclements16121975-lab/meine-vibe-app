@@ -3017,6 +3017,7 @@ initCoachingAreaDragAndDrop();
 const formationCatalog = FORMATIONS_UNIFIED;
 
 let formationIndex = 0;
+let formationAssignmentsDirty = false;
 const getLineYPositions = (lineCount) => {
   if (lineCount === 4) return [0.18, 0.44, 0.72, 0.88];
   if (lineCount === 5) return [0.16, 0.32, 0.50, 0.70, 0.88];
@@ -3363,6 +3364,7 @@ const assignPlayerToActivePosition = (playerId) => {
   if (!selectedPlayer) return;
 
   formationAssignments.set(activePositionKey, selectedPlayer);
+  formationAssignmentsDirty = true;
   renderFormationPreview();
 };
 function updateFormationLabel() {
@@ -3791,6 +3793,8 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
 
       // 3. Modal schließen
       closeModal();
+    // Modal-Daten sind jetzt synchron mit großem Feld → kein Dirty mehr
+      formationAssignmentsDirty = false;
 
       // 4. Großes Feld neu rendern
       if (typeof renderLineupBuilder === 'function') {
@@ -3821,7 +3825,7 @@ const openModal = () => {
       }
 
       // 2. Vorhandene Spielerzuweisungen vom großen Feld ins Modal übernehmen
-      if (formationAssignments && typeof formationAssignments.clear === 'function') {
+      if (!formationAssignmentsDirty && formationAssignments && typeof formationAssignments.clear === 'function') {
         formationAssignments.clear();
 
         if (lineupState && lineupState.assigned) {
