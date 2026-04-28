@@ -940,10 +940,31 @@ const DEMO_MEMBERS = [
   { id: 'demo-15', name: 'Spieler 15', email: '', role: 'Spieler', team: 'Team A' },
 ];
 async function loadMembers() {
-  if (!isAdmin()) {
-    el('membersList').innerHTML = '';
-    return;
-  }
+  // Tile-Render läuft immer (auch für Nicht-Admins → DEMO_MEMBERS)
+    if (!isAdmin()) {
+      el('membersList').innerHTML = '';
+      const playerMembers = DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
+      const tilesSource = playerMembers.length > 0
+        ? playerMembers
+        : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
+      el('nomPlayerButtons').innerHTML = tilesSource
+        .map((m) => `
+          <button
+            type="button"
+            class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]"
+            data-player-id="${m.id}"
+          >
+            <span class="text-center leading-tight">${m.name}</span>
+          </button>
+        `)
+        .join('');
+      el('nomPlayerButtons')?.querySelectorAll('[data-player-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          el('nomPlayerId').value = button.dataset.playerId || '';
+        });
+      });
+      return;
+    }
 
   const members = await api('/api/members').catch(() => DEMO_MEMBERS);
 
