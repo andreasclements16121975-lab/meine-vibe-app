@@ -470,25 +470,28 @@
 </div>
 
 <div class="bg-white rounded-xl">
-  <div class="grid gap-4 xl:grid-cols-[260px_minmax(0,1fr)] items-start">
+  <div class="grid gap-4 xl:grid-cols-[260px_200px_minmax(0,1fr)] items-start">
         <div>
           <div id="nomPlayerButtons" class="grid grid-cols-3 gap-2"></div>
         </div>
-        <div>
-          <div class="flex flex-col items-center gap-2 mb-3">
-            <button id="openFormationModalBtn" type="button" class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200">Spielsysteme</button>
-            <div class="flex gap-2">
-              <button id="prevFormationSwitchBtn" type="button" class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200">← System</button>
-              <button id="nextFormationSwitchBtn" type="button" class="rounded bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200">System →</button>
+        <div class="flex flex-col items-center gap-3">
+          <button id="openFormationModalBtn" type="button" class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-4 text-sm font-medium text-slate-700 hover:border-emerald-400 hover:bg-emerald-50 transition-colors text-center leading-tight">Klick um dein<br>Spielsystem<br>auszuwählen</button>
+          <div id="formationSwitchArea" class="hidden w-full flex flex-col items-center gap-2">
+            <div class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">Ausgewähltes Spielsystem</div>
+              <div id="currentFormationLabel" class="text-lg font-bold text-slate-800">–</div>
             </div>
-            <div id="currentFormationLabel" class="text-sm font-semibold text-slate-700">–</div>
-          </div>
-          <div class="relative">
-            <div id="lineupCanvasWrap" class="flex w-full justify-end overflow-x-auto overflow-y-hidden">
-              <canvas id="lineupCanvas" class="block max-w-none"></canvas>
+            <div class="flex gap-3">
+              <button id="prevFormationSwitchBtn" type="button" class="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 text-xl font-bold transition-colors">◀</button>
+              <button id="nextFormationSwitchBtn" type="button" class="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 text-xl font-bold transition-colors">▶</button>
             </div>
-            <div id="lineupPitchSlots" class="absolute inset-0"></div>
           </div>
+        </div>
+        <div class="relative">
+          <div id="lineupCanvasWrap" class="flex w-full justify-end overflow-x-auto overflow-y-hidden">
+            <canvas id="lineupCanvas" class="block max-w-none"></canvas>
+          </div>
+          <div id="lineupPitchSlots" class="absolute inset-0"></div>
         </div>
       </div>
         
