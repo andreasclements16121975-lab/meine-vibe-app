@@ -3975,6 +3975,11 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
       } else if (typeof renderLineup === 'function') {
         renderLineup();
       }
+    // Pfeile sichtbar machen nach Systemauswahl
+      const switchArea = el('formationSwitchArea');
+      if (switchArea) {
+        switchArea.classList.remove('hidden');
+      }
 
       // 5. State persistieren falls Funktion existiert
       if (typeof persistLineup === 'function') {
