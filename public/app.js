@@ -4072,7 +4072,22 @@ window.addEventListener('load', () => {
           `).join('');
           container.querySelectorAll('[data-player-id]').forEach((btn) => {
             btn.addEventListener('click', () => {
-              el('nomPlayerId').value = btn.dataset.playerId || '';
+              const playerId = btn.dataset.playerId || '';
+              // Toggle: nochmal klicken = deselektieren
+              if (lineupState.selectedPlayerId === playerId) {
+                lineupState.selectedPlayerId = null;
+                btn.classList.remove('ring-4', 'ring-emerald-400', 'bg-emerald-50');
+                setLineupStatus('Spieler abgewählt.');
+                return;
+              }
+              // Vorherige Markierung entfernen
+              container.querySelectorAll('.player-tile').forEach((t) => {
+                t.classList.remove('ring-4', 'ring-emerald-400', 'bg-emerald-50');
+              });
+              // Neuen Spieler markieren
+              lineupState.selectedPlayerId = playerId;
+              btn.classList.add('ring-4', 'ring-emerald-400', 'bg-emerald-50');
+              setLineupStatus('Jetzt eine Position auf dem Spielfeld anklicken.');
             });
           });
         }
