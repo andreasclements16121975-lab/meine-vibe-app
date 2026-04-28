@@ -4053,6 +4053,25 @@ window.addEventListener('load', () => {
     setupCanvas();
     setupLineupCanvas();
     setupFormationSwitchButtons();
+    // Spieler-Tiles immer anzeigen (Demo-Fallback)
+      setTimeout(() => {
+        const container = el('nomPlayerButtons');
+        if (container && !container.children.length) {
+          const source = (typeof DEMO_MEMBERS !== 'undefined' && DEMO_MEMBERS.length)
+            ? DEMO_MEMBERS.filter((m) => m.role === 'Spieler')
+            : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
+          container.innerHTML = source.map((m) => `
+            <button type="button" class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]" data-player-id="${m.id}">
+              <span class="text-center leading-tight">${m.name}</span>
+            </button>
+          `).join('');
+          container.querySelectorAll('[data-player-id]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              el('nomPlayerId').value = btn.dataset.playerId || '';
+            });
+          });
+        }
+      }, 500);
     initFormationModal();
   }, 100);
 });
