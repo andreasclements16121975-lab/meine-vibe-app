@@ -510,10 +510,11 @@
 <div id="formationModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-2">
   <div class="w-full max-w-5xl rounded-2xl bg-emerald-950 shadow-2xl flex flex-col overflow-hidden" style="max-height:92dvh;width:calc(100vw - 16px)">
   <div class="flex items-center justify-between gap-4 px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4">
-    <div>
-  <h3 class="text-xl sm:text-3xl font-semibold text-white">Spielsystem auswählen</h3>
-  <p id="formationModalCurrentName" class="mt-1 text-sm text-white/80">3-2-1</p>
-</div>
+    <div class="flex items-center gap-3 flex-wrap">
+        <h3 class="text-sm sm:text-base font-semibold text-white">Spielsystem auswählen</h3>
+        <span class="text-white/30">|</span>
+        <p id="formationModalCurrentName" class="text-sm sm:text-base font-bold text-white"></p>
+      </div>
     <button id="closeFormationModalBtn" type="button" class="text-5xl leading-none text-white">×</button>
   </div>
 
