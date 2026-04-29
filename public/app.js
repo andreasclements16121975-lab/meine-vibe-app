@@ -3839,9 +3839,6 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
     ctx.stroke();
   }
 
-  const cornerRadius = Math.max(8, scale);
-  drawCornerArc(fieldX,              goalLineY, cornerRadius, -Math.PI / 2, 0);
-  drawCornerArc(fieldX + fieldWidth, goalLineY, cornerRadius,  Math.PI,     Math.PI * 1.5);
 
   const currentFormation = formationCatalog[formationIndex];
 const positions = getFormationPositions(currentFormation);
