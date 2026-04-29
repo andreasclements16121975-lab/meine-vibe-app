@@ -3689,7 +3689,7 @@ function updateFormationLabel() {
   };
 
   const drawBadge = (x, y, label, playerName = null, scale = 1) => {
-  const radius = 22 * scale;
+  const radius = Math.min(20, Math.round(scale * 2.8));
   const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
   const colors = {
@@ -3732,7 +3732,7 @@ function updateFormationLabel() {
   ctx.fill();
 
   ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 3.5 * scale;
+  ctx.lineWidth = Math.min(2, 3.5 * scale / 10);
   ctx.stroke();
 
   // Position IM Kreis
@@ -3743,7 +3743,6 @@ function updateFormationLabel() {
   ctx.font = `700 ${labelSize}px ${fontFamily}`;
   ctx.fillText(label, x, y + 1);
 
-  ctx.fillText(label, x, y + 1);
 
 if (playerName) {
   const namePx = 9;  // FEST — niemals skaliert
