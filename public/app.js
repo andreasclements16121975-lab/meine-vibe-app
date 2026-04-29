@@ -602,9 +602,9 @@ const assignedPlayer = typeof rawAssigned === 'object' && rawAssigned !== null
               !assignedPlayer ? `border-color: ${badgeColor}80;` : ''
             }"
           >${position.label}</div>
-          <div class="text-[7px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap"
-            ${assignedPlayer ? (assignedPlayer.displayName || assignedPlayer.name || `${assignedPlayer.firstName || ''} ${assignedPlayer.lastName || ''}`.trim() || '') : ''}
-            ${assignedPlayer ? '' : (rawAssigned ? `<div class="text-[6px] text-red-300">ID:${rawAssigned}</div>` : '')}
+          <div class="text-[7px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
+            ${assignedPlayer ? (assignedPlayer.name || '') : ''}
+          </div>
           </div>
         </button>
       `;
