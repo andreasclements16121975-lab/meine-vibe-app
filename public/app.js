@@ -3689,7 +3689,7 @@ function updateFormationLabel() {
   };
 
   const drawBadge = (x, y, label, playerName = null, scale = 1) => {
-  const radius = 22 * scale;
+  const radius = window.innerWidth <= 480 ? Math.round(scale * 13) : 22 * scale;
   const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
   const colors = {
