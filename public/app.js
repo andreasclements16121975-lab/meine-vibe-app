@@ -604,6 +604,7 @@ const assignedPlayer = typeof rawAssigned === 'object' && rawAssigned !== null
           >${position.label}</div>
           <div class="text-[7px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap"
             ${assignedPlayer ? (assignedPlayer.displayName || assignedPlayer.name || `${assignedPlayer.firstName || ''} ${assignedPlayer.lastName || ''}`.trim() || '') : ''}
+            ${assignedPlayer ? '' : (rawAssigned ? `<div class="text-[6px] text-red-300">ID:${rawAssigned}</div>` : '')}
           </div>
         </button>
       `;
