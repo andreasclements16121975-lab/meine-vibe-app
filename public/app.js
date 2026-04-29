@@ -927,21 +927,21 @@ async function forgotPassword() {
   el('authMessage').innerHTML = `${data.message} <a class="text-blue-700 underline" href="${data.resetUrl || '#'}">Reset öffnen</a>`;
 }
 const DEMO_MEMBERS = [
-  { id: 'demo-1', name: 'Spieler 1', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-2', name: 'Spieler 2', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-3', name: 'Spieler 3', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-4', name: 'Spieler 4', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-5', name: 'Spieler 5', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-6', name: 'Spieler 6', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-7', name: 'Spieler 7', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-8', name: 'Spieler 8', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-9', name: 'Spieler 9', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-10', name: 'Spieler 10', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-11', name: 'Spieler 11', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-12', name: 'Spieler 12', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-13', name: 'Spieler 13', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-14', name: 'Spieler 14', email: '', role: 'Spieler', team: 'Team A' },
-  { id: 'demo-15', name: 'Spieler 15', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-1', name: 'Lukas Meier', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-2', name: 'Jonas Weber', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-3', name: 'Felix Braun', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-4', name: 'Leon Richter', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-5', name: 'Niklas Koch', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-6', name: 'Tim Hofmann', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-7', name: 'Paul Wagner', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-8', name: 'Max Schulz', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-9', name: 'Ben Fischer', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-10', name: 'David Klein', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-11', name: 'Elias Wolf', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-12', name: 'Noah Berger', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-13', name: 'Luca Schmitt', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-14', name: 'Finn Keller', email: '', role: 'Spieler', team: 'Team A' },
+  { id: 'demo-15', name: 'Henri Lang', email: '', role: 'Spieler', team: 'Team A' },
 ];
 async function loadMembers() {
   // Tile-Render läuft immer (auch für Nicht-Admins → DEMO_MEMBERS)
@@ -3454,7 +3454,6 @@ const updateApplyButtonState = () => {
       const isSelected =
         assignedPlayer && String(getPlayerId(assignedPlayer) ?? '') === playerId;
 
-      const number = String(index + 1).padStart(2, '0');
       const chipClass = isSelected ? 'fm-chip fm-chip-active' : 'fm-chip';
       const checkmark = isSelected
         ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
@@ -3462,8 +3461,7 @@ const updateApplyButtonState = () => {
 
       chips.push(
         `<button type="button" data-player-id="${playerId.replace(/"/g, '&quot;')}" class="${chipClass}">
-          <span class="fm-chip-num">#${number}</span>
-          <span>${playerName}</span>
+        <span>${playerName}</span>
           ${checkmark}
         </button>`
       );
