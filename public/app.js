@@ -3481,7 +3481,7 @@ const updateApplyButtonState = () => {
       );
       const assignedNumber = assignedIndex >= 0 ? String(assignedIndex + 1).padStart(2, '0') : '--';
       const assignedName = getPlayerName(assignedPlayer) || 'Unbekannt';
-      selectedValue.textContent = `#${assignedNumber} ${assignedName}`;
+      selectedValue.textContent = assignedName;
       selectedWrap.classList.remove('hidden');
     } else if (selectedWrap) {
       selectedWrap.classList.add('hidden');
