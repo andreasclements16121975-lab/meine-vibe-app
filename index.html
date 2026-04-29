@@ -508,7 +508,7 @@
       </div>
     </section>
 <div id="formationModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4">
-  <div class="w-full max-w-5xl rounded-2xl bg-emerald-950 shadow-2xl flex flex-col max-h-[95dvh]">
+  <div class="w-full max-w-5xl rounded-2xl bg-emerald-950 shadow-2xl flex flex-col" style="max-height:92dvh">
   <div class="flex items-center justify-between gap-4 px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4">
     <div>
   <h3 class="text-xl sm:text-3xl font-semibold text-white">Spielsystem auswählen</h3>
@@ -517,11 +517,11 @@
     <button id="closeFormationModalBtn" type="button" class="text-5xl leading-none text-white">×</button>
   </div>
 
-  <div class="px-3 sm:px-6">
-    <div id="formationModalBody" class="w-full min-h-[200px] sm:min-h-[350px] overflow-auto rounded-xl flex-1"></div>
-  </div>
+  <div class="flex-1 overflow-y-auto px-3 sm:px-6 py-2">
+  <div id="formationModalBody" class="w-full rounded-xl"></div>
+</div>
 
-  <div class="flex items-center justify-between gap-3 px-4 pt-3 pb-4 sm:px-6 sm:pt-4 sm:pb-6">
+  <div class="flex-shrink-0 flex items-center justify-between gap-3 px-4 pt-2 pb-4 sm:px-6 sm:pt-4 sm:pb-6 border-t border-white/10">
   <div class="flex gap-3">
     <button id="prevFormationBtn" type="button" class="px-2 py-1.5 text-[11px] font-medium text-white/70 hover:text-white whitespace-nowrap sm:px-4 sm:py-2 sm:text-sm">
         ← Zurück
