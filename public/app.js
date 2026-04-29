@@ -3743,21 +3743,19 @@ function updateFormationLabel() {
   ctx.font = `700 ${labelSize}px ${fontFamily}`;
   ctx.fillText(label, x, y + 1);
 
-  // Spielername UNTER dem Kreis - 15px mit weichem Schatten
+  ctx.fillText(label, x, y + 1);
+  // Spielername UNTER dem Kreis
   if (playerName) {
-    const shortName = playerName.length > 14 ? playerName.slice(0, 13) + '…' : playerName;
-    const nameSize = Math.max(17, Math.round(18 * scale));
-
+    const maxChars = scale < 0.7 ? 8 : 11;
+    const shortName = playerName.length > maxChars ? playerName.slice(0, maxChars - 1) + '…' : playerName;
+    const nameSize = Math.max(9, Math.round(11 * scale));
     ctx.font = `600 ${nameSize}px ${fontFamily}`;
-
-    // Weicher Schatten (blur) statt harter Outline
-    ctx.shadowColor = 'rgba(0,0,0,0.7)';
-    ctx.shadowBlur = 4;
+    ctx.shadowColor = 'rgba(0,0,0,0.85)';
+    ctx.shadowBlur = 3;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 1;
-
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(shortName, x, y + radius + nameSize - 2);
+    ctx.fillText(shortName, x, y + radius + nameSize + 1);
   }
 
   ctx.restore();
