@@ -3772,7 +3772,7 @@ if (playerName) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, drawWidth, drawHeight);
 
-  const padding = 0;
+  const padding = 6;
 const halfPitchRatio = 68 / 52.5;
 let fieldWidth = drawWidth;
 let fieldHeight = fieldWidth / halfPitchRatio;
