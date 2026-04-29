@@ -3551,10 +3551,7 @@ function updateFormationLabel() {
   // Konvertiere lines-Format zu lines-Property für getFormationSizeHint
   const formationForHint = formation;
   const hint = getFormationSizeHint(formationForHint);
-  currentNameLabel.innerHTML = `
-    <span class="text-2xl font-bold">${formation.name}</span>
-    <span class="block text-xs font-medium text-white/60 mt-1">${hint}</span>
-  `;
+  currentNameLabel.innerHTML = `${formation.name} <span class="text-white/50 font-normal">· ${hint}</span>`;
 }
   const renderFormationPreview = () => {
   if (!body) return;
