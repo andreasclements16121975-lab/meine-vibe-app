@@ -383,10 +383,10 @@ function setLineupStore(store) {
 }
 
 function buildFallbackLineupPlayers() {
-  return Array.from({ length: 18 }, (_, index) => ({
-    id: `fallback-player-${index + 1}`,
-    name: `Spieler ${index + 1}`,
-    team: 'Testkader',
+  return DEMO_MEMBERS.map((m, i) => ({
+    id: m.id,
+    name: m.name,
+    team: m.team || 'Testkader',
     role: 'Spieler'
   }));
 }
@@ -950,7 +950,7 @@ async function loadMembers() {
       const playerMembers = DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
       const tilesSource = playerMembers.length > 0
         ? playerMembers
-        : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
+        : DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
       el('nomPlayerButtons').innerHTML = tilesSource
         .map((m) => `
           <button
@@ -981,7 +981,7 @@ async function loadMembers() {
 const playerMembers = members.filter((m) => m.role === 'Spieler');
     const tilesSource = playerMembers.length > 0
       ? playerMembers
-      : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
+      : DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
   
 el('nomPlayerButtons').innerHTML = tilesSource
     .map(
