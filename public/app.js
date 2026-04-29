@@ -3795,8 +3795,8 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
   ctx.strokeStyle = 'rgba(255,255,255,0.96)';
   ctx.fillStyle   = 'rgba(255,255,255,0.96)';
   ctx.lineWidth   = 2.5;
-  ctx.lineCap     = 'round';
-  ctx.lineJoin    = 'round';
+  ctx.lineCap     = 'butt';
+  ctx.lineJoin    = 'miter';
 
   ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
 
