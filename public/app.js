@@ -3744,19 +3744,21 @@ function updateFormationLabel() {
   ctx.fillText(label, x, y + 1);
 
   ctx.fillText(label, x, y + 1);
-  // Spielername UNTER dem Kreis
-  if (playerName) {
-    const maxChars = scale < 0.7 ? 8 : 11;
-    const shortName = playerName.length > maxChars ? playerName.slice(0, maxChars - 1) + '…' : playerName;
-    const nameSize = Math.max(9, Math.round(11 * scale));
-    ctx.font = `600 ${nameSize}px ${fontFamily}`;
-    ctx.shadowColor = 'rgba(0,0,0,0.85)';
-    ctx.shadowBlur = 3;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 1;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(shortName, x, y + radius + nameSize + 1);
-  }
+
+if (playerName) {
+  const namePx = 9;  // FEST — niemals skaliert
+  const maxChars = 7;
+  const shortName = playerName.length > maxChars 
+    ? playerName.slice(0, maxChars - 1) + '…' 
+    : playerName;
+  ctx.font = `600 ${namePx}px ${fontFamily}`;
+  ctx.shadowColor = 'rgba(0,0,0,0.9)';
+  ctx.shadowBlur = 3;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 1;
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(shortName, x, y + radius + namePx + 2);
+}
 
   ctx.restore();
 };
