@@ -3961,6 +3961,7 @@ pickPlayersFromFormationBtn?.addEventListener('click', () => {
           console.log('[Spielsystem übernehmen] slot:', slotId, 'player:', player, 'extractedId:', playerId);
           if (playerId !== null && playerId !== undefined) {
             lineupState.assigned[slotId] = playerId;
+            console.log('[DEBUG] assigned slotId:', slotId, 'playerId:', playerId, 'found:', getLineupPlayerById(playerId)?.name);
           }
         });
       }
