@@ -3854,7 +3854,8 @@ for (const position of positions) {
   const badgeY = fieldY + fieldHeight * position.y;
 
   const assignedPlayer = getAssignedPlayer(position.slotId || position.key);
-    const badgeScale = fieldWidth < 400 ? 0.95 : fieldWidth < 700 ? 1.0 : 1.0;
+    const isMobile = window.innerWidth <= 480;
+const badgeScale = isMobile ? (fieldWidth < 400 ? 0.55 : 0.6) : (fieldWidth < 400 ? 0.95 : 1.0);
     drawBadge(
       badgeX,
       badgeY,
@@ -3868,7 +3869,7 @@ for (const position of positions) {
     label: position.label,
     x: badgeX,
     y: badgeY,
-    radius: 28
+    radius: window.innerWidth <= 480 ? 16 : 28
   });
 }
     renderPlayerPicker();
