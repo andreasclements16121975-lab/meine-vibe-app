@@ -3764,8 +3764,8 @@ if (playerName) {
 
   const draw = () => {
   const dpr = window.devicePixelRatio || 1;
-  const drawWidth  = Math.max(320, body.clientWidth  || 760);
-  const drawHeight = Math.max(360, body.clientHeight || 560);
+  const drawWidth = Math.min(body.clientWidth || 320, window.innerWidth - 16);
+  const drawHeight = Math.round(drawWidth * (52.5 / 68));
   canvas.style.width  = `${drawWidth}px`;
   canvas.style.height = `${drawHeight}px`;
   canvas.width  = Math.round(drawWidth  * dpr);
