@@ -600,7 +600,7 @@ function renderLineupPitch() {
             }"
           >${position.label}</div>
           <div class="text-[7px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap"
-            ${assignedPlayer ? assignedPlayer.name : ''}
+            ${assignedPlayer ? (assignedPlayer.displayName || assignedPlayer.name || `${assignedPlayer.firstName || ''} ${assignedPlayer.lastName || ''}`.trim() || '') : ''}
           </div>
         </button>
       `;
