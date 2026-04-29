@@ -3798,7 +3798,9 @@ ctx.fillRect(0, 0, drawWidth, drawHeight);
   ctx.lineCap     = 'butt';
   ctx.lineJoin    = 'miter';
 
-  ctx.strokeRect(fieldX, fieldY, fieldWidth, fieldHeight);
+  ctx.beginPath();
+ctx.rect(fieldX + 0.5, fieldY + 0.5, fieldWidth - 1, fieldHeight - 1);
+ctx.stroke();
 
   ctx.beginPath();
   ctx.moveTo(fieldX, halfLineY);
