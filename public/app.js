@@ -592,14 +592,14 @@ function renderLineupPitch() {
           style="left:${position.x}%; top:${position.y}%"
         >
           <div
-            class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-[11px] font-bold uppercase text-white shadow-lg ${
+            class="w-6 h-6 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-[8px] sm:text-[11px] font-bold uppercase text-white shadow-lg ${
               assignedPlayer ? '' : 'opacity-40 border-2 border-dashed border-white/40'
             } ${isSelected ? 'ring-4 ring-lime-300' : ''}"
             style="background-color: ${assignedPlayer ? badgeColor : 'transparent'}; ${
               !assignedPlayer ? `border-color: ${badgeColor}80;` : ''
             }"
           >${position.label}</div>
-          <div class="text-[11px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
+          <div class="text-[7px] sm:text-xs font-semibold leading-tight text-white whitespace-nowrap"
             ${assignedPlayer ? assignedPlayer.name : ''}
           </div>
         </button>
