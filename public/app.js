@@ -3778,7 +3778,7 @@ function updateFormationLabel() {
 
 
 if (playerName) {
-  const namePx = 9;  // FEST — niemals skaliert
+  const namePx = window.innerWidth >= 1024 ? 14 : 9;  // Desktop größer, Mobil/Tablet wie zuvor
   const maxChars = 7;
   const shortName = playerName.length > maxChars 
     ? playerName.slice(0, maxChars - 1) + '…' 
