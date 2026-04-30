@@ -1244,8 +1244,87 @@ function getHolidayMap(year) {
 
   return Object.fromEntries(holidays.map((holiday) => [formatDateKey(holiday.date), holiday.name]));
 }
+function getNextEvent(events) {
+  if (!Array.isArray(events) || events.length === 0) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcoming = events
+    .filter(e => {
+      if (!e || !e.date) return false;
+      const eventDate = new Date(e.date);
+      return !isNaN(eventDate) && eventDate >= today;
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  return upcoming[0] || null;
+}
+
+function formatEventDistance(dateStr) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const eventDate = new Date(dateStr);
+  eventDate.setHours(0, 0, 0, 0);
+
+  const diffDays = Math.round((eventDate - today) / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return 'HEUTE';
+  if (diffDays === 1) return 'MORGEN';
+  if (diffDays < 7) return `IN ${diffDays} TAGEN`;
+  if (diffDays < 14) return 'NÄCHSTE WOCHE';
+  if (diffDays < 30) return `IN ${Math.round(diffDays / 7)} WOCHEN`;
+  return `AM ${eventDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}`;
+}
+
+function formatEventLabel(event) {
+  const title = (event.title || '').toLowerCase();
+  if (title.includes('training')) return 'NÄCHSTES TRAINING';
+  if (title.includes('turnier')) return 'NÄCHSTES TURNIER';
+  if (title.includes('spiel')) return 'NÄCHSTES SPIEL';
+  if (title.includes('event')) return 'NÄCHSTES EVENT';
+  return 'NÄCHSTER TERMIN';
+}
+
+function formatEventTitle(event) {
+  const title = event.title || 'Termin';
+  const opponent = event.opponent || '';
+  const homeAway = event.homeAway || '';
+  const address = event.address || '';
+
+  const lower = title.toLowerCase();
+  const oppHtml = opponent ? `<em class="italic font-semibold text-emerald-700">${opponent}</em>` : '';
+
+  if (lower.includes('meisterschaftsspiel') || lower.includes('freundschaftsspiel')) {
+    if (!opponent) return title;
+    return homeAway === 'Heimspiel' ? `Heimspiel gegen ${oppHtml}` : `Auswärts bei ${oppHtml}`;
+  }
+  if (lower.includes('turnier')) {
+    return address ? `Turnier in <em class="italic font-semibold text-emerald-700">${address.split(',')[0]}</em>` : 'Turnier';
+  }
+  if (lower.includes('training')) return 'Training';
+  if (lower.includes('event')) return opponent ? `Event: ${oppHtml}` : 'Event';
+  return title;
+}
+
+function renderNextEvent() {
+  const box = document.getElementById('nextEventBox');
+  const labelEl = document.getElementById('nextEventLabel');
+  const titleEl = document.getElementById('nextEventTitle');
+  if (!box || !labelEl || !titleEl) return;
+
+  const next = getNextEvent(calendarEvents);
+  if (!next) {
+    box.classList.add('hidden');
+    return;
+  }
+
+  labelEl.textContent = `${formatEventLabel(next)} · ${formatEventDistance(next.date)}`;
+  titleEl.innerHTML = formatEventTitle(next);
+  box.classList.remove('hidden');
+}
 function renderCalendar(events) {
   calendarEvents = events;
+  renderNextEvent();
   const now = new Date();
   const y = calendarViewDate.getFullYear();
   const m = calendarViewDate.getMonth();
