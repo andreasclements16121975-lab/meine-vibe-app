@@ -965,12 +965,12 @@ const DEMO_MEMBERS = [
 async function loadMembers() {
   // Tile-Render läuft immer (auch für Nicht-Admins → DEMO_MEMBERS)
     if (!isAdmin()) {
-      el('membersList').innerHTML = '';
+      if (el('membersList')) el('membersList').innerHTML = '';
       const playerMembers = DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
       const tilesSource = playerMembers.length > 0
         ? playerMembers
         : DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
-      el('nomPlayerButtons').innerHTML = tilesSource
+      if (el('nomPlayerButtons')) el('nomPlayerButtons').innerHTML = tilesSource
         .map((m) => `
           <button
             type="button"
