@@ -3600,7 +3600,7 @@ function updateFormationLabel() {
         .fm-chip-clear{background:transparent;color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.15);}
         .fm-chip-clear:hover{background:rgba(255,255,255,0.08);color:#ffffff;}
         @media (min-width: 1024px) {
-              .fm-chip{font-size:15px;padding:8px 14px;gap:8px;}
+              .fm-chip{font-size:25px;padding:8px 14px;gap:8px;}
               .fm-chip-num{font-size:13px;}
             }
         .fm-pos-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:#bef264;color:#052e16;font-weight:700;font-size:11px;letter-spacing:0.5px;}
