@@ -70,7 +70,13 @@
     <section id="dashboardHome" class="space-y-4">
   <div>
     <h2 class="text-lg sm:text-2xl font-bold tracking-tight text-slate-900">Dashboard</h2>
-    <div id="nextEventBox" class="mt-2"></div>
+    <div id="nextEventBox" class="mt-2 hidden">
+      <div class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-600">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+        <span id="nextEventLabel"></span>
+      </div>
+      <div id="nextEventTitle" class="mt-0.5 text-base sm:text-xl font-bold text-slate-900 leading-tight"></div>
+    </div>
   </div>
 
   <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
