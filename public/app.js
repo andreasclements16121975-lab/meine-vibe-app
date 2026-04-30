@@ -3288,6 +3288,36 @@ const getPlayerName = (player) => {
     'Unbekannt'
   );
 };
+  const getPlayerShortName = (player, allPlayers = []) => {
+  if (player == null) return '';
+  if (typeof player === 'string') return player.split(' ')[0] || '';
+
+  // Vor- und Nachname ermitteln (notfalls aus Vollnamen splitten)
+  const fullName = player.displayName || player.name || player.fullName || '';
+  const parts = fullName.trim().split(/\s+/);
+  const first = player.firstName || parts[0] || player.nickname || 'Unbekannt';
+  const last = player.lastName || (parts.length > 1 ? parts.slice(1).join(' ') : '');
+
+  if (!first) return 'Unbekannt';
+
+  // Duplikate prüfen: andere Spieler mit gleichem Vornamen?
+  const myId = player.playerId ?? player.uuid ?? player.id;
+  const duplicates = (Array.isArray(allPlayers) ? allPlayers : []).filter(p => {
+    if (!p || p === player) return false;
+    const pId = p.playerId ?? p.uuid ?? p.id;
+    if (myId && pId && myId === pId) return false;
+
+    const pFullName = p.displayName || p.name || p.fullName || '';
+    const pParts = pFullName.trim().split(/\s+/);
+    const pFirst = p.firstName || pParts[0] || '';
+    return pFirst && pFirst.toLowerCase() === first.toLowerCase();
+  });
+
+  if (duplicates.length === 0) return first;
+
+  // Bei Duplikat: "Max M."
+  return last ? `${first} ${last.charAt(0).toUpperCase()}.` : first;
+};
   const getPlayerSource = () => {
   if (Array.isArray(lineupState?.players) && lineupState.players.length) {
     return lineupState.players;
@@ -3450,7 +3480,7 @@ const updateApplyButtonState = () => {
 
     availablePlayers.forEach((player, index) => {
       const playerId = String(getPlayerId(player) ?? '');
-      const playerName = getPlayerName(player) || 'Unbekannter Spieler';
+      const playerName = getPlayerShortName(player, availablePlayers) || 'Unbekannter Spieler';
       const isSelected =
         assignedPlayer && String(getPlayerId(assignedPlayer) ?? '') === playerId;
 
@@ -3480,7 +3510,7 @@ const updateApplyButtonState = () => {
         (p) => String(getPlayerId(p) ?? '') === String(getPlayerId(assignedPlayer) ?? '')
       );
       const assignedNumber = assignedIndex >= 0 ? String(assignedIndex + 1).padStart(2, '0') : '--';
-      const assignedName = getPlayerName(assignedPlayer) || 'Unbekannt';
+      const assignedName = getPlayerShortName(assignedPlayer, availablePlayers) || 'Unbekannt';
       selectedValue.textContent = assignedName;
       selectedWrap.classList.remove('hidden');
     } else if (selectedWrap) {
@@ -3858,7 +3888,7 @@ const badgeScale = isMobile ? (fieldWidth < 400 ? 0.55 : 0.6) : (fieldWidth < 40
       badgeX,
       badgeY,
       position.label,
-      assignedPlayer ? getPlayerName(assignedPlayer) : null,
+      assignedPlayer ? getPlayerShortName(assignedPlayer, (typeof availablePlayers !== 'undefined' ? availablePlayers : (lineupState?.players || []))) : null,
       badgeScale
     );
 
