@@ -43,8 +43,8 @@
       </div>
     </header>
 <main class="max-w-7xl mx-auto p-4 space-y-6">
-  <section class="grid md:grid-cols-2 gap-4">
-    <div class="bg-white rounded-xl border p-4">
+  <section id="authSection" class="grid md:grid-cols-2 gap-4">
+    <div id="loginSection" class="bg-white rounded-xl border p-4">
       <h2 class="font-semibold mb-2">Login</h2>
       <div class="space-y-2">
         <input id="loginEmail" class="w-full border rounded p-2" placeholder="E-Mail" />
@@ -54,7 +54,7 @@
         <p id="authMessage" class="text-sm text-slate-600"></p>
       </div>
     </div>
-    <div class="bg-white rounded-xl border p-4">
+    <div id="brandingSection" class="bg-white rounded-xl border p-4">
       <h2 class="font-semibold mb-2">Branding / Vereinslogo</h2>
       <input id="logoInput" type="file" accept="image/*" class="mb-2" />
       <button id="uploadLogoBtn" class="px-4 py-2 rounded bg-sky-600 text-white">Logo hochladen</button>
