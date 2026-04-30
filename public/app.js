@@ -835,6 +835,7 @@ function renderSessionUi() {
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
   el('dashboardHome')?.classList.remove('hidden');
     el('authSection')?.classList.add('hidden');
+    el('logoutBtn')?.classList.remove('hidden');
 el('dashboardTabs')?.parentElement?.classList.add('hidden');
 document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 }
@@ -878,7 +879,24 @@ function initDashboardTabs() {
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
 }
+function logout() {
+  // Token & User aus dem Speicher löschen
+  localStorage.removeItem('token');
+  if (typeof token !== 'undefined') token = null;
+  if (typeof setStoredUser === 'function') setStoredUser(null);
+  if (typeof currentUser !== 'undefined') currentUser = null;
 
+  // Login-Felder leeren
+  if (el('loginEmail')) el('loginEmail').value = '';
+  if (el('loginPassword')) el('loginPassword').value = '';
+
+  // UI zurücksetzen
+  el('authSection')?.classList.remove('hidden');
+  el('logoutBtn')?.classList.add('hidden');
+  el('dashboardShell')?.classList.add('hidden');
+  setAuthInfo('');
+  el('authMessage').textContent = 'Du bist abgemeldet.';
+}
 async function login() {
   const email = el('loginEmail').value.trim().toLowerCase();
   const password = el('loginPassword').value;
@@ -3235,6 +3253,7 @@ async function bootstrapData() {
 const on = (id, event, handler) => el(id)?.addEventListener(event, handler);
 
 on('loginBtn', 'click', login);
+  on('logoutBtn', 'click', logout);
 on('forgotBtn', 'click', forgotPassword);
 on('saveMemberBtn', 'click', saveMember);
 on('uploadLogoBtn', 'click', uploadLogo);
