@@ -1334,7 +1334,7 @@ function renderNextEvent() {
 
   labelEl.textContent = formatEventLabel(next);
 
-  titleEl.textContent = (next.opponent || next.title || 'Termin').trim();
+  titleEl.textContent = ((next.opponent || '').split(',')[0] || next.title || 'Termin').trim();
 
   const today = new Date(); today.setHours(0,0,0,0);
   const eventDate = new Date(next.date); eventDate.setHours(0,0,0,0);
