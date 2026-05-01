@@ -1279,19 +1279,17 @@ function getNextEvent(events) {
 }
 
 function formatEventDistance(dateStr) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
   const eventDate = new Date(dateStr);
-  eventDate.setHours(0, 0, 0, 0);
-
-  const diffDays = Math.round((eventDate - today) / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) return 'HEUTE';
-  if (diffDays === 1) return 'MORGEN';
-  if (diffDays < 7) return `IN ${diffDays} TAGEN`;
-  if (diffDays < 14) return 'NÄCHSTE WOCHE';
-  if (diffDays < 30) return `IN ${Math.round(diffDays / 7)} WOCHEN`;
-  return `AM ${eventDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })}`;
+  
+  // Wochentag + Datum (z. B. "SA · 09. MAI")
+  const days = ['SO', 'MO', 'DI', 'MI', 'DO', 'FR', 'SA'];
+  const months = ['JAN', 'FEB', 'MÄR', 'APR', 'MAI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEZ'];
+  
+  const dayName = days[eventDate.getDay()];
+  const dayNum = String(eventDate.getDate()).padStart(2, '0');
+  const monthName = months[eventDate.getMonth()];
+  
+  return `${dayName} · ${dayNum}. ${monthName}`;
 }
 
 function formatEventLabel(event) {
