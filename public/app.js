@@ -1307,39 +1307,17 @@ function formatEventLabel(event) {
 
 function formatEventTitle(event) {
   const title = event.title || 'Termin';
-  const opponent = event.opponent || '';
-  const address = event.address || '';
+  const opponent = (event.opponent || '').split(',')[0].trim();
   const lower = title.toLowerCase();
-  const oppHtml = opponent ? `<em class="italic font-semibold text-emerald-700">${opponent}</em>` : '';
-  
-  // Ort extrahieren (erste Zeile vor Komma)
-  const city = address ? address.split(',')[0].trim() : '';
-  
-  // Basis-Titel
-  let mainLine = '';
+  const oppHtml = opponent ? `<strong>${opponent}</strong>` : '';
+
   if (lower.includes('meisterschaftsspiel') || lower.includes('freundschaftsspiel')) {
-    mainLine = opponent ? `VS. ${oppHtml}` : 'Spiel';
-  } else if (lower.includes('turnier')) {
-    mainLine = city ? `Turnier in ${city}` : 'Turnier';
-  } else if (lower.includes('training')) {
-    mainLine = 'Training';
-  } else if (lower.includes('event')) {
-    mainLine = opponent ? `Event: ${oppHtml}` : 'Event';
-  } else {
-    mainLine = title;
+    return opponent ? `VS. ${oppHtml}` : 'Spiel';
   }
-
-  // Details-Zeile mit Icons (wie in Bild 1)
-  let detailsLine = '';
-  const details = [];
-  
-  if (city) details.push(`📍 ${city}`);
-  
-  if (details.length > 0) {
-    detailsLine = `<div class="text-xs text-slate-600 mt-0.5">${details.join(' · ')}</div>`;
-  }
-
-  return `<div>${mainLine}</div>${detailsLine}`;
+  if (lower.includes('turnier')) return 'Turnier';
+  if (lower.includes('training')) return 'Training';
+  if (lower.includes('event')) return opponent ? `Event: ${oppHtml}` : 'Event';
+  return title;
 }
 
 function renderNextEvent() {
