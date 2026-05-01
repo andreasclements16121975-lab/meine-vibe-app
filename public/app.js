@@ -1324,16 +1324,48 @@ function renderNextEvent() {
   const box = document.getElementById('nextEventBox');
   const labelEl = document.getElementById('nextEventLabel');
   const titleEl = document.getElementById('nextEventTitle');
+  const daysEl = document.getElementById('nextEventDays');
+  const detailsEl = document.getElementById('nextEventDetails');
+  const playersEl = document.getElementById('nextEventPlayers');
+
   if (!box || !labelEl || !titleEl) return;
 
   const next = getNextEvent(calendarEvents);
-  if (!next) {
-    box.classList.add('hidden');
-    return;
+  if (!next) { box.classList.add('hidden'); return; }
+
+  labelEl.textContent = formatEventLabel(next);
+
+  const opponent = (next.opponent || '').split(',')[0].trim();
+  titleEl.textContent = opponent || next.title || 'Termin';
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const eventDate = new Date(next.date); eventDate.setHours(0,0,0,0);
+  const diffDays = Math.round((eventDate - today) / 86400000);
+  if (daysEl) daysEl.textContent = diffDays === 0 ? 'Heute' : diffDays === 1 ? 'Morgen' : diffDays;
+
+  if (detailsEl) {
+    const dn = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+    const mn = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+    const chips = [];
+    let dateStr = `${dn[eventDate.getDay()]} · ${String(eventDate.getDate()).padStart(2,'0')}. ${mn[eventDate.getMonth()]}`;
+    const startTime = next.startTime || next.time || '';
+    if (startTime) dateStr += ` · ${startTime} Uhr`;
+    chips.push(dateStr);
+    const city = (next.address || '').split(',')[0].trim();
+    if (city) chips.push(`📍 ${city}`);
+    const meetTime = next.meetTime || next.treffzeit || '';
+    if (meetTime) chips.push(`⏱ Treff: ${meetTime}`);
+    detailsEl.innerHTML = chips.map(c =>
+      `<span class="px-2.5 py-1 rounded-full text-xs font-medium" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);">${c}</span>`
+    ).join('');
   }
 
-  labelEl.textContent = `${formatEventLabel(next)} · ${formatEventDistance(next.date)}`;
-  titleEl.innerHTML = formatEventTitle(next);
+  if (playersEl) {
+    const nom = next.nominationsCount || 0;
+    const max = next.maxPlayers || 0;
+    playersEl.textContent = (nom && max) ? `👥 ${nom} / ${max} zugesagt` : '';
+  }
+
   box.classList.remove('hidden');
 }
 function renderCalendar(events) {
