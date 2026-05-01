@@ -836,6 +836,7 @@ function renderSessionUi() {
   el('dashboardHome')?.classList.remove('hidden');
     el('authSection')?.classList.add('hidden');
     el('logoutBtn')?.classList.remove('hidden');
+    renderNextEvent();
 el('dashboardTabs')?.parentElement?.classList.add('hidden');
 document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 }
