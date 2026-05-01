@@ -1294,11 +1294,15 @@ function formatEventDistance(dateStr) {
 
 function formatEventLabel(event) {
   const title = (event.title || '').toLowerCase();
-  if (title.includes('training')) return 'NÄCHSTES TRAINING';
-  if (title.includes('turnier')) return 'NÄCHSTES TURNIER';
-  if (title.includes('spiel')) return 'NÄCHSTES SPIEL';
-  if (title.includes('event')) return 'NÄCHSTES EVENT';
-  return 'NÄCHSTER TERMIN';
+  const homeAway = (event.homeAway || '').toLowerCase();
+  
+  if (title.includes('training')) return 'TRAINING';
+  if (title.includes('turnier')) return 'TURNIER';
+  if (title.includes('spiel')) {
+    return homeAway.includes('heim') ? 'HEIMSPIEL' : 'AUSWÄRTS';
+  }
+  if (title.includes('event')) return 'EVENT';
+  return 'TERMIN';
 }
 
 function formatEventTitle(event) {
