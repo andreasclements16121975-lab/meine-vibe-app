@@ -1264,7 +1264,18 @@ function getHolidayMap(year) {
   return Object.fromEntries(holidays.map((holiday) => [formatDateKey(holiday.date), holiday.name]));
 }
 function getNextEvent(events) {
-  if (!Array.isArray(events) || events.length === 0) return null;
+  const testEvent = {
+    title: 'Meisterschaftsspiel',
+    opponent: 'TuS Köln rrh. 1874 e. V.',
+    homeAway: 'Heimspiel',
+    address: 'Merheimer Heideweg, Köln-Kalk, Deutschland',
+    date: new Date(Date.now() + 6 * 86400000).toISOString().slice(0, 10),
+    kickoffTime: '15:00',
+    meetingTime: '13:30',
+    nominationsCount: 12,
+    maxPlayers: 15
+  };
+  if (!Array.isArray(events) || events.length === 0) return testEvent;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
