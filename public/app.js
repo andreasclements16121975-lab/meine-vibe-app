@@ -1306,22 +1306,38 @@ function formatEventLabel(event) {
 function formatEventTitle(event) {
   const title = event.title || 'Termin';
   const opponent = event.opponent || '';
-  const homeAway = event.homeAway || '';
   const address = event.address || '';
-
   const lower = title.toLowerCase();
   const oppHtml = opponent ? `<em class="italic font-semibold text-emerald-700">${opponent}</em>` : '';
-
+  
+  // Ort extrahieren (erste Zeile vor Komma)
+  const city = address ? address.split(',')[0].trim() : '';
+  
+  // Basis-Titel
+  let mainLine = '';
   if (lower.includes('meisterschaftsspiel') || lower.includes('freundschaftsspiel')) {
-    if (!opponent) return title;
-    return homeAway === 'Heimspiel' ? `Heimspiel gegen ${oppHtml}` : `Auswärts bei ${oppHtml}`;
+    mainLine = opponent ? `VS. ${oppHtml}` : 'Spiel';
+  } else if (lower.includes('turnier')) {
+    mainLine = city ? `Turnier in ${city}` : 'Turnier';
+  } else if (lower.includes('training')) {
+    mainLine = 'Training';
+  } else if (lower.includes('event')) {
+    mainLine = opponent ? `Event: ${oppHtml}` : 'Event';
+  } else {
+    mainLine = title;
   }
-  if (lower.includes('turnier')) {
-    return address ? `Turnier in <em class="italic font-semibold text-emerald-700">${address.split(',')[0]}</em>` : 'Turnier';
+
+  // Details-Zeile mit Icons (wie in Bild 1)
+  let detailsLine = '';
+  const details = [];
+  
+  if (city) details.push(`📍 ${city}`);
+  
+  if (details.length > 0) {
+    detailsLine = `<div class="text-xs text-slate-600 mt-0.5">${details.join(' · ')}</div>`;
   }
-  if (lower.includes('training')) return 'Training';
-  if (lower.includes('event')) return opponent ? `Event: ${oppHtml}` : 'Event';
-  return title;
+
+  return `<div>${mainLine}</div>${detailsLine}`;
 }
 
 function renderNextEvent() {
