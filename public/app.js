@@ -1332,9 +1332,11 @@ function renderNextEvent() {
   const next = getNextEvent(calendarEvents);
   if (!next) { box.classList.add('hidden'); return; }
 
-  labelEl.textContent = formatEventLabel(next);
+  labelEl.textContent = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
 
-  titleEl.textContent = ((next.opponent || '').split(',')[0] || next.title || 'Termin').trim();
+  const fullOpponent = (next.opponent || '').split(',')[0].trim();
+  const shortOpponent = fullOpponent.replace(/\s+\d{4}.*$/, '').trim();
+  titleEl.textContent = shortOpponent || next.title || 'Termin';
 
   const today = new Date(); today.setHours(0,0,0,0);
   const eventDate = new Date(next.date); eventDate.setHours(0,0,0,0);
@@ -1344,18 +1346,15 @@ function renderNextEvent() {
   if (detailsEl) {
     const dn = ['So','Mo','Di','Mi','Do','Fr','Sa'];
     const mn = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-    const chips = [];
-    let dateStr = `${dn[eventDate.getDay()]} · ${String(eventDate.getDate()).padStart(2,'0')}. ${mn[eventDate.getMonth()]}`;
-    const startTime = next.kickoffTime || '';
-    if (startTime) dateStr += ` · ${startTime} Uhr`;
-    chips.push(dateStr);
+    const dateStr = `${dn[eventDate.getDay()]} · ${String(eventDate.getDate()).padStart(2,'0')}. ${mn[eventDate.getMonth()]}${next.kickoffTime ? ' · ' + next.kickoffTime : ''}`;
     const city = (next.address || '').split(',')[0].trim();
-    if (city) chips.push(`📍 ${city}`);
-    const meetTime = next.meetingTime || '';
-    if (meetTime) chips.push(`⏱ Treff: ${meetTime}`);
-    detailsEl.innerHTML = chips.map(c =>
-      `<span class="px-2.5 py-1 rounded-full text-xs font-medium" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);">${c}</span>`
-    ).join('');
+    const meetTime = next.meetingTime ? next.meetingTime + ' Uhr' : '';
+    const cols = [
+      { label: 'DATUM', value: dateStr },
+      { label: 'ORT', value: city ? `📍 ${city}` : '' },
+      { label: 'TREFF', value: meetTime ? `⏱ ${meetTime}` : '' },
+    ].filter(c => c.value);
+    detailsEl.innerHTML = `<div class="flex gap-6 mt-3 border-t border-white/10 pt-3">${cols.map(c => `<div><div class="text-white/40 text-[9px] font-bold uppercase tracking-widest mb-0.5">${c.label}</div><div class="text-white text-xs font-semibold">${c.value}</div></div>`).join('')}</div>`;
   }
 
   if (playersEl) {
