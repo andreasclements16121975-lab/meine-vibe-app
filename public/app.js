@@ -1319,7 +1319,7 @@ function formatEventTitle(event) {
   if (lower.includes('event')) return opponent ? `Event: ${oppHtml}` : 'Event';
   return title;
 }
-
+function renderNextEvent() {
   const box = document.getElementById('nextEventBox');
   const labelEl = document.getElementById('nextEventLabel');
   const titleEl = document.getElementById('nextEventTitle');
