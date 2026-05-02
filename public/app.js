@@ -1334,7 +1334,19 @@ function formatEventTitle(event) {
   return title;
 }
 function setBodyScroll(allow) {
-  document.body.style.overflow = allow ? '' : 'hidden';
+  if (allow) {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.height = '';
+  } else {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+  }
 }
 function renderNextEvent() {
   const box = document.getElementById('nextEventBox');
