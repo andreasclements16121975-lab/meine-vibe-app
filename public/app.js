@@ -879,7 +879,6 @@ function initDashboardTabs() {
   el('backToDashboardBtn')?.addEventListener('click', () => {
     showDashboardHome();
   });
-}
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
 }
