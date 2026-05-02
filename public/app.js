@@ -837,13 +837,15 @@ function renderSessionUi() {
     el('authSection')?.classList.add('hidden');
     el('logoutBtn')?.classList.remove('hidden');
     renderNextEvent();
+    setBodyScroll(false);
 el('dashboardTabs')?.parentElement?.classList.add('hidden');
 document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 }
 
 function initDashboardTabs() {
-  const showDashboardHome = () => {
-    el('dashboardHome')?.classList.remove('hidden');
+  el('dashboardHome')?.classList.remove('hidden');
+      el('dashboardMiniNav')?.classList.add('hidden');
+      setBodyScroll(false);
     el('dashboardMiniNav')?.classList.add('hidden');
     document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
   };
@@ -851,6 +853,7 @@ function initDashboardTabs() {
   const openDashboardSection = (tabKey) => {
     el('dashboardHome')?.classList.add('hidden');
     el('dashboardMiniNav')?.classList.remove('hidden');
+      setBodyScroll(true);
     activateDashboardTab(tabKey);
   };
 
@@ -1330,6 +1333,9 @@ function formatEventTitle(event) {
   if (lower.includes('training')) return 'Training';
   if (lower.includes('event')) return opponent ? `Event: ${oppHtml}` : 'Event';
   return title;
+}
+function setBodyScroll(allow) {
+  document.body.style.overflow = allow ? '' : 'hidden';
 }
 function renderNextEvent() {
   const box = document.getElementById('nextEventBox');
