@@ -219,9 +219,11 @@
       <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-sm"></div>
     </section>
 
-    <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border p-4 shadow-sm sm:p-6">
-      <h2 class="font-semibold text-lg mb-1">Termin erstellen</h2>
-      <p class="text-sm text-slate-500 mb-6">Lege einen neuen Spiel-, Trainings- oder Vereinstermin an.</p>
+    <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
+      <div class="-mx-4 sm:-mx-6 mb-4 px-4 sm:px-6 py-4 sm:py-5 rounded-t-2xl" style="background-color:#1a3c34;">
+        <button onclick="document.querySelectorAll('[data-tab-panel]').forEach(p=>p.classList.add('hidden'));document.getElementById('dashboardHome').classList.remove('hidden');" class="flex items-center gap-1 text-sm text-emerald-300 hover:text-white mb-2">← Zurück</button>
+        <h1 class="text-xl sm:text-2xl font-bold text-white">Neuer Termin</h1>
+      </div>
 
       <div class="border rounded-xl p-4 sm:p-5 mb-4">
         <div class="flex items-center justify-between mb-4">
@@ -232,17 +234,35 @@
           <span class="text-xs text-slate-400 hidden sm:block">Was und gegen wen?</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Terminart <span class="text-rose-500">*</span></label>
-            <select id="eventTitle" class="w-full border rounded-lg p-2.5 bg-white" required>
-              <option value="">Terminart wählen...</option>
-              <option>Meisterschaftsspiel</option>
-              <option>Freundschaftsspiel</option>
-              <option>Turnier</option>
-              <option>Training</option>
-              <option>Event</option>
-            </select>
+          <div class="grid gap-2 text-sm sm:col-span-2">
+          <label class="font-medium text-slate-500 text-xs uppercase tracking-wide">Terminart</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="terminartButtons">
+            <button type="button" data-art="Meisterschaftsspiel" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/><path d="m4.93 19.07 14.14-14.14"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>
+              <span class="font-medium" style="color:#1a3c34;">Spiel</span>
+            </button>
+            <button type="button" data-art="Training" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span class="font-medium" style="color:#1a3c34;">Training</span>
+            </button>
+            <button type="button" data-art="Turnier" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+              <span class="font-medium" style="color:#1a3c34;">Turnier</span>
+            </button>
+            <button type="button" data-art="Event" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              <span class="font-medium" style="color:#1a3c34;">Sonstiges</span>
+            </button>
           </div>
+          <select id="eventTitle" class="hidden" required>
+            <option value="">Terminart wählen...</option>
+            <option>Meisterschaftsspiel</option>
+            <option>Freundschaftsspiel</option>
+            <option>Turnier</option>
+            <option>Training</option>
+            <option>Event</option>
+          </select>
+        </div>
           <div class="grid gap-1.5 text-sm">
             <label class="font-medium text-slate-700">Gegner</label>
             <div class="relative">
