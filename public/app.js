@@ -1383,7 +1383,7 @@ function renderNextEvent() {
       { label: 'ORT', value: city ? `📍 ${city}` : '' },
       { label: 'TREFF', value: meetTime ? `⏱ ${meetTime}` : '' },
     ].filter(c => c.value);
-    detailsEl.innerHTML = `<div class="flex gap-6 mt-3 border-t border-white/10 pt-3">${cols.map(c => `<div><div class="text-white/40 text-[9px] font-bold uppercase tracking-widest mb-0.5">${c.label}</div><div class="text-white text-xs font-semibold">${c.value}</div></div>`).join('')}</div>`;
+    detailsEl.innerHTML = `<div class="flex gap-3 lg:gap-6 mt-3 border-t border-white/10 pt-3">${cols.map(c => `<div class="min-w-0"><div class="text-white/40 text-[9px] font-bold uppercase tracking-widest mb-0.5">${c.label}</div><div class="text-white text-[10px] lg:text-xs font-semibold whitespace-nowrap">${c.value}</div></div>`).join('')}</div>`;
   }
 
   if (playersEl) {
