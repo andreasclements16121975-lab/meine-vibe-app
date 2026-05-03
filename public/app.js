@@ -1005,7 +1005,7 @@ el('nomPlayerButtons').innerHTML = tilesSource
         return `
         <button
           type="button"
-          class="player-tile w-full flex items-center rounded-full px-4 py-2.5 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
+          class="player-tile w-full flex items-center rounded-lg px-3 py-2 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
           style="background-color:#E6F3EA;"
           data-player-id="${m.id}"
         >
@@ -4253,7 +4253,7 @@ window.addEventListener('load', () => {
   return `
   <button
     type="button"
-    class="player-tile w-full flex items-center rounded-full px-4 py-2.5 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
+    class="player-tile w-full flex items-center rounded-lg px-3 py-2 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
     style="background-color:#E6F3EA;"
     data-player-id="${m.id}"
   >
