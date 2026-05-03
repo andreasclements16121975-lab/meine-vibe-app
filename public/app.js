@@ -844,15 +844,12 @@ document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList
 
 function initDashboardTabs() {
   el('dashboardHome')?.classList.remove('hidden');
-      el('dashboardMiniNav')?.classList.add('hidden');
-      setBodyScroll(false);
-    el('dashboardMiniNav')?.classList.add('hidden');
-    document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
-  };
+  setBodyScroll(false);
+  document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
+}
 
   const openDashboardSection = (tabKey) => {
     el('dashboardHome')?.classList.add('hidden');
-    el('dashboardMiniNav')?.classList.remove('hidden');
       setBodyScroll(true);
     activateDashboardTab(tabKey);
   };
@@ -868,16 +865,6 @@ function initDashboardTabs() {
     const button = event.target.closest('[data-home-target]');
     if (!button) return;
     openDashboardSection(button.dataset.homeTarget);
-  });
-
-  el('dashboardMiniNav')?.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-mini-target]');
-    if (!button) return;
-    openDashboardSection(button.dataset.miniTarget);
-  });
-
-  el('backToDashboardBtn')?.addEventListener('click', () => {
-    showDashboardHome();
   });
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
