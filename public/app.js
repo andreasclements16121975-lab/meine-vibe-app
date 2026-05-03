@@ -961,15 +961,20 @@ async function loadMembers() {
         ? playerMembers
         : DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
       if (el('nomPlayerButtons')) el('nomPlayerButtons').innerHTML = tilesSource
-        .map((m) => `
-          <button
-            type="button"
-            class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]"
-            data-player-id="${m.id}"
-          >
-            <span class="text-center leading-tight">${m.name}</span>
-          </button>
-        `)
+        .map((m) => {
+        const parts = (m.name || '').trim().split(' ');
+        const firstName = parts.shift() || '';
+        const lastName = parts.join(' ');
+        return `
+        <button
+          type="button"
+          class="player-tile w-full flex items-center rounded-full px-4 py-2.5 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
+          style="background-color:#E6F3EA;"
+          data-player-id="${m.id}"
+        >
+          <span class="leading-tight"><span class="font-bold">${firstName}</span>${lastName ? ' ' + lastName : ''}</span>
+        </button>`;
+      })
         .join('');
       el('nomPlayerButtons')?.querySelectorAll('[data-player-id]').forEach((button) => {
         button.addEventListener('click', () => {
@@ -993,17 +998,20 @@ const playerMembers = members.filter((m) => m.role === 'Spieler');
       : DEMO_MEMBERS.filter((m) => m.role === 'Spieler');
   
 el('nomPlayerButtons').innerHTML = tilesSource
-    .map(
-      (m) => `
+    .map((m) => {
+        const parts = (m.name || '').trim().split(' ');
+        const firstName = parts.shift() || '';
+        const lastName = parts.join(' ');
+        return `
         <button
           type="button"
-          class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]"
+          class="player-tile w-full flex items-center rounded-full px-4 py-2.5 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
+          style="background-color:#E6F3EA;"
           data-player-id="${m.id}"
         >
-          <span class="text-center leading-tight">${m.name}</span>
-        </button>
-      `
-    )
+          <span class="leading-tight"><span class="font-bold">${firstName}</span>${lastName ? ' ' + lastName : ''}</span>
+        </button>`;
+      })
     .join('');
   el('nomPlayerButtons')?.querySelectorAll('[data-player-id]').forEach((button) => {
   button.addEventListener('click', () => {
@@ -4238,11 +4246,20 @@ window.addEventListener('load', () => {
           const source = (typeof DEMO_MEMBERS !== 'undefined' && DEMO_MEMBERS.length)
             ? DEMO_MEMBERS.filter((m) => m.role === 'Spieler')
             : Array.from({ length: 15 }, (_, i) => ({ id: `demo-${i + 1}`, name: `Spieler ${i + 1}` }));
-          container.innerHTML = source.map((m) => `
-            <button type="button" class="player-tile relative flex items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3 py-4 text-base font-medium text-slate-800 hover:border-emerald-400 hover:bg-emerald-50 transition-colors min-h-[64px]" data-player-id="${m.id}">
-              <span class="text-center leading-tight">${m.name}</span>
-            </button>
-          `).join('');
+          container.innerHTML = source.map((m) => {
+  const parts = (m.name || '').trim().split(' ');
+  const firstName = parts.shift() || '';
+  const lastName = parts.join(' ');
+  return `
+  <button
+    type="button"
+    class="player-tile w-full flex items-center rounded-full px-4 py-2.5 text-sm sm:text-base text-slate-900 hover:opacity-90 transition"
+    style="background-color:#E6F3EA;"
+    data-player-id="${m.id}"
+  >
+    <span class="leading-tight"><span class="font-bold">${firstName}</span>${lastName ? ' ' + lastName : ''}</span>
+  </button>`;
+}).join('');
           container.querySelectorAll('[data-player-id]').forEach((btn) => {
             btn.addEventListener('click', () => {
               const playerId = btn.dataset.playerId || '';
