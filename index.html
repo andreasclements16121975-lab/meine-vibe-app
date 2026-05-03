@@ -278,11 +278,11 @@
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
               Heimspiel
             </button>
-            <button type="button" onclick="setHomeAway('Auswärtsspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-slate-200 text-slate-600">
+            <button type="button" onclick="setHomeAway('Auswärtsspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-emerald-600 bg-emerald-50 text-emerald-700">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               Auswärts
             </button>
-            <button type="button" onclick="setHomeAway('Neutral', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-slate-200 text-slate-600">
+            <button type="button" onclick="setHomeAway('Neutral', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-emerald-600 bg-emerald-50 text-emerald-700">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
               Neutral
             </button>
@@ -418,11 +418,11 @@
             <span>Erinnerung vorab</span>
           </div>
           <div class="flex flex-wrap gap-2">
-            <button type="button" onclick="setReminder(6, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 text-slate-600 transition">2 Std</button>
-            <button type="button" onclick="setReminder(12, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 text-slate-600 transition">12 Std</button>
+            <button type="button" onclick="setReminder(6, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">2 Std</button>
+            <button type="button" onclick="setReminder(12, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">12 Std</button>
             <button type="button" onclick="setReminder(24, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border text-white transition" style="background:#1A8A4F;border-color:#1A8A4F;">24 Std</button>
-            <button type="button" onclick="setReminder(48, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 text-slate-600 transition">48 Std</button>
-            <button type="button" onclick="setReminder(168, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 text-slate-600 transition">1 Woche</button>
+            <button type="button" onclick="setReminder(48, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">48 Std</button>
+            <button type="button" onclick="setReminder(168, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">1 Woche</button>
           </div>
           <input type="hidden" id="eventReminderHours" value="24" />
         </div>
@@ -475,11 +475,11 @@
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t pt-4">
-        <button id="deleteEventBtn" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition">
+        <button id="deleteEventBtn" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-emerald-600 bg-emerald-50 text-emerald-700 text-sm font-medium hover:bg-slate-50 transition">
           Termin löschen/absagen
         </button>
         <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <button type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition">
+          <button type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-emerald-600 bg-emerald-50 text-emerald-700 text-sm font-medium hover:bg-slate-50 transition">
             Abbrechen
           </button>
           <button id="createEventBtn" type="button" class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold transition" style="background:#1A8A4F;">
