@@ -4315,7 +4315,25 @@ function initTerminartButtons() {
   };
   const buttons = document.querySelectorAll('.terminart-btn');
   const select = document.getElementById('eventTitle');
-  
+  const section = document.querySelector('[data-tab-panel="create-event"]');
+
+  // Alle Felder zwischen Terminart-Buttons und Submit-Button verstecken
+  function toggleFelder(show) {
+    if (!section) return;
+    const grid = section.querySelector('#terminartButtons');
+    if (!grid) return;
+    const parentGrid = grid.parentElement.parentElement;
+    let el = parentGrid.nextElementSibling;
+    while (el) {
+      if (el.querySelector && el.querySelector('#createEventBtn')) break;
+      el.style.display = show ? '' : 'none';
+      el = el.nextElementSibling;
+    }
+  }
+
+  // Beim Laden: Felder verstecken
+  toggleFelder(false);
+
   if (!buttons.length || !select) return;
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -4323,6 +4341,7 @@ function initTerminartButtons() {
       btn.style.border = '2px solid ' + (colors[btn.dataset.art] || '#1a3c34');
       select.value = btn.dataset.art;
       select.dispatchEvent(new Event('change'));
+      toggleFelder(true);
     });
   });
 }
