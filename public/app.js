@@ -4307,13 +4307,26 @@ function setHomeAway(value, btn) {
 }
 
 function initTerminartButtons() {
+  const colors = {
+    'Meisterschaftsspiel': '#0F6B57',
+    'Training': '#7B5BB6',
+    'Turnier': '#C97A2B',
+    'Event': '#6F675F'
+  };
   const buttons = document.querySelectorAll('.terminart-btn');
   const select = document.getElementById('eventTitle');
+  buttons.forEach(btn => {
+    const color = colors[btn.dataset.art];
+    if (color) {
+      btn.querySelectorAll('svg').forEach(svg => svg.style.stroke = color);
+      btn.querySelectorAll('span').forEach(span => span.style.color = color);
+    }
+  });
   if (!buttons.length || !select) return;
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      buttons.forEach(b => b.style.border = '1.5px solid #E5E3DC');
-      btn.style.border = '2px solid #1a3c34';
+      buttons.forEach(b => b.style.border = '1.5px solid transparent');
+      btn.style.border = '2px solid ' + (colors[btn.dataset.art] || '#1a3c34');
       select.value = btn.dataset.art;
       select.dispatchEvent(new Event('change'));
     });
