@@ -4315,13 +4315,7 @@ function initTerminartButtons() {
   };
   const buttons = document.querySelectorAll('.terminart-btn');
   const select = document.getElementById('eventTitle');
-  buttons.forEach(btn => {
-    const color = colors[btn.dataset.art];
-    if (color) {
-      btn.querySelectorAll('svg').forEach(svg => svg.style.stroke = color);
-      btn.querySelectorAll('span').forEach(span => span.style.color = color);
-    }
-  });
+  
   if (!buttons.length || !select) return;
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
