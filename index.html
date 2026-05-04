@@ -220,7 +220,7 @@
     </section>
 
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
-      <div class="-mx-4 sm:-mx-6 mb-4 px-4 sm:px-6 py-4 sm:py-5 rounded-t-2xl" style="background-color:#1a3c34;">
+      <div class="-mx-4 sm:-mx-6 mb-4 px-4 sm:px-6 pt-2 pb-4 sm:pt-3 sm:pb-5 rounded-t-2xl" style="background-color:#1a3c34;">
         <button onclick="document.querySelectorAll('[data-tab-panel]').forEach(p=>p.classList.add('hidden'));document.getElementById('dashboardHome').classList.remove('hidden');" class="flex items-center gap-1 text-sm text-emerald-300 hover:text-white mb-2">← Zurück</button>
         <h1 class="text-xl sm:text-2xl font-bold text-white">Neuer Termin</h1>
       </div>
@@ -290,6 +290,7 @@
             <option>Event</option>
           </select>
         </div>
+        
           <div class="grid gap-1.5 text-sm">
             <label class="font-medium text-slate-700">Gegner</label>
             <div class="relative">
