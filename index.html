@@ -236,22 +236,49 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="grid gap-2 text-sm sm:col-span-2">
           <label class="font-medium text-slate-500 text-xs uppercase tracking-wide">Terminart</label>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="terminartButtons">
-            <button type="button" data-art="Meisterschaftsspiel" class="terminart-btn flex flex-col items-center justify-center gap-2 h-[104px] sm:h-32 rounded-2xl transition" style="background:#E3F2E9;border:1.5px solid transparent;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/><path d="m4.93 19.07 14.14-14.14"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>
-              <span class="font-medium" style="color:#1a3c34;">Spiel</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="terminartButtons">
+            <button type="button" data-art="Meisterschaftsspiel" class="terminart-btn group h-[104px] sm:h-32 rounded-2xl p-4 text-left shadow-sm transition" style="background:#E3F2E9;border:1.5px solid transparent;">
+              <div class="flex h-full flex-col justify-between">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#FFFFFF;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A5230" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2 L9.5 9 L2 9 L8 14 L5.5 22 L12 17 L18.5 22 L16 14 L22 9 L14.5 9 Z"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-medium mb-0.5" style="color:#0A5230;">Match</div>
+                  <div class="text-xl font-bold leading-tight" style="color:#0A5230;">Spiel</div>
+                </div>
+              </div>
             </button>
-            <button type="button" data-art="Training" class="terminart-btn flex flex-col items-center justify-center gap-2 h-[104px] sm:h-32 rounded-2xl transition" style="background:#FDEEDE;border:1.5px solid transparent;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              <span class="font-medium" style="color:#1a3c34;">Training</span>
+            <button type="button" data-art="Training" class="terminart-btn group h-[104px] sm:h-32 rounded-2xl p-4 text-left shadow-sm transition" style="background:#FDEEDE;border:1.5px solid transparent;">
+              <div class="flex h-full flex-col justify-between">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#FFFFFF;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C46A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M15 7l-3 4 2 3v6"/><path d="M12 11l-4 1-2 4"/><path d="M14 14l4 2"/><circle cx="6" cy="20" r="1.5"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-medium mb-0.5" style="color:#C46A1A;">Übung</div>
+                  <div class="text-xl font-bold leading-tight" style="color:#C46A1A;">Training</div>
+                </div>
+              </div>
             </button>
-            <button type="button" data-art="Turnier" class="terminart-btn flex flex-col items-center justify-center gap-2 h-[104px] sm:h-32 rounded-2xl transition" style="background:#EDE7F6;border:1.5px solid transparent;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-              <span class="font-medium" style="color:#1a3c34;">Turnier</span>
-            </button>
-            <button type="button" data-art="Event" class="terminart-btn flex flex-col items-center justify-center gap-2 h-[104px] sm:h-32 rounded-2xl transition" style="background:#E3EDFA;border:1.5px solid transparent;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-              <span class="font-medium" style="color:#1a3c34;">Sonstiges</span>
+            <button type="button" data-art="Turnier" class="terminart-btn group h-[104px] sm:h-32 rounded-2xl p-4 text-left shadow-sm transition" style="background:#EDE7F6;border:1.5px solid transparent;">
+              <div class="flex h-full flex-col justify-between">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#FFFFFF;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B3FA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-medium mb-0.5" style="color:#5B3FA0;">Cup</div>
+                  <div class="text-xl font-bold leading-tight" style="color:#5B3FA0;">Turnier</div>
+                </div>
+              </button>
+            <button type="button" data-art="Event" class="terminart-btn group h-[104px] sm:h-32 rounded-2xl p-4 text-left shadow-sm transition" style="background:#E3EDFA;border:1.5px solid transparent;">
+              <div class="flex h-full flex-col justify-between">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#FFFFFF;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A4A8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><circle cx="12" cy="17" r="0.5" fill="#1A4A8A"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-medium mb-0.5" style="color:#1A4A8A;">Event</div>
+                  <div class="text-xl font-bold leading-tight" style="color:#1A4A8A;">Sonstiges</div>
+                </div>
+              </div>
             </button>
           </div>
           <select id="eventTitle" class="hidden" required>
