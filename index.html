@@ -237,19 +237,19 @@
           <div class="grid gap-2 text-sm sm:col-span-2">
           <label class="font-medium text-slate-500 text-xs uppercase tracking-wide">Terminart</label>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="terminartButtons">
-            <button type="button" data-art="Meisterschaftsspiel" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+            <button type="button" data-art="Meisterschaftsspiel" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#FFFFFF;border:1.5px solid #E5E3DC;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/><path d="m4.93 19.07 14.14-14.14"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>
               <span class="font-medium" style="color:#1a3c34;">Spiel</span>
             </button>
-            <button type="button" data-art="Training" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+            <button type="button" data-art="Training" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#FFFFFF;border:1.5px solid #E5E3DC;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               <span class="font-medium" style="color:#1a3c34;">Training</span>
             </button>
-            <button type="button" data-art="Turnier" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+            <button type="button" data-art="Turnier" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#FFFFFF;border:1.5px solid #E5E3DC;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
               <span class="font-medium" style="color:#1a3c34;">Turnier</span>
             </button>
-            <button type="button" data-art="Event" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#E6F3EA;border:2px solid transparent;">
+            <button type="button" data-art="Event" class="terminart-btn flex flex-col items-center gap-1.5 p-4 rounded-2xl transition" style="background:#FFFFFF;border:1.5px solid #E5E3DC;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
               <span class="font-medium" style="color:#1a3c34;">Sonstiges</span>
             </button>
@@ -274,15 +274,15 @@
         <div class="mt-4 grid gap-1.5 text-sm">
           <label class="font-medium text-slate-700">Spielort</label>
           <div class="grid grid-cols-3 gap-2" id="spielortButtons">
-            <button type="button" onclick="setHomeAway('Heimspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-emerald-600 bg-emerald-50 text-emerald-700">
+            <button type="button" onclick="setHomeAway('Heimspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-slate-200 bg-white text-slate-700">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
               Heimspiel
             </button>
-            <button type="button" onclick="setHomeAway('Auswärtsspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-emerald-600 bg-emerald-50 text-emerald-700">
+            <button type="button" onclick="setHomeAway('Auswärtsspiel', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-slate-200 bg-white text-slate-700">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               Auswärts
             </button>
-            <button type="button" onclick="setHomeAway('Neutral', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-emerald-600 bg-emerald-50 text-emerald-700">
+            <button type="button" onclick="setHomeAway('Neutral', this)" class="homeaway-btn flex items-center justify-center gap-2 border-2 rounded-lg p-2.5 text-sm font-medium transition border-slate-200 bg-white text-slate-700">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
               Neutral
             </button>
@@ -418,11 +418,11 @@
             <span>Erinnerung vorab</span>
           </div>
           <div class="flex flex-wrap gap-2">
-            <button type="button" onclick="setReminder(6, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">2 Std</button>
-            <button type="button" onclick="setReminder(12, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">12 Std</button>
+            <button type="button" onclick="setReminder(6, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 bg-white text-slate-700 transition">2 Std</button>
+            <button type="button" onclick="setReminder(12, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 bg-white text-slate-700 transition">12 Std</button>
             <button type="button" onclick="setReminder(24, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border text-white transition" style="background:#1A8A4F;border-color:#1A8A4F;">24 Std</button>
-            <button type="button" onclick="setReminder(48, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">48 Std</button>
-            <button type="button" onclick="setReminder(168, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-emerald-600 bg-emerald-50 text-emerald-700 transition">1 Woche</button>
+            <button type="button" onclick="setReminder(48, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 bg-white text-slate-700 transition">48 Std</button>
+            <button type="button" onclick="setReminder(168, this)" class="reminder-btn px-3 py-1.5 rounded-full text-sm border border-slate-200 bg-white text-slate-700 transition">1 Woche</button>
           </div>
           <input type="hidden" id="eventReminderHours" value="24" />
         </div>
@@ -475,11 +475,11 @@
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t pt-4">
-        <button id="deleteEventBtn" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-emerald-600 bg-emerald-50 text-emerald-700 text-sm font-medium hover:bg-slate-50 transition">
+        <button id="deleteEventBtn" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition">
           Termin löschen/absagen
         </button>
         <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <button type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-emerald-600 bg-emerald-50 text-emerald-700 text-sm font-medium hover:bg-slate-50 transition">
+          <button type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition">
             Abbrechen
           </button>
           <button id="createEventBtn" type="button" class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold transition" style="background:#1A8A4F;">
