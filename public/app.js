@@ -4292,3 +4292,36 @@ if (token && currentUser) {
 } else if (token) {
   setAuthInfo('Session gefunden – bitte neu einloggen.');
 }
+function setHomeAway(value, btn) {
+  const buttons = document.querySelectorAll('.homeaway-btn');
+  buttons.forEach(b => {
+    b.style.background = '#FFFFFF';
+    b.style.color = '#444441';
+    b.style.borderColor = '#E5E3DC';
+  });
+  btn.style.background = '#1a3c34';
+  btn.style.color = '#FFFFFF';
+  btn.style.borderColor = '#1a3c34';
+  const input = document.getElementById('eventHomeAway');
+  if (input) input.value = value;
+}
+
+function initTerminartButtons() {
+  const buttons = document.querySelectorAll('.terminart-btn');
+  const select = document.getElementById('eventTitle');
+  if (!buttons.length || !select) return;
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.style.border = '1.5px solid #E5E3DC');
+      btn.style.border = '2px solid #1a3c34';
+      select.value = btn.dataset.art;
+      select.dispatchEvent(new Event('change'));
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTerminartButtons();
+  const heim = document.querySelector('.homeaway-btn');
+  if (heim) setHomeAway('Heimspiel', heim);
+});
