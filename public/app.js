@@ -4308,10 +4308,10 @@ function setHomeAway(value, btn) {
 
 function initTerminartButtons() {
   const colors = {
-    'Meisterschaftsspiel': '#0F6B57',
-    'Training': '#7B5BB6',
-    'Turnier': '#C97A2B',
-    'Event': '#6F675F'
+    'Meisterschaftsspiel': '#0A5230',
+    'Training': '#C46A1A',
+    'Turnier': '#5B3FA0',
+    'Event': '#1A4A8A'
   };
   const buttons = document.querySelectorAll('.terminart-btn');
   const select = document.getElementById('eventTitle');
