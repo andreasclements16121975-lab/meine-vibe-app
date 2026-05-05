@@ -220,10 +220,25 @@
     </section>
 
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
-      <div class="-mx-4 sm:-mx-6 mb-4 px-4 sm:px-6 pt-4 pb-10 sm:pt-6 sm:pb-14 rounded-t-2xl" style="background-color:#1a3c34;">
-        <button onclick="document.querySelectorAll('[data-tab-panel]').forEach(p=>p.classList.add('hidden'));document.getElementById('dashboardHome').classList.remove('hidden');" class="flex items-center gap-1 text-sm text-emerald-300 hover:text-white mb-2">← Zurück</button>
-        <h1 class="text-xl sm:text-2xl font-bold text-white">Neuer Termin</h1>
-      </div>
+      <div class="-mx-4 sm:-mx-6 mb-4 rounded-t-2xl" style="background:linear-gradient(135deg,#0E3823 0%,#0A1E14 100%);">
+  <div class="px-4 sm:px-6 pt-3 pb-1 flex items-center gap-2">
+    <button onclick="document.querySelectorAll('[data-tab-panel]').forEach(p=>p.classList.add('hidden'));document.getElementById('dashboardHome').classList.remove('hidden');" class="flex items-center gap-1 text-sm text-emerald-300 hover:text-white">← Zurück</button>
+  </div>
+  <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="w-2 h-2 rounded-full inline-block" style="background:#5FE89A;"></span>
+      <span id="nextEventLabelCreate" class="text-xs font-bold tracking-widest uppercase" style="color:#5FE89A;">NÄCHSTES SPIEL</span>
+    </div>
+    <div class="text-white/50 text-xs font-bold uppercase tracking-widest mb-0.5">vs.</div>
+    <div id="nextEventTitleCreate" class="text-2xl sm:text-4xl font-black text-white leading-tight">–</div>
+    <div class="mt-0.5">
+      <span class="text-lg sm:text-3xl font-black mr-1" style="color:#5FE89A;">in</span>
+      <span id="nextEventDaysCreate" class="text-2xl sm:text-4xl font-black" style="color:#5FE89A;">–</span>
+      <span class="text-lg sm:text-3xl font-black ml-1" style="color:#5FE89A;">Tagen.</span>
+    </div>
+    <div id="nextEventDetailsCreate" class="mt-2"></div>
+  </div>
+</div>
 
       <div class="mb-6">
         <div class="hidden">
