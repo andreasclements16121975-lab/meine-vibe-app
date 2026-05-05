@@ -3318,12 +3318,10 @@ function loadTimeOptions() {
     }
   }
   const html = `<option value="">Zeit wählen</option>${slots.join('')}`;
-  el('eventMeetingTime').innerHTML = html;
-  el('eventKickoffTime').innerHTML = html;
-  el('seriesMeetingTime').innerHTML = html;
-  el('seriesKickoffTime').innerHTML = html;
-  el('seriesEndTime').innerHTML = html;
-  el('eventDeadlineTime').innerHTML = html;
+  // Nur echte Selects befüllen — Serie-Felder sind Divs (per onclick gesteuert)
+  if (el('eventMeetingTime') && el('eventMeetingTime').tagName === 'SELECT') el('eventMeetingTime').innerHTML = html;
+  if (el('eventKickoffTime') && el('eventKickoffTime').tagName === 'SELECT') el('eventKickoffTime').innerHTML = html;
+  if (el('eventDeadlineTime') && el('eventDeadlineTime').tagName === 'SELECT') el('eventDeadlineTime').innerHTML = html;
 }
 
 async function bootstrapData() {
