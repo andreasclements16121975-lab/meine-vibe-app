@@ -4601,7 +4601,7 @@ function initBottomSheets() {
   });
 
   // Datums-Inputs abfangen
-  ['eventDate', 'eventDeadlineDate'].forEach(id => {
+  ['eventDate', 'eventDeadlineDate', 'seriesStartDate', 'seriesEndDate'].forEach(id => {
     const input = document.getElementById(id);
     if (!input) return;
     input.setAttribute('readonly', 'readonly');
@@ -4613,7 +4613,10 @@ function initBottomSheets() {
   const timeFields = [
     { id: 'eventMeetingTime', title: 'Treffzeit wählen' },
     { id: 'eventKickoffTime', title: 'Anstoßzeit wählen' },
-    { id: 'eventDeadlineTime', title: 'Uhrzeit Deadline wählen' }
+    { id: 'eventDeadlineTime', title: 'Uhrzeit Deadline wählen' },
+    { id: 'seriesMeetingTime', title: 'Treffzeit (Serie) wählen' },
+    { id: 'seriesKickoffTime', title: 'Startzeit (Serie) wählen' },
+    { id: 'seriesEndTime', title: 'Endzeit (Serie) wählen' }
   ];
   timeFields.forEach(({ id, title }) => {
     const sel = document.getElementById(id);
