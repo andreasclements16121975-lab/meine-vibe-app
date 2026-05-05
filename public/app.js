@@ -4572,8 +4572,8 @@ function initBottomSheets() {
     const input = document.getElementById(id);
     if (!input) return;
     input.setAttribute('readonly', 'readonly');
+    input.addEventListener('pointerdown', (e) => { e.preventDefault(); openDateSheet(input); });
     input.addEventListener('click', (e) => { e.preventDefault(); openDateSheet(input); });
-    input.addEventListener('focus', (e) => { e.preventDefault(); input.blur(); openDateSheet(input); });
   });
 
   // Uhrzeit-Selects abfangen
@@ -4585,8 +4585,8 @@ function initBottomSheets() {
   timeFields.forEach(({ id, title }) => {
     const sel = document.getElementById(id);
     if (!sel) return;
+    sel.addEventListener('pointerdown', (e) => { e.preventDefault(); sel.blur(); openTimeSheet(sel, title); });
     sel.addEventListener('mousedown', (e) => { e.preventDefault(); sel.blur(); openTimeSheet(sel, title); });
-    sel.addEventListener('focus', (e) => { sel.blur(); });
     sel.addEventListener('keydown', (e) => { e.preventDefault(); openTimeSheet(sel, title); });
   });
 }
