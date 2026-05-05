@@ -751,7 +751,45 @@
         </div>
 
         <div id="deleteEventsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+<!-- Datum Bottom-Sheet -->
+<div id="dateSheet" class="fixed inset-0 z-[60] hidden items-end sm:items-center justify-center" style="background:rgba(0,0,0,0.35);">
+  <div class="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-5 pb-6" style="max-height:90vh; overflow-y:auto;">
+    <div class="flex justify-center mb-3 sm:hidden"><div style="width:40px;height:5px;background:#E5E7EB;border-radius:3px;"></div></div>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-bold" style="color:#1F2937;">Datum wählen</h3>
+      <button type="button" id="dateSheetCloseBtn" class="text-2xl leading-none" style="color:#6B7280;">×</button>
+    </div>
+    <div class="flex items-center justify-between mb-3">
+      <button type="button" id="dateSheetPrevBtn" class="w-10 h-10 flex items-center justify-center rounded-lg" style="color:#003322;">‹</button>
+      <div id="dateSheetMonthLabel" class="font-semibold" style="color:#1F2937;"></div>
+      <button type="button" id="dateSheetNextBtn" class="w-10 h-10 flex items-center justify-center rounded-lg" style="color:#003322;">›</button>
+    </div>
+    <div class="grid grid-cols-7 gap-1 mb-2 text-center text-xs" style="color:#6B7280;">
+      <div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div>
+    </div>
+    <div id="dateSheetGrid" class="grid grid-cols-7 gap-1"></div>
+    <div class="flex gap-2 mt-5">
+      <button type="button" id="dateSheetTodayBtn" class="flex-1 py-3 rounded-xl font-semibold border" style="border-color:#003322;color:#003322;">Heute</button>
+      <button type="button" id="dateSheetApplyBtn" class="flex-1 py-3 rounded-xl font-semibold text-white" style="background:#003322;">Übernehmen</button>
+    </div>
+  </div>
+</div>
 
+<!-- Uhrzeit Bottom-Sheet -->
+<div id="timeSheet" class="fixed inset-0 z-[60] hidden items-end sm:items-center justify-center" style="background:rgba(0,0,0,0.35);">
+  <div class="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-5 pb-6" style="max-height:90vh; overflow-y:auto;">
+    <div class="flex justify-center mb-3 sm:hidden"><div style="width:40px;height:5px;background:#E5E7EB;border-radius:3px;"></div></div>
+    <div class="flex items-center justify-between mb-4">
+      <h3 id="timeSheetTitle" class="text-lg font-bold" style="color:#1F2937;">Zeit wählen</h3>
+      <button type="button" id="timeSheetCloseBtn" class="text-2xl leading-none" style="color:#6B7280;">×</button>
+    </div>
+    <div id="timeSheetGrid" class="grid grid-cols-4 gap-2"></div>
+    <div class="flex gap-2 mt-5">
+      <button type="button" id="timeSheetNowBtn" class="flex-1 py-3 rounded-xl font-semibold border" style="border-color:#003322;color:#003322;">Jetzt</button>
+      <button type="button" id="timeSheetApplyBtn" class="flex-1 py-3 rounded-xl font-semibold text-white" style="background:#003322;">Übernehmen</button>
+    </div>
+  </div>
+</div>
        <datalist id="opponentSuggestions"></datalist>
 <datalist id="addressSuggestions"></datalist>
 </main>
