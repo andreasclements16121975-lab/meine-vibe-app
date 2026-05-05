@@ -4320,15 +4320,17 @@ function initTerminartButtons() {
   // Alle Felder zwischen Terminart-Buttons und Submit-Button verstecken
   function toggleFelder(show) {
     if (!section) return;
-    const grid = section.querySelector('#terminartButtons');
-    if (!grid) return;
-    const parentGrid = grid.parentElement.parentElement;
-    let el = parentGrid.nextElementSibling;
-    while (el) {
-      if (el.querySelector && el.querySelector('#createEventBtn')) break;
-      el.style.display = show ? '' : 'none';
-      el = el.nextElementSibling;
-    }
+    const allBlocks = section.querySelectorAll(':scope > div.mb-6');
+    let foundTerminart = false;
+    allBlocks.forEach(block => {
+      if (block.querySelector('#terminartButtons')) {
+        foundTerminart = true;
+        return;
+      }
+      if (foundTerminart) {
+        block.style.display = show ? '' : 'none';
+      }
+    });
   }
 
   // Beim Laden: Felder verstecken
