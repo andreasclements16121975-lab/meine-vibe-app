@@ -4320,17 +4320,34 @@ function initTerminartButtons() {
   // Alle Felder zwischen Terminart-Buttons und Submit-Button verstecken
   function toggleFelder(show) {
     if (!section) return;
-    const allBlocks = section.querySelectorAll(':scope > div.mb-6');
-    let foundTerminart = false;
-    allBlocks.forEach(block => {
-      if (block.querySelector('#terminartButtons')) {
-        foundTerminart = true;
-        return;
+    const terminartContainer = section.querySelector('#terminartButtons');
+    if (!terminartContainer) return;
+
+    // 1. Innerhalb des Eltern-Containers: Verstecke alle Geschwister NACH den Kacheln
+    //    (z.B. den Spielort-Block, der im selben mb-6 liegt)
+    let innerSibling = terminartContainer.nextElementSibling;
+    while (innerSibling) {
+      innerSibling.style.display = show ? '' : 'none';
+      innerSibling = innerSibling.nextElementSibling;
+    }
+
+    // 2. Klettere hoch bis zum Top-Level-Block (direkt unter section/form)
+    let topBlock = terminartContainer;
+    while (topBlock.parentElement) {
+      const parent = topBlock.parentElement;
+      if (parent === section || parent.tagName === 'FORM' || parent.tagName === 'SECTION') {
+        break;
       }
-      if (foundTerminart) {
-        block.style.display = show ? '' : 'none';
-      }
-    });
+      topBlock = parent;
+    }
+
+    // 3. Verstecke alle Geschwister-Elemente des Top-Level-Blocks
+    //    (alle weiteren Form-Blöcke + Submit-Buttons)
+    let outerSibling = topBlock.nextElementSibling;
+    while (outerSibling) {
+      outerSibling.style.display = show ? '' : 'none';
+      outerSibling = outerSibling.nextElementSibling;
+    }
   }
 
   // Beim Laden: Felder verstecken
