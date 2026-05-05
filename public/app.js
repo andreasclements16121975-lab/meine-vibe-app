@@ -4320,33 +4320,26 @@ function initTerminartButtons() {
   // Alle Felder zwischen Terminart-Buttons und Submit-Button verstecken
   function toggleFelder(show) {
     if (!section) return;
+
+    // 1. Innerhalb des Form-Grids: Alle Kinder verstecken außer dem Terminart-Wrapper
+    const formGrid = section.querySelector('#eventFormGrid');
+    if (formGrid) {
+      Array.from(formGrid.children).forEach(child => {
+        if (!child.querySelector('#terminartButtons')) {
+          child.style.display = show ? '' : 'none';
+        }
+      });
+    }
+
+    // 2. Alle nachfolgenden Blöcke (untere Buttons etc.) verstecken
     const terminartContainer = section.querySelector('#terminartButtons');
-    if (!terminartContainer) return;
-
-    // 1. Innerhalb des Eltern-Containers: Verstecke alle Geschwister NACH den Kacheln
-    //    (z.B. den Spielort-Block, der im selben mb-6 liegt)
-    let innerSibling = terminartContainer.nextElementSibling;
-    while (innerSibling) {
-      innerSibling.style.display = show ? '' : 'none';
-      innerSibling = innerSibling.nextElementSibling;
-    }
-
-    // 2. Klettere hoch bis zum Top-Level-Block (direkt unter section/form)
-    let topBlock = terminartContainer;
-    while (topBlock.parentElement) {
-      const parent = topBlock.parentElement;
-      if (parent === section || parent.tagName === 'FORM' || parent.tagName === 'SECTION') {
-        break;
+    if (terminartContainer) {
+      const topBlock = terminartContainer.closest('.mb-6') || terminartContainer;
+      let sibling = topBlock.nextElementSibling;
+      while (sibling) {
+        sibling.style.display = show ? '' : 'none';
+        sibling = sibling.nextElementSibling;
       }
-      topBlock = parent;
-    }
-
-    // 3. Verstecke alle Geschwister-Elemente des Top-Level-Blocks
-    //    (alle weiteren Form-Blöcke + Submit-Buttons)
-    let outerSibling = topBlock.nextElementSibling;
-    while (outerSibling) {
-      outerSibling.style.display = show ? '' : 'none';
-      outerSibling = outerSibling.nextElementSibling;
     }
   }
 
