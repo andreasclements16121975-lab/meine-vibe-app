@@ -9,7 +9,7 @@
   html, body {
     max-width: 100%;
     overflow-x: hidden;
-    overscroll-behavior-x: none;
+    overscroll-behavior: none;
   }
 
   body {
@@ -26,6 +26,11 @@
   #tacticsMaterialsPanel {
     min-width: 0;
     max-width: 100%;
+  }
+
+  /* Verhindert iOS-Zoom beim Fokus auf Eingabefelder */
+  input, select, textarea {
+    font-size: 16px !important;
   }
 </style>
   </head>
