@@ -1388,6 +1388,24 @@ function renderNextEvent() {
   }
 
   box.classList.remove('hidden');
+  // Banner auf "Termin erstellen" direkt befüllen
+  const l2 = document.getElementById('nextEventLabelCreate');
+  const t2 = document.getElementById('nextEventTitleCreate');
+  const d2 = document.getElementById('nextEventDaysCreate');
+  const det2 = document.getElementById('nextEventDetailsCreate');
+
+  if (l2) l2.textContent = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
+  if (t2) {
+    const opp = (next.opponent || '').split(',')[0].replace(/\s+\d{4}.*$/, '').trim();
+    t2.textContent = opp || next.title || 'Termin';
+  }
+  if (d2) {
+    const today2 = new Date(); today2.setHours(0,0,0,0);
+    const ed2 = new Date(next.date); ed2.setHours(0,0,0,0);
+    const diff2 = Math.round((ed2 - today2) / 86400000);
+    d2.textContent = diff2 === 0 ? 'Heute' : diff2 === 1 ? 'Morgen' : diff2;
+  }
+  if (det2 && detailsEl) det2.innerHTML = detailsEl.innerHTML;
 }
 function renderCalendar(events) {
   calendarEvents = events;
