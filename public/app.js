@@ -4505,23 +4505,56 @@ function initBottomSheets() {
 
   function renderTimeGrid() {
     const grid = document.getElementById('timeSheetGrid');
-    const slots = [];
-    for (let h = 6; h <= 22; h++) {
-      for (let mn = 0; mn < 60; mn += 15) {
-        slots.push(`${pad(h)}:${pad(mn)}`);
-      }
-    }
-    grid.innerHTML = slots.map(t => {
-      const isSelected = timeSelected === t;
-      const bg = isSelected ? '#003322' : '#FFFFFF';
-      const color = isSelected ? '#FFFFFF' : '#1F2937';
-      const border = isSelected ? '#003322' : '#003322';
-      return `<button type="button" data-time="${t}" class="py-3 rounded-lg text-sm font-semibold border" style="background:${bg};color:${color};border-color:${border};">${t}</button>`;
-    }).join('');
+    const selHour = timeSelected ? parseInt(timeSelected.split(':')[0]) : 9;
+    const selMin = timeSelected ? parseInt(timeSelected.split(':')[1]) : 0;
 
-    grid.querySelectorAll('[data-time]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        timeSelected = btn.dataset.time;
+    const hours = [];
+    for (let h = 6; h <= 22; h++) hours.push(h);
+    const minutes = [0, 15, 30, 45];
+
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = '1fr 1fr';
+    grid.style.gap = '0';
+    grid.className = '';
+
+    grid.innerHTML = `
+      <div class="text-center text-xs font-bold uppercase tracking-wider mb-2" style="color:#6B7280;">Stunde</div>
+      <div class="text-center text-xs font-bold uppercase tracking-wider mb-2" style="color:#6B7280;">Minute</div>
+      <div id="hourScroll" style="height:220px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;">
+        ${hours.map(h => `
+          <div data-hour="${h}" style="scroll-snap-align:center;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:${h===selHour?'700':'400'};color:${h===selHour?'#FFFFFF':'#1F2937'};background:${h===selHour?'#003322':'transparent'};border-radius:12px;cursor:pointer;transition:all 0.15s;">
+            ${pad(h)}
+          </div>`).join('')}
+      </div>
+      <div id="minScroll" style="height:220px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;">
+        ${minutes.map(m => `
+          <div data-min="${m}" style="scroll-snap-align:center;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:${m===selMin?'700':'400'};color:${m===selMin?'#FFFFFF':'#1F2937'};background:${m===selMin?'#003322':'transparent'};border-radius:12px;cursor:pointer;transition:all 0.15s;">
+            ${pad(m)}
+          </div>`).join('')}
+      </div>
+    `;
+
+    requestAnimationFrame(() => {
+      const hourEl = grid.querySelector(`[data-hour="${selHour}"]`);
+      const minEl = grid.querySelector(`[data-min="${selMin}"]`);
+      if (hourEl) hourEl.scrollIntoView({ block: 'center', behavior: 'instant' });
+      if (minEl) minEl.scrollIntoView({ block: 'center', behavior: 'instant' });
+    });
+
+    grid.querySelectorAll('[data-hour]').forEach(el => {
+      el.addEventListener('click', () => {
+        const h = parseInt(el.dataset.hour);
+        const m = timeSelected ? parseInt(timeSelected.split(':')[1]) : 0;
+        timeSelected = `${pad(h)}:${pad(m)}`;
+        renderTimeGrid();
+      });
+    });
+
+    grid.querySelectorAll('[data-min]').forEach(el => {
+      el.addEventListener('click', () => {
+        const m = parseInt(el.dataset.min);
+        const h = timeSelected ? parseInt(timeSelected.split(':')[0]) : 9;
+        timeSelected = `${pad(h)}:${pad(m)}`;
         renderTimeGrid();
       });
     });
