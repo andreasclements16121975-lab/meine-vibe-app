@@ -4398,3 +4398,195 @@ document.addEventListener('DOMContentLoaded', () => {
   const heim = document.querySelector('.homeaway-btn');
   if (heim) setHomeAway('Heimspiel', heim);
 });
+
+// ============================================================
+// Bottom-Sheets für Datum & Uhrzeit
+// ============================================================
+(function initBottomSheets() {
+  const dateSheet = document.getElementById('dateSheet');
+  const timeSheet = document.getElementById('timeSheet');
+  if (!dateSheet || !timeSheet) return;
+
+  let activeDateInput = null;
+  let activeTimeSelect = null;
+  let dateViewDate = new Date();
+  let dateSelected = null;
+  let timeSelected = null;
+
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function fmtIso(d) { return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+
+  function renderDateGrid() {
+    const monthLabel = document.getElementById('dateSheetMonthLabel');
+    const grid = document.getElementById('dateSheetGrid');
+    const y = dateViewDate.getFullYear();
+    const m = dateViewDate.getMonth();
+    monthLabel.textContent = `${months[m]} ${y}`;
+
+    const firstDay = (new Date(y, m, 1).getDay() + 6) % 7;
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const daysPrev = new Date(y, m, 0).getDate();
+
+    const cells = [];
+    for (let i = firstDay - 1; i >= 0; i--) {
+      cells.push({ day: daysPrev - i, muted: true, date: new Date(y, m - 1, daysPrev - i) });
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      cells.push({ day: d, muted: false, date: new Date(y, m, d) });
+    }
+    while (cells.length % 7 !== 0 || cells.length < 42) {
+      const next = cells.length - firstDay - daysInMonth + 1;
+      cells.push({ day: next, muted: true, date: new Date(y, m + 1, next) });
+      if (cells.length >= 42) break;
+    }
+
+    grid.innerHTML = cells.map(c => {
+      const iso = fmtIso(c.date);
+      const isSelected = dateSelected && fmtIso(dateSelected) === iso;
+      const bg = isSelected ? '#003322' : 'transparent';
+      const color = isSelected ? '#FFFFFF' : (c.muted ? '#9CA3AF' : '#1F2937');
+      return `<button type="button" data-iso="${iso}" class="aspect-square rounded-lg text-sm font-medium" style="background:${bg};color:${color};">${c.day}</button>`;
+    }).join('');
+
+    grid.querySelectorAll('[data-iso]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        dateSelected = new Date(btn.dataset.iso);
+        renderDateGrid();
+      });
+    });
+  }
+
+  function openDateSheet(input) {
+    activeDateInput = input;
+    if (input.value) {
+      dateSelected = new Date(input.value);
+      dateViewDate = new Date(input.value);
+    } else {
+      dateSelected = null;
+      dateViewDate = new Date();
+    }
+    renderDateGrid();
+    dateSheet.classList.remove('hidden');
+    dateSheet.classList.add('flex');
+  }
+
+  function closeDateSheet() {
+    dateSheet.classList.add('hidden');
+    dateSheet.classList.remove('flex');
+    activeDateInput = null;
+  }
+
+  document.getElementById('dateSheetCloseBtn').addEventListener('click', closeDateSheet);
+  document.getElementById('dateSheetPrevBtn').addEventListener('click', () => {
+    dateViewDate = new Date(dateViewDate.getFullYear(), dateViewDate.getMonth() - 1, 1);
+    renderDateGrid();
+  });
+  document.getElementById('dateSheetNextBtn').addEventListener('click', () => {
+    dateViewDate = new Date(dateViewDate.getFullYear(), dateViewDate.getMonth() + 1, 1);
+    renderDateGrid();
+  });
+  document.getElementById('dateSheetTodayBtn').addEventListener('click', () => {
+    dateSelected = new Date();
+    dateViewDate = new Date();
+    renderDateGrid();
+  });
+  document.getElementById('dateSheetApplyBtn').addEventListener('click', () => {
+    if (activeDateInput && dateSelected) {
+      activeDateInput.value = fmtIso(dateSelected);
+      activeDateInput.dispatchEvent(new Event('change'));
+    }
+    closeDateSheet();
+  });
+  dateSheet.addEventListener('click', (e) => {
+    if (e.target === dateSheet) closeDateSheet();
+  });
+
+  function renderTimeGrid() {
+    const grid = document.getElementById('timeSheetGrid');
+    const slots = [];
+    for (let h = 6; h <= 22; h++) {
+      for (let mn = 0; mn < 60; mn += 15) {
+        slots.push(`${pad(h)}:${pad(mn)}`);
+      }
+    }
+    grid.innerHTML = slots.map(t => {
+      const isSelected = timeSelected === t;
+      const bg = isSelected ? '#003322' : '#FFFFFF';
+      const color = isSelected ? '#FFFFFF' : '#1F2937';
+      const border = isSelected ? '#003322' : '#003322';
+      return `<button type="button" data-time="${t}" class="py-3 rounded-lg text-sm font-semibold border" style="background:${bg};color:${color};border-color:${border};">${t}</button>`;
+    }).join('');
+
+    grid.querySelectorAll('[data-time]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        timeSelected = btn.dataset.time;
+        renderTimeGrid();
+      });
+    });
+  }
+
+  function openTimeSheet(selectEl, title) {
+    activeTimeSelect = selectEl;
+    timeSelected = selectEl.value || null;
+    document.getElementById('timeSheetTitle').textContent = title;
+    renderTimeGrid();
+    timeSheet.classList.remove('hidden');
+    timeSheet.classList.add('flex');
+  }
+
+  function closeTimeSheet() {
+    timeSheet.classList.add('hidden');
+    timeSheet.classList.remove('flex');
+    activeTimeSelect = null;
+  }
+
+  document.getElementById('timeSheetCloseBtn').addEventListener('click', closeTimeSheet);
+  document.getElementById('timeSheetNowBtn').addEventListener('click', () => {
+    const now = new Date();
+    const minutes = Math.round(now.getMinutes() / 15) * 15;
+    timeSelected = `${pad(now.getHours())}:${pad(minutes % 60)}`;
+    renderTimeGrid();
+  });
+  document.getElementById('timeSheetApplyBtn').addEventListener('click', () => {
+    if (activeTimeSelect && timeSelected) {
+      // Falls value als Option nicht existiert: hinzufügen
+      if (![...activeTimeSelect.options].some(o => o.value === timeSelected)) {
+        const opt = document.createElement('option');
+        opt.value = timeSelected;
+        opt.textContent = timeSelected;
+        activeTimeSelect.appendChild(opt);
+      }
+      activeTimeSelect.value = timeSelected;
+      activeTimeSelect.dispatchEvent(new Event('change'));
+    }
+    closeTimeSheet();
+  });
+  timeSheet.addEventListener('click', (e) => {
+    if (e.target === timeSheet) closeTimeSheet();
+  });
+
+  // Datums-Inputs abfangen
+  ['eventDate', 'eventDeadlineDate'].forEach(id => {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.setAttribute('readonly', 'readonly');
+    input.addEventListener('click', (e) => { e.preventDefault(); openDateSheet(input); });
+    input.addEventListener('focus', (e) => { e.preventDefault(); input.blur(); openDateSheet(input); });
+  });
+
+  // Uhrzeit-Selects abfangen
+  const timeFields = [
+    { id: 'eventMeetingTime', title: 'Treffzeit wählen' },
+    { id: 'eventKickoffTime', title: 'Anstoßzeit wählen' },
+    { id: 'eventDeadlineTime', title: 'Uhrzeit Deadline wählen' }
+  ];
+  timeFields.forEach(({ id, title }) => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    sel.addEventListener('mousedown', (e) => { e.preventDefault(); sel.blur(); openTimeSheet(sel, title); });
+    sel.addEventListener('focus', (e) => { sel.blur(); });
+    sel.addEventListener('keydown', (e) => { e.preventDefault(); openTimeSheet(sel, title); });
+  });
+})();
