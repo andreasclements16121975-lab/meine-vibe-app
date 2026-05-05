@@ -4584,15 +4584,19 @@ function initBottomSheets() {
   });
   document.getElementById('timeSheetApplyBtn').addEventListener('click', () => {
     if (activeTimeSelect && timeSelected) {
-      // Falls value als Option nicht existiert: hinzufügen
-      if (![...activeTimeSelect.options].some(o => o.value === timeSelected)) {
-        const opt = document.createElement('option');
-        opt.value = timeSelected;
-        opt.textContent = timeSelected;
-        activeTimeSelect.appendChild(opt);
+      if (activeTimeSelect._divEl) {
+        activeTimeSelect._divEl.textContent = timeSelected;
+        activeTimeSelect._divEl.dataset.value = timeSelected;
+      } else {
+        if (![...activeTimeSelect.options].some(o => o.value === timeSelected)) {
+          const opt = document.createElement('option');
+          opt.value = timeSelected;
+          opt.textContent = timeSelected;
+          activeTimeSelect.appendChild(opt);
+        }
+        activeTimeSelect.value = timeSelected;
+        activeTimeSelect.dispatchEvent(new Event('change'));
       }
-      activeTimeSelect.value = timeSelected;
-      activeTimeSelect.dispatchEvent(new Event('change'));
     }
     closeTimeSheet();
   });
@@ -4625,6 +4629,17 @@ function initBottomSheets() {
     sel.addEventListener('mousedown', (e) => { e.preventDefault(); sel.blur(); openTimeSheet(sel, title); });
     sel.addEventListener('keydown', (e) => { e.preventDefault(); openTimeSheet(sel, title); });
   });
+  // Globale Hilfsfunktion für onclick-Aufruf (Serie-Divs)
+  window.openTimeSheetById = function(id, title) {
+    const divEl = document.getElementById(id);
+    if (!divEl) return;
+    activeTimeSelect = { value: divEl.dataset.value || '', _divEl: divEl };
+    timeSelected = divEl.dataset.value || null;
+    document.getElementById('timeSheetTitle').textContent = title;
+    renderTimeGrid();
+    timeSheet.classList.remove('hidden');
+    timeSheet.classList.add('flex');
+  };
 }
 
 // Bottom-Sheets sofort initialisieren (mit kleinem Delay, damit DOM bereit ist)
