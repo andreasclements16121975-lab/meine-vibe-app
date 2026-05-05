@@ -4320,8 +4320,7 @@ function initTerminartButtons() {
   // Alle Felder zwischen Terminart-Buttons und Submit-Button verstecken
   function toggleFelder(show) {
     if (!section) return;
-
-    // 1. Innerhalb des Form-Grids: Alle Kinder verstecken außer dem Terminart-Wrapper
+    // 1. Kinder von eventFormGrid: alle außer Terminart-Wrapper verstecken (= Gegner)
     const formGrid = section.querySelector('#eventFormGrid');
     if (formGrid) {
       Array.from(formGrid.children).forEach(child => {
@@ -4329,9 +4328,14 @@ function initTerminartButtons() {
           child.style.display = show ? '' : 'none';
         }
       });
+      // Geschwister von eventFormGrid verstecken (= Spielort)
+      let gridSibling = formGrid.nextElementSibling;
+      while (gridSibling) {
+        gridSibling.style.display = show ? '' : 'none';
+        gridSibling = gridSibling.nextElementSibling;
+      }
     }
-
-    // 2. Alle nachfolgenden Blöcke (untere Buttons etc.) verstecken
+    // 2. Alle nachfolgenden mb-6 Blöcke + Buttons verstecken
     const terminartContainer = section.querySelector('#terminartButtons');
     if (terminartContainer) {
       const topBlock = terminartContainer.closest('.mb-6') || terminartContainer;
