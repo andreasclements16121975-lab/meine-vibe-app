@@ -4590,5 +4590,6 @@ function initBottomSheets() {
     sel.addEventListener('keydown', (e) => { e.preventDefault(); openTimeSheet(sel, title); });
   });
 }
-document.addEventListener('DOMContentLoaded', initBottomSheets);
-if (document.readyState !== 'loading') initBottomSheets();
+
+// Bottom-Sheets sofort initialisieren (mit kleinem Delay, damit DOM bereit ist)
+setTimeout(initBottomSheets, 100);
