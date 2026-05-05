@@ -866,6 +866,15 @@ function initDashboardTabs() {
     if (!button) return;
     openDashboardSection(button.dataset.homeTarget);
   });
+// Inline "Zurück"-Buttons: Startseite nach Klick wieder fixieren
+  document.body.addEventListener('click', (event) => {
+    const btn = event.target.closest('button');
+    if (!btn) return;
+    const onclick = btn.getAttribute('onclick') || '';
+    if (onclick.includes('dashboardHome') && onclick.includes('classList.remove')) {
+      setTimeout(() => setBodyScroll(false), 0);
+    }
+  });
 function setAuthInfo(text) {
   el('authInfo').textContent = text;
 }
