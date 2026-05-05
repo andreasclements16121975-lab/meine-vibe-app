@@ -4387,6 +4387,14 @@ function initTerminartButtons() {
       select.value = btn.dataset.art;
       select.dispatchEvent(new Event('change'));
       toggleFelder(true);
+
+      // Bei Training: Hauptzeit-Block (Datum, Treffzeit, Anstoßzeit, Deadline) verstecken
+      const isTraining = btn.dataset.art === 'Training';
+      const dateField = section.querySelector('#eventDate');
+      if (dateField) {
+        const timeBlock = dateField.closest('.mb-6');
+        if (timeBlock) timeBlock.style.display = isTraining ? 'none' : '';
+      }
     });
   });
 }
