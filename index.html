@@ -455,37 +455,49 @@
         </div>
       </div>
 
-      <div id="trainingSeriesBox" class="hidden border rounded-xl p-4 sm:p-5 mb-6 bg-slate-50">
-        <h3 class="font-semibold mb-4">Serie erstellen</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Startdatum</label>
-            <input id="seriesStartDate" type="text" readonly class="w-full border rounded-lg p-2.5 cursor-pointer" placeholder="Datum wählen" />
-          </div>
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Enddatum</label>
-            <input id="seriesEndDate" type="text" readonly class="w-full border rounded-lg p-2.5 cursor-pointer" placeholder="Datum wählen" />
-          </div>
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Anzahl Wochen</label>
-            <input id="seriesWeeks" type="number" min="1" class="w-full border rounded-lg p-2.5" placeholder="z. B. 8" />
-          </div>
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Treffzeit (Serie)</label>
-            <div id="seriesMeetingTime" onclick="openTimeSheetById('seriesMeetingTime','Treffzeit (Serie) wählen')" class="w-full border rounded-lg p-2.5 bg-white cursor-pointer text-slate-700" style="min-height:42px;">Zeit wählen</div>
-          </div>
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Startzeit (Serie)</label>
-            <div id="seriesKickoffTime" onclick="openTimeSheetById('seriesKickoffTime','Startzeit (Serie) wählen')" class="w-full border rounded-lg p-2.5 bg-white cursor-pointer text-slate-700" style="min-height:42px;">Zeit wählen</div>
-          </div>
-          <div class="grid gap-1.5 text-sm">
-            <label class="font-medium text-slate-700">Endzeit (Serie)</label>
-            <div id="seriesEndTime" onclick="openTimeSheetById('seriesEndTime','Endzeit (Serie) wählen')" class="w-full border rounded-lg p-2.5 bg-white cursor-pointer text-slate-700" style="min-height:42px;">Zeit wählen</div>
-          </div>
-          <div class="grid gap-1.5 text-sm sm:col-span-2 xl:col-span-3">
-            <label class="font-medium text-slate-700">Zu-/Absage bis (Serie)</label>
-            <input id="seriesDeadline" type="datetime-local" step="3600" class="w-full border rounded-lg p-2.5" />
-          </div>
+      <div id="trainingSeriesBox" class="hidden border rounded-xl mb-6 bg-slate-50 px-4 py-1">
+        <h3 class="font-semibold mb-2 mt-3">Serie erstellen</h3>
+        
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Startdatum</div>
+          <input id="seriesStartDate" type="text" readonly class="ml-auto bg-transparent text-sm font-medium border-none outline-none text-right cursor-pointer" style="color:#1a3c34;" placeholder="Datum wählen" />
+        </div>
+
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Enddatum</div>
+          <input id="seriesEndDate" type="text" readonly class="ml-auto bg-transparent text-sm font-medium border-none outline-none text-right cursor-pointer" style="color:#1a3c34;" placeholder="Datum wählen" />
+        </div>
+
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Anzahl Wochen</div>
+          <input id="seriesWeeks" type="number" min="1" class="ml-auto bg-transparent text-sm font-medium border-none outline-none text-right" style="color:#1a3c34;width:80px;" placeholder="z. B. 8" />
+        </div>
+
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Treffzeit</div>
+          <div id="seriesMeetingTime" onclick="openTimeSheetById('seriesMeetingTime','Treffzeit (Serie) wählen')" class="ml-auto bg-transparent text-sm font-medium cursor-pointer" style="color:#1a3c34;">Zeit wählen</div>
+        </div>
+
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Startzeit</div>
+          <div id="seriesKickoffTime" onclick="openTimeSheetById('seriesKickoffTime','Startzeit (Serie) wählen')" class="ml-auto bg-transparent text-sm font-medium cursor-pointer" style="color:#1a3c34;">Zeit wählen</div>
+        </div>
+
+        <div class="flex items-center gap-3 py-3" style="border-bottom:0.5px solid #E5E3DC;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Endzeit</div>
+          <div id="seriesEndTime" onclick="openTimeSheetById('seriesEndTime','Endzeit (Serie) wählen')" class="ml-auto bg-transparent text-sm font-medium cursor-pointer" style="color:#1a3c34;">Zeit wählen</div>
+        </div>
+
+        <div class="flex items-center gap-3 py-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3c34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+          <div class="text-sm" style="color:#1a3c34;">Zu-/Absage bis</div>
+          <input id="seriesDeadline" type="datetime-local" step="3600" class="ml-auto bg-transparent text-sm font-medium border-none outline-none text-right" style="color:#1a3c34;" />
         </div>
         <div class="mt-4">
           <p class="text-sm font-medium mb-2">Wochentage</p>
