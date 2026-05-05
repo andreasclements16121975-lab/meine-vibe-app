@@ -4402,7 +4402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 // Bottom-Sheets für Datum & Uhrzeit
 // ============================================================
-(function initBottomSheets() {
+function initBottomSheets() {
   const dateSheet = document.getElementById('dateSheet');
   const timeSheet = document.getElementById('timeSheet');
   if (!dateSheet || !timeSheet) return;
@@ -4589,4 +4589,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sel.addEventListener('focus', (e) => { sel.blur(); });
     sel.addEventListener('keydown', (e) => { e.preventDefault(); openTimeSheet(sel, title); });
   });
-})();
+}
+document.addEventListener('DOMContentLoaded', initBottomSheets);
+if (document.readyState !== 'loading') initBottomSheets();
