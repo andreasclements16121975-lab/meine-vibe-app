@@ -4592,4 +4592,4 @@ function initBottomSheets() {
 }
 
 // Bottom-Sheets sofort initialisieren (mit kleinem Delay, damit DOM bereit ist)
-setTimeout(initBottomSheets, 100);
+setTimeout(initBottomSheets, 500); window.addEventListener('load', () => setTimeout(initBottomSheets, 200));
