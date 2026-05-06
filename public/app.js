@@ -866,6 +866,65 @@ function initDashboardTabs() {
     if (!button) return;
     openDashboardSection(button.dataset.homeTarget);
   });
+// Bottom Navigation
+  document.querySelectorAll('[data-bottom-nav]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.bottomNav;
+      
+      // Alle Tabs zurücksetzen
+      document.querySelectorAll('[data-bottom-nav]').forEach(b => {
+        b.style.color = '#6B7280';
+      });
+      // Aktiven Tab grün markieren
+      btn.style.color = '#1A8A4F';
+      
+      // Alle Panels verstecken
+      document.querySelectorAll('[data-tab-panel]').forEach(p => p.classList.add('hidden'));
+      
+      if (target === 'start') {
+        el('dashboardHome')?.classList.remove('hidden');
+        setBodyScroll(false);
+      } else {
+        el('dashboardHome')?.classList.add('hidden');
+        setBodyScroll(true);
+        const panel = document.querySelector(`[data-tab-panel="${target}"]`);
+        if (panel) panel.classList.remove('hidden');
+        
+        // Profil-Inhalt füllen
+        if (target === 'profil') renderProfilTab();
+      }
+    });
+  });
+  
+  // Start-Tab beim Laden aktiv markieren
+  const startBtn = document.querySelector('[data-bottom-nav="start"]');
+  if (startBtn) startBtn.style.color = '#1A8A4F';
+  
+  function renderProfilTab() {
+    const content = el('profilContent');
+    if (!content) return;
+    const u = currentUser;
+    if (!u) {
+      content.innerHTML = '<p class="text-slate-500">Bitte einloggen.</p>';
+      return;
+    }
+    content.innerHTML = `
+      <div class="flex items-center gap-4 pb-4 border-b">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white" style="background:#1A8A4F;">
+          ${(u.name || u.email || '?').charAt(0).toUpperCase()}
+        </div>
+        <div>
+          <div class="text-lg font-bold">${u.name || 'Unbenannt'}</div>
+          <div class="text-sm text-slate-500">${u.email || ''}</div>
+          <div class="text-xs mt-1 px-2 py-0.5 rounded-full inline-block" style="background:#DDEFE6;color:#0F5A3E;">${u.role || 'Mitglied'}</div>
+        </div>
+      </div>
+      <button id="profilLogoutBtn" class="w-full mt-4 px-4 py-3 rounded-xl border text-sm font-medium" style="border-color:#E5E7EB;color:#DC2626;">
+        Abmelden
+      </button>
+    `;
+    el('profilLogoutBtn')?.addEventListener('click', logout);
+  }
 // Inline "Zurück"-Buttons: Startseite nach Klick wieder fixieren
   document.body.addEventListener('click', (event) => {
     const btn = event.target.closest('button');
