@@ -822,6 +822,12 @@ function renderSessionUi() {
   if (dashboardShell) {
     dashboardShell.classList.toggle('hidden', !hasUser);
   }
+  
+  // Bottom Navigation: nur für eingeloggte Nutzer anzeigen
+  const bottomNav = el('bottomNav');
+  if (bottomNav) {
+    bottomNav.classList.toggle('hidden', !hasUser);
+  }
 
   if (!hasUser) {
     setAuthInfo('');
