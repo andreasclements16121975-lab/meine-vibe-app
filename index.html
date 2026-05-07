@@ -41,6 +41,32 @@
   input, select, textarea {
     font-size: 16px !important;
   }
+    #calendarGrid > * {
+    aspect-ratio: 1 / 1;
+    border: 1px solid #f3f4f6;
+    border-radius: 10px;
+    padding: 6px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    line-height: 1.1;
+    overflow: hidden;
+    text-align: left !important;
+  }
+  #calendarGrid > *:nth-child(-n+7) {
+    aspect-ratio: auto;
+    border: none;
+    padding: 4px 0 !important;
+    font-size: 11px !important;
+    font-weight: 700;
+    color: #9ca3af !important;
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
 </style>
   </head>
   <body class="bg-slate-50 text-slate-800 overflow-x-hidden" style="font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:0;">
@@ -285,34 +311,7 @@
           </div>
         </div>
 
-        <style>
-  #calendarGrid > * {
-    aspect-ratio: 1 / 1;
-    border: 1px solid #f3f4f6;
-    border-radius: 10px;
-    padding: 6px !important;
-    display: flex !important;
-    flex-direction: column;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    font-size: 14px !important;
-    font-weight: 500;
-    line-height: 1.1;
-    overflow: hidden;
-    text-align: left !important;
-  }
-  #calendarGrid > *:nth-child(-n+7) {
-    aspect-ratio: auto;
-    border: none;
-    padding: 4px 0 !important;
-    font-size: 11px !important;
-    font-weight: 700;
-    color: #9ca3af !important;
-    text-align: center !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-</style>
+      
 
         <div id="calendarGrid" class="grid grid-cols-7 gap-1 text-sm"></div>
       </div>
