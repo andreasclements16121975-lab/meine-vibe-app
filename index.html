@@ -10,6 +10,12 @@
     max-width: 100%;
     overflow-x: hidden;
     overscroll-behavior: none;
+    margin: 0;
+    padding: 0;
+  }
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   body {
@@ -34,7 +40,7 @@
   }
 </style>
   </head>
-  <body class="bg-slate-50 text-slate-800 overflow-x-hidden" style="font-family:'Segoe UI',system-ui,sans-serif;">
+  <body class="bg-slate-50 text-slate-800 overflow-x-hidden" style="font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:0;">
     <header class="hidden">
       <div class="max-w-7xl mx-auto px-4 py-2 sm:py-4 flex items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -74,7 +80,7 @@
   <section id="dashboardShell" class="hidden space-y-0">
     <section id="dashboardHome" class="space-y-0 overflow-y-auto" style="padding-bottom:90px;">
   <div>
-    <div id="nextEventBox" class="hidden mb-0" style="background:linear-gradient(135deg,#0E3823 0%,#0A1E14 100%);">
+    <div id="nextEventBox" class="hidden mb-0" style="background:linear-gradient(135deg,#0E3823 0%,#0A1E14 100%);padding-top:calc(env(safe-area-inset-top) + 8px);">
       <div class="px-4 sm:px-6 pt-2 sm:pt-4 pb-1 flex items-center gap-2">
         <span class="w-2 h-2 rounded-full inline-block" style="background:#5FE89A;"></span>
         <span id="nextEventLabel" class="text-xs font-bold tracking-widest uppercase" style="color:#5FE89A;"></span>
