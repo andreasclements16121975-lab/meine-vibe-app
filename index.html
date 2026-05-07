@@ -216,38 +216,89 @@
 
     <section data-tab-panel="overview" class="overflow-y-auto" style="padding-bottom:90px; background:#f3f4f6;">
 
-  <!-- ===== GRÜNER HEADER ===== -->
-  <div style="background:linear-gradient(145deg,#0E3823 0%,#0A1E14 100%); padding:20px 16px 72px; position:relative; overflow:hidden;">
-    <!-- Taktik-Muster Hintergrund -->
-    <svg style="position:absolute;right:0;top:0;opacity:0.08;width:160px;" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="20" y="20" width="120" height="120" rx="4" stroke="white" stroke-width="2"/>
-      <circle cx="80" cy="80" r="20" stroke="white" stroke-width="2"/>
-      <line x1="80" y1="20" x2="80" y2="140" stroke="white" stroke-width="1.5"/>
-      <line x1="20" y1="80" x2="140" y2="80" stroke="white" stroke-width="1.5"/>
-    </svg>
+      <!-- ===== GRÜNER HEADER ===== -->
+      <div style="background:linear-gradient(145deg,#0E3823 0%,#0A1E14 100%); padding:20px 16px 72px; position:relative; overflow:hidden;">
+        <svg style="position:absolute;right:0;top:0;opacity:0.08;width:160px;" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="120" height="120" rx="4" stroke="white" stroke-width="2"/>
+          <circle cx="80" cy="80" r="20" stroke="white" stroke-width="2"/>
+          <line x1="80" y1="20" x2="80" y2="140" stroke="white" stroke-width="1.5"/>
+          <line x1="20" y1="80" x2="140" y2="80" stroke="white" stroke-width="1.5"/>
+        </svg>
 
-    <!-- Zurück-Button -->
-    <div style="color:#4ade80; font-size:13px; font-weight:500; margin-bottom:12px; cursor:pointer;" onclick="document.querySelector('[data-home-target=\'terminuebersicht\']')?.click()">
-      ← Zurück
-    </div>
+        <div style="color:#4ade80; font-size:13px; font-weight:500; margin-bottom:12px; cursor:pointer;" onclick="document.querySelectorAll('[data-tab-panel]').forEach(p=>p.classList.add('hidden'));document.getElementById('dashboardHome').classList.remove('hidden');">
+          ← Zurück
+        </div>
 
-    <!-- Badge: Nächstes Spiel -->
-    <div id="calHeaderBadge" style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-      <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;"></span>
-      <span style="color:#4ade80;font-size:11px;font-weight:700;letter-spacing:0.08em;">NÄCHSTES SPIEL · HEIMSPIEL</span>
-    </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;"></span>
+          <span style="color:#4ade80;font-size:11px;font-weight:700;letter-spacing:0.08em;">NÄCHSTES SPIEL · HEIMSPIEL</span>
+        </div>
 
-    <!-- Titel -->
-    <h1 style="color:white;font-size:32px;font-weight:800;margin:0 0 2px;">Kalender</h1>
-    <p id="calHeaderMonthLabel" style="color:#9ca3af;font-size:14px;margin:0 0 16px;">Mai 2026 · Überblick</p>
+        <h1 style="color:white;font-size:32px;font-weight:800;margin:0 0 2px;">Kalender</h1>
+        <p id="calHeaderMonthLabel" style="color:#9ca3af;font-size:14px;margin:0 0 16px;">Mai 2026 · Überblick</p>
 
-    <!-- Info-Zeile -->
-    <div id="calHeaderNextEvent" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;">
-      <div>
-        <div style="color:#6b7280;font-size:9px;font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">DATUM</div>
-        <div style="color:white;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;">
+          <div>
+            <div style="color:#6b7280;font-size:9px;font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">DATUM</div>
+            <div style="color:white;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span id="calHeaderDate">–</span>
+            </div>
+          </div>
+          <div>
+            <div style="color:#6b7280;font-size:9px;font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">ORT</div>
+            <div style="color:white;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <span id="calHeaderLocation">–</span>
+            </div>
+          </div>
+          <div>
+            <div style="color:#6b7280;font-size:9px;font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">TREFF</div>
+            <div style="color:white;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="calHeaderMeetTime">–</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- ===== WEISSE KALENDER-KARTE ===== -->
+      <div style="margin:-52px 12px 0; background:white; border-radius:20px; padding:16px; box-shadow:0 4px 20px rgba(0,0,0,0.12); position:relative; z-index:10;">
+
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+          <button id="prevMonthBtn" type="button" style="width:36px;height:36px;border-radius:10px;border:1px solid #e5e7eb;background:white;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">←</button>
+          <select id="monthSelect" style="flex:1;min-width:120px;border:1px solid #e5e7eb;border-radius:10px;padding:6px 10px;font-size:14px;font-weight:600;color:#111827;text-align:center;cursor:pointer;"></select>
+          <span id="currentYearLabel" style="font-size:14px;font-weight:600;color:#374151;white-space:nowrap;"></span>
+          <button id="nextMonthBtn" type="button" style="width:36px;height:36px;border-radius:10px;border:1px solid #e5e7eb;background:white;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">→</button>
+          <div style="display:flex;border-radius:10px;overflow:hidden;border:1px solid #e5e7eb;flex-shrink:0;">
+            <button id="calViewMonth" type="button" style="padding:6px 12px;font-size:12px;font-weight:600;background:#0E3823;color:white;border:none;cursor:pointer;">Monat</button>
+            <button id="calViewWeek" type="button" style="padding:6px 12px;font-size:12px;font-weight:600;background:white;color:#374151;border:none;cursor:pointer;">Woche</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px;">
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Mo</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Di</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Mi</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Do</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Fr</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Sa</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">So</div>
+        </div>
+
+        <div id="calendarGrid" class="grid grid-cols-7 gap-1 text-sm"></div>
+      </div>
+
+      <!-- ===== NÄCHSTE TERMINE ===== -->
+      <div style="padding:20px 12px 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <span style="font-size:11px;font-weight:800;letter-spacing:0.08em;color:#374151;">NÄCHSTE TERMINE</span>
+          <button type="button" style="font-size:12px;color:#0E3823;font-weight:600;background:none;border:none;cursor:pointer;">Alle anzeigen ›</button>
+        </div>
+        <div id="upcomingEventsList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+
+    </section>
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
       <div class="-mx-4 sm:-mx-6 mb-4 rounded-t-2xl" style="background:linear-gradient(135deg,#0E3823 0%,#0A1E14 100%);">
   <div class="px-4 sm:px-6 pt-3 pb-1 flex items-center gap-2">
