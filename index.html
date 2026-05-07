@@ -276,15 +276,34 @@
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px;">
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Mo</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Di</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Mi</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Do</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Fr</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">Sa</div>
-          <div style="text-align:center;font-size:11px;font-weight:700;color:#9ca3af;">So</div>
-        </div>
+        <style>
+  #calendarGrid > * {
+    aspect-ratio: 1 / 1;
+    border: 1px solid #f3f4f6;
+    border-radius: 10px;
+    padding: 6px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    line-height: 1.1;
+    overflow: hidden;
+    text-align: left !important;
+  }
+  #calendarGrid > *:nth-child(-n+7) {
+    aspect-ratio: auto;
+    border: none;
+    padding: 4px 0 !important;
+    font-size: 11px !important;
+    font-weight: 700;
+    color: #9ca3af !important;
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+</style>
 
         <div id="calendarGrid" class="grid grid-cols-7 gap-1 text-sm"></div>
       </div>
