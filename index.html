@@ -214,16 +214,39 @@
       </div>
     </div>
 
-    <section data-tab-panel="overview" class="bg-white rounded-2xl border p-4 shadow-sm">
-      <h2 class="font-semibold mb-3">Terminübersicht</h2>
-      <div class="flex items-center gap-2 mb-3">
-        <button id="prevMonthBtn" type="button" class="px-3 py-1 rounded border bg-white">←</button>
-        <select id="monthSelect" class="border rounded p-1"></select>
-        <span id="currentYearLabel" class="text-sm font-medium"></span>
-        <button id="nextMonthBtn" type="button" class="px-3 py-1 rounded border bg-white">→</button>
-      </div>
-      <div id="calendarGrid" class="grid grid-cols-7 gap-2 text-sm"></div>
-    </section>
+    <section data-tab-panel="overview" class="overflow-y-auto" style="padding-bottom:90px; background:#f3f4f6;">
+
+  <!-- ===== GRÜNER HEADER ===== -->
+  <div style="background:linear-gradient(145deg,#0E3823 0%,#0A1E14 100%); padding:20px 16px 72px; position:relative; overflow:hidden;">
+    <!-- Taktik-Muster Hintergrund -->
+    <svg style="position:absolute;right:0;top:0;opacity:0.08;width:160px;" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="20" width="120" height="120" rx="4" stroke="white" stroke-width="2"/>
+      <circle cx="80" cy="80" r="20" stroke="white" stroke-width="2"/>
+      <line x1="80" y1="20" x2="80" y2="140" stroke="white" stroke-width="1.5"/>
+      <line x1="20" y1="80" x2="140" y2="80" stroke="white" stroke-width="1.5"/>
+    </svg>
+
+    <!-- Zurück-Button -->
+    <div style="color:#4ade80; font-size:13px; font-weight:500; margin-bottom:12px; cursor:pointer;" onclick="document.querySelector('[data-home-target=\'terminuebersicht\']')?.click()">
+      ← Zurück
+    </div>
+
+    <!-- Badge: Nächstes Spiel -->
+    <div id="calHeaderBadge" style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;"></span>
+      <span style="color:#4ade80;font-size:11px;font-weight:700;letter-spacing:0.08em;">NÄCHSTES SPIEL · HEIMSPIEL</span>
+    </div>
+
+    <!-- Titel -->
+    <h1 style="color:white;font-size:32px;font-weight:800;margin:0 0 2px;">Kalender</h1>
+    <p id="calHeaderMonthLabel" style="color:#9ca3af;font-size:14px;margin:0 0 16px;">Mai 2026 · Überblick</p>
+
+    <!-- Info-Zeile -->
+    <div id="calHeaderNextEvent" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;">
+      <div>
+        <div style="color:#6b7280;font-size:9px;font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">DATUM</div>
+        <div style="color:white;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"
 
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
       <div class="-mx-4 sm:-mx-6 mb-4 rounded-t-2xl" style="background:linear-gradient(135deg,#0E3823 0%,#0A1E14 100%);">
