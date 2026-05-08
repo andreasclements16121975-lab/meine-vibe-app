@@ -9,17 +9,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
     html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-    overscroll-behavior: none;
-    margin: 0;
-    padding: 0;
-    background: #0E3823;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  margin: 0;
+  padding: 0;
+  background: #f3f4f6;
+}
+
+body {
+  touch-action: pan-y;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+#appShell {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: #ffffff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  #appShell {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
   }
-  main {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+}
 
   body {
     touch-action: pan-y;
