@@ -858,15 +858,10 @@ function renderSessionUi() {
   if (dashboardShell) {
     dashboardShell.classList.toggle('hidden', !hasUser);
   }
-  
-  // Bottom Navigation: nur für eingeloggte Nutzer anzeigen
-  const bottomNav = el('bottomNav');
-  if (bottomNav) {
-    bottomNav.classList.toggle('hidden', !hasUser);
-  }
 
   if (!hasUser) {
     setAuthInfo('');
+    updateResponsiveNavigation();
     return;
   }
 
@@ -876,12 +871,13 @@ function renderSessionUi() {
 
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
   el('dashboardHome')?.classList.remove('hidden');
-    el('authSection')?.classList.add('hidden');
-    el('logoutBtn')?.classList.remove('hidden');
-    renderNextEvent();
-    setBodyScroll(false);
+  el('authSection')?.classList.add('hidden');
+  el('logoutBtn')?.classList.remove('hidden');
 
-document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
+  document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
+
+  renderNextEvent();
+  syncDashboardViewportState();
 }
 
 function initDashboardTabs() {
