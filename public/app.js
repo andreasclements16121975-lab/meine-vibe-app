@@ -4419,6 +4419,29 @@ window.addEventListener('load', () => {
         }
       }, 500);
     initFormationModal();
+    if (!isMobileViewport()) {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    document.querySelector('main')?.scrollTo?.(0, 0);
+    el('dashboardShell')?.scrollTo?.(0, 0);
+    el('dashboardHome')?.scrollTo?.(0, 0);
+  }, 0);
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    document.querySelector('main')?.scrollTo?.(0, 0);
+    el('dashboardShell')?.scrollTo?.(0, 0);
+    el('dashboardHome')?.scrollTo?.(0, 0);
+  }, 250);
+}
   }, 100);
 });
 if (token && currentUser) {
