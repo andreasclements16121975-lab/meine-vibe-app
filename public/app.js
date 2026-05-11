@@ -808,7 +808,43 @@ function activateDashboardTab(tabKey) {
     requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
   }
 }
+const MOBILE_NAV_BREAKPOINT = 1024;
 
+function isMobileViewport() {
+  return window.innerWidth < MOBILE_NAV_BREAKPOINT;
+}
+
+function updateResponsiveNavigation() {
+  const hasUser = Boolean(currentUser);
+  const isMobile = isMobileViewport();
+
+  const bottomNav = el('bottomNav');
+  const dashboardTabs = el('dashboardTabs');
+  const dashboardShell = el('dashboardShell');
+
+  if (bottomNav) {
+    bottomNav.classList.toggle('hidden', !hasUser || !isMobile);
+    bottomNav.classList.toggle('flex', hasUser && isMobile);
+  }
+
+  if (dashboardTabs) {
+    dashboardTabs.classList.toggle('hidden', !hasUser || isMobile);
+    dashboardTabs.classList.toggle('flex', hasUser && !isMobile);
+  }
+
+  if (dashboardShell) {
+    dashboardShell.style.paddingBottom = hasUser && isMobile ? '88px' : '';
+  }
+}
+
+function syncDashboardViewportState() {
+  updateResponsiveNavigation();
+
+  const homeVisible = !el('dashboardHome')?.classList.contains('hidden');
+  const shouldLockHomeOnMobile = homeVisible && isMobileViewport();
+
+  setBodyScroll(!shouldLockHomeOnMobile);
+}
 function renderSessionUi() {
   const hasUser = Boolean(currentUser);
   const welcomeBanner = el('welcomeBanner');
