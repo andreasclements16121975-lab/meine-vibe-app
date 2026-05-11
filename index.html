@@ -38,7 +38,14 @@ body {
     box-shadow: 0 20px 60px rgba(0,0,0,0.18);
   }
 }
-
+@media (min-width: 768px) {
+  #bottomNav {
+    display: none !important;
+  }
+  main, section {
+    padding-bottom: 0 !important;
+  }
+}
   body {
     touch-action: pan-y;
   }
