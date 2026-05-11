@@ -882,9 +882,8 @@ function renderSessionUi() {
 
 function initDashboardTabs() {
   el('dashboardHome')?.classList.remove('hidden');
-  setBodyScroll(false);
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
-  el('dashboardTabs')?.classList.add('hidden');
+  syncDashboardViewportState();
 }
 
   const openDashboardSection = (tabKey) => {
