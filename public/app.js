@@ -821,6 +821,7 @@ function updateResponsiveNavigation() {
 
   const bottomNav = el('bottomNav');
   const dashboardTabs = el('dashboardTabs');
+  const dashboardTabsWrap = el('dashboardTabsWrap');
   const dashboardShell = el('dashboardShell');
 
   const showBottomNav = hasUser && isMobile;
@@ -835,7 +836,9 @@ function updateResponsiveNavigation() {
     dashboardTabs.classList.toggle('hidden', !showDesktopTabs);
     dashboardTabs.classList.toggle('flex', showDesktopTabs);
   }
-
+if (dashboardTabsWrap) {
+  dashboardTabsWrap.classList.toggle('hidden', !showDesktopTabs);
+}
   if (dashboardShell) {
     dashboardShell.style.paddingBottom = showBottomNav ? '88px' : '';
   }
