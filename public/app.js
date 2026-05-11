@@ -855,8 +855,9 @@ function initDashboardTabs() {
 }
 
   const openDashboardSection = (tabKey) => {
-    // el('dashboardHome')?.classList.add('hidden');
-      setBodyScroll(true);
+    el('dashboardHome')?.classList.add('hidden');
+    el('dashboardTabs')?.parentElement?.classList.remove('hidden');
+    setBodyScroll(true);
     activateDashboardTab(tabKey);
   };
 
@@ -937,7 +938,10 @@ function initDashboardTabs() {
     if (!btn) return;
     const onclick = btn.getAttribute('onclick') || '';
     if (onclick.includes('dashboardHome') && onclick.includes('classList.remove')) {
-      setTimeout(() => setBodyScroll(false), 0);
+      setTimeout(() => {
+        setBodyScroll(false);
+        el('dashboardTabs')?.parentElement?.classList.add('hidden');
+      }, 0);
     }
   });
 function setAuthInfo(text) {
