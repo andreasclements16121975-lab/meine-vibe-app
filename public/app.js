@@ -888,10 +888,10 @@ function initDashboardTabs() {
 }
 
   const openDashboardSection = (tabKey) => {
-    el('dashboardHome')?.classList.add('hidden');
-    setBodyScroll(true);
-    activateDashboardTab(tabKey);
-  };
+  el('dashboardHome')?.classList.add('hidden');
+  activateDashboardTab(tabKey);
+  syncDashboardViewportState();
+};
 
   el('dashboardTabs')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-tab-button]');
@@ -980,22 +980,22 @@ function setAuthInfo(text) {
   el('authInfo').textContent = text;
 }
 function logout() {
-  // Token & User aus dem Speicher löschen
   localStorage.removeItem('token');
   if (typeof token !== 'undefined') token = null;
   if (typeof setStoredUser === 'function') setStoredUser(null);
   if (typeof currentUser !== 'undefined') currentUser = null;
 
-  // Login-Felder leeren
   if (el('loginEmail')) el('loginEmail').value = '';
   if (el('loginPassword')) el('loginPassword').value = '';
 
-  // UI zurücksetzen
   el('authSection')?.classList.remove('hidden');
   el('logoutBtn')?.classList.add('hidden');
   el('dashboardShell')?.classList.add('hidden');
   setAuthInfo('');
   el('authMessage').textContent = 'Du bist abgemeldet.';
+
+  updateResponsiveNavigation();
+  setBodyScroll(true);
 }
 async function login() {
   const email = el('loginEmail').value.trim().toLowerCase();
