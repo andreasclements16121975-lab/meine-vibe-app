@@ -817,23 +817,27 @@ function isMobileViewport() {
 function updateResponsiveNavigation() {
   const hasUser = Boolean(currentUser);
   const isMobile = isMobileViewport();
+  const homeVisible = !el('dashboardHome')?.classList.contains('hidden');
 
   const bottomNav = el('bottomNav');
   const dashboardTabs = el('dashboardTabs');
   const dashboardShell = el('dashboardShell');
 
+  const showBottomNav = hasUser && isMobile;
+  const showDesktopTabs = hasUser && !isMobile && !homeVisible;
+
   if (bottomNav) {
-    bottomNav.classList.toggle('hidden', !hasUser || !isMobile);
-    bottomNav.classList.toggle('flex', hasUser && isMobile);
+    bottomNav.classList.toggle('hidden', !showBottomNav);
+    bottomNav.classList.toggle('flex', showBottomNav);
   }
 
   if (dashboardTabs) {
-    dashboardTabs.classList.toggle('hidden', !hasUser || isMobile);
-    dashboardTabs.classList.toggle('flex', hasUser && !isMobile);
+    dashboardTabs.classList.toggle('hidden', !showDesktopTabs);
+    dashboardTabs.classList.toggle('flex', showDesktopTabs);
   }
 
   if (dashboardShell) {
-    dashboardShell.style.paddingBottom = hasUser && isMobile ? '88px' : '';
+    dashboardShell.style.paddingBottom = showBottomNav ? '88px' : '';
   }
 }
 
