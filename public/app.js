@@ -844,7 +844,7 @@ function renderSessionUi() {
     el('logoutBtn')?.classList.remove('hidden');
     renderNextEvent();
     setBodyScroll(false);
-el('dashboardTabs')?.parentElement?.classList.add('hidden');
+
 document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 }
 
