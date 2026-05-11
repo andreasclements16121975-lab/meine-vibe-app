@@ -857,7 +857,6 @@ function initDashboardTabs() {
 
   const openDashboardSection = (tabKey) => {
     el('dashboardHome')?.classList.add('hidden');
-    el('dashboardTabs')?.parentElement?.classList.remove('hidden');
     setBodyScroll(true);
     activateDashboardTab(tabKey);
   };
