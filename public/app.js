@@ -863,8 +863,8 @@ function renderSessionUi() {
   }
 
   if (dashboardShell) {
-    dashboardShell.classList.remove('hidden');
-  }
+  dashboardShell.classList.toggle('hidden', !hasUser);
+}
 
   if (!hasUser) {
     setAuthInfo('');
@@ -895,7 +895,12 @@ if (!isMobileViewport()) {
 }
 
 function initDashboardTabs() {
-  el('dashboardHome')?.classList.remove('hidden');
+  if (currentUser) {
+    el('dashboardHome')?.classList.remove('hidden');
+  } else {
+    el('dashboardHome')?.classList.add('hidden');
+  }
+
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
   syncDashboardViewportState();
 }
