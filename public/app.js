@@ -1481,7 +1481,7 @@ function renderNextEvent() {
   if (!box || !labelEl || !titleEl) return;
 
   const next = getNextEvent(calendarEvents);
-  if (!next) { box.classList.add('hidden'); return; }
+  if (!next) { if (currentUser) box.classList.add('hidden'); return; }
 
   labelEl.textContent = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
 
