@@ -1479,6 +1479,7 @@ function renderNextEvent() {
   const playersEl = document.getElementById('nextEventPlayers');
 
   if (!box || !labelEl || !titleEl) return;
+if (!currentUser) { box.classList.add('hidden'); return; }
 
   const next = getNextEvent(calendarEvents);
   if (!next) { box.classList.add('hidden'); return; }
