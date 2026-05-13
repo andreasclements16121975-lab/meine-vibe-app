@@ -863,7 +863,7 @@ function renderSessionUi() {
   }
 
   if (dashboardShell) {
-    dashboardShell.classList.toggle('hidden', !hasUser);
+    dashboardShell.classList.remove('hidden');
   }
 
   if (!hasUser) {
