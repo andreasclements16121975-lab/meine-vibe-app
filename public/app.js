@@ -886,13 +886,13 @@ function renderSessionUi() {
   renderNextEvent();
   syncDashboardViewportState();
 }
-if (!isMobileViewport()) {
+
   requestAnimationFrame(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     el('dashboardShell')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
     el('dashboardHome')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
   });
-}
+
 
 function initDashboardTabs() {
   if (currentUser) {
