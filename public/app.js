@@ -863,42 +863,56 @@ function syncDashboardViewportState() {
 }
 function renderSessionUi() {
   const hasUser = Boolean(currentUser);
-  const welcomeBanner = el('welcomeBanner');
   const dashboardShell = el('dashboardShell');
-  const welcomeUserName = el('welcomeUserName');
-
-  if (welcomeBanner) {
-    welcomeBanner.classList.toggle('hidden', !hasUser);
-  }
+  const dashboardHome = el('dashboardHome');
+  const authSection = el('authSection');
+  const logoutBtn = el('logoutBtn');
 
   if (dashboardShell) {
-  dashboardShell.classList.toggle('hidden', !hasUser);
-}
+    dashboardShell.classList.toggle('hidden', !hasUser);
+  }
+
+  if (authSection) {
+    authSection.classList.toggle('hidden', hasUser);
+  }
+
+  if (logoutBtn) {
+    logoutBtn.classList.toggle('hidden', !hasUser);
+  }
+
+  if (dashboardHome) {
+    dashboardHome.classList.toggle('hidden', !hasUser);
+  }
+
+  syncNextEventBannerVisibility();
 
   if (!hasUser) {
     setAuthInfo('');
+    document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
     updateResponsiveNavigation();
+    setBodyScroll(true);
+    resetDashboardHomeViewport();
     return;
   }
 
-  if (welcomeUserName) {
-    welcomeUserName.textContent = currentUser.name || '';
-  }
-
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
-  el('dashboardHome')?.classList.remove('hidden');
-  el('authSection')?.classList.add('hidden');
-  el('logoutBtn')?.classList.remove('hidden');
+
+  dashboardHome?.classList.remove('hidden');
+  authSection?.classList.add('hidden');
+  logoutBtn?.classList.remove('hidden');
 
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
 
   renderNextEvent();
+  syncNextEventBannerVisibility();
   syncDashboardViewportState();
+
   requestAnimationFrame(() => {
-  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  el('dashboardShell')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
-  el('dashboardHome')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
-});
+    resetDashboardHomeViewport();
+    requestAnimationFrame(() => {
+      resetDashboardHomeViewport();
+    });
+  });
 }
 
   
