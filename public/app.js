@@ -872,8 +872,8 @@ function renderSessionUi() {
   const bannerLogoutBtn = el('bannerLogoutBtn');
 
   if (dashboardShell) {
-    dashboardShell.classList.toggle('hidden', !hasUser);
-  }
+  dashboardShell.classList.remove('hidden');
+}
 
   if (dashboardHome) {
     dashboardHome.classList.toggle('hidden', !hasUser);
@@ -1045,7 +1045,7 @@ function logout() {
 
   el('authSection')?.classList.remove('hidden');
   el('logoutBtn')?.classList.add('hidden');
-  el('dashboardShell')?.classList.add('hidden');
+  el('dashboardShell')?.classList.remove('hidden');
   setAuthInfo('');
   el('authMessage').textContent = 'Du bist abgemeldet.';
 
