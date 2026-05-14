@@ -5,6 +5,9 @@ if (new URLSearchParams(window.location.search).has('reset')) {
   sessionStorage.clear();
   window.location.replace(window.location.pathname);
 }
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
 let editingMemberId = null;
 let currentUser = null;
 let calendarViewDate = new Date();
