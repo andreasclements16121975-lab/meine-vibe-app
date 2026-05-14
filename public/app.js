@@ -865,39 +865,66 @@ function renderSessionUi() {
   const hasUser = Boolean(currentUser);
   const welcomeBanner = el('welcomeBanner');
   const dashboardShell = el('dashboardShell');
-  const welcomeUserName = el('welcomeUserName');
-
-  if (welcomeBanner) {
-    welcomeBanner.classList.toggle('hidden', !hasUser);
-  }
+  const dashboardHome = el('dashboardHome');
+  const authSection = el('authSection');
+  const logoutBtn = el('logoutBtn');
+  const bannerLoginBtn = el('bannerLoginBtn');
+  const bannerLogoutBtn = el('bannerLogoutBtn');
 
   if (dashboardShell) {
     dashboardShell.classList.toggle('hidden', !hasUser);
   }
 
+  if (dashboardHome) {
+    dashboardHome.classList.toggle('hidden', !hasUser);
+  }
+
+  if (welcomeBanner) {
+    welcomeBanner.classList.toggle('hidden', !hasUser);
+  }
+
+  if (authSection) {
+    authSection.classList.toggle('hidden', hasUser);
+  }
+
+  if (logoutBtn) {
+    logoutBtn.classList.toggle('hidden', !hasUser);
+  }
+
+  if (bannerLoginBtn) {
+    bannerLoginBtn.classList.toggle('hidden', hasUser);
+  }
+
+  if (bannerLogoutBtn) {
+    bannerLogoutBtn.classList.toggle('hidden', !hasUser);
+  }
+
+  document.querySelectorAll('[data-tab-panel]').forEach((panel) => {
+    panel.classList.add('hidden');
+  });
+
   if (!hasUser) {
     setAuthInfo('');
     updateResponsiveNavigation();
+    setBodyScroll(true);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      dashboardShell?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
+      dashboardHome?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
+    });
+
     return;
   }
 
-  if (welcomeUserName) {
-    welcomeUserName.textContent = currentUser.name || '';
-  }
-
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
-  el('dashboardHome')?.classList.remove('hidden');
-  el('authSection')?.classList.add('hidden');
-  el('logoutBtn')?.classList.remove('hidden');
-
-  document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
-
   renderNextEvent();
   syncDashboardViewportState();
+
   requestAnimationFrame(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    el('dashboardShell')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
-    el('dashboardHome')?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
+    dashboardShell?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
+    dashboardHome?.scrollTo?.({ top: 0, left: 0, behavior: 'auto' });
   });
 }
 
