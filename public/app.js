@@ -1,4 +1,10 @@
 let token = localStorage.getItem('token') || '';
+if (new URLSearchParams(window.location.search).has('reset')) {
+  localStorage.removeItem('token');
+  localStorage.removeItem('currentUser');
+  sessionStorage.clear();
+  window.location.replace(window.location.pathname);
+}
 let editingMemberId = null;
 let currentUser = null;
 let calendarViewDate = new Date();
