@@ -880,7 +880,7 @@ function renderSessionUi() {
   }
 
   if (welcomeBanner) {
-    welcomeBanner.classList.toggle('hidden', !hasUser);
+    welcomeBanner.classList.remove('hidden');
   }
 
   if (authSection) {
