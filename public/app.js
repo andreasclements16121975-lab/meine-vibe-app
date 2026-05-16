@@ -876,7 +876,7 @@ function renderSessionUi() {
 }
 
   if (dashboardHome) {
-    dashboardHome.classList.toggle('hidden', !hasUser);
+    dashboardHome.classList.remove('hidden');
   }
 
   if (welcomeBanner) {
@@ -932,11 +932,7 @@ function renderSessionUi() {
 
 
 function initDashboardTabs() {
-  if (currentUser) {
-    el('dashboardHome')?.classList.remove('hidden');
-  } else {
-    el('dashboardHome')?.classList.add('hidden');
-  }
+  el('dashboardHome')?.classList.remove('hidden');
 
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
   syncDashboardViewportState();
@@ -1045,6 +1041,8 @@ function logout() {
 
   el('authSection')?.classList.remove('hidden');
   el('logoutBtn')?.classList.add('hidden');
+  el('bannerLoginBtn')?.classList.remove('hidden');
+el('bannerLogoutBtn')?.classList.add('hidden');
   el('dashboardShell')?.classList.remove('hidden');
   setAuthInfo('');
   el('authMessage').textContent = 'Du bist abgemeldet.';
