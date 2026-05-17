@@ -3493,6 +3493,7 @@ const on = (id, event, handler) => el(id)?.addEventListener(event, handler);
 
 on('loginBtn', 'click', login);
   on('logoutBtn', 'click', logout);
+on('bannerLogoutBtn', 'click', logout);
 on('forgotBtn', 'click', forgotPassword);
 on('saveMemberBtn', 'click', saveMember);
 on('uploadLogoBtn', 'click', uploadLogo);
