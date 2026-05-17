@@ -146,38 +146,21 @@ body {
   
   <section id="dashboardShell" class="space-y-0">
     <div id="welcomeBanner">
-  <div id="nextEventBox" class="mb-0" style="background:linear-gradient(180deg,#0E3823 0%,#0A1E14 100%);padding-top:calc(env(safe-area-inset-top) + 8px);">
-    <div class="px-4 sm:px-6 pt-2 sm:pt-4 pb-1 flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full inline-block" style="background:#5FE89A;"></span>
-      <span id="nextEventLabel" class="text-xs font-bold tracking-widest uppercase" style="color:white;"></span>
-    </div>
-
-    <div class="px-4 sm:px-6 pb-2 sm:pb-4">
-      <div class="mt-2">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
-          <span style="color:white;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">vs.</span>
-          <span id="nextEventTitle" style="color:white;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;"></span>
-        </div>
-
-        <div style="color:white;font-size:18px;font-weight:800;white-space:nowrap;">
-          in <span id="nextEventDays">–</span> Tagen.
-        </div>
-
-        <div id="nextEventDetails" class="mt-2 sm:mt-4"></div>
-
-        <div class="flex items-center justify-between mt-2 sm:mt-5 flex-wrap gap-2">
-          <div id="nextEventPlayers" class="text-white/60 text-sm"></div>
-
-          <div class="flex gap-2">
-            <button id="bannerLoginBtn" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/20 hover:bg-white/10 transition">
-              Einloggen
-            </button>
-            <button id="bannerLogoutBtn" type="button" class="hidden px-4 py-2 rounded-lg text-sm font-semibold text-white transition" style="background:#1A8A4F;">
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
+  <div id="nextEventBox" class="mb-0" style="background:#0E3823;padding:16px 16px 14px;border-radius:16px;margin:8px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#5FE89A;display:inline-block;flex-shrink:0;"></span>
+    <span id="nextEventLabel" style="font-size:10px;font-weight:700;letter-spacing:2px;color:#5FE89A;font-family:monospace;"></span>
+  </div>
+  <div style="font-size:20px;font-weight:800;color:white;line-height:1.25;margin-bottom:6px;">
+    vs. <span id="nextEventTitle" style="color:#5FE89A;font-style:italic;"></span>
+    <span style="color:#5FE89A;font-style:italic;">in <span id="nextEventDays">-</span> Tagen.</span>
+  </div>
+  <div id="nextEventDetails" style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:12px;"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <div id="nextEventPlayers" style="font-size:11px;color:rgba(255,255,255,0.5);"></div>
+    <div style="display:flex;gap:8px;">
+      <button id="bannerLoginBtn" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/20 hover:bg-white/10 transition">Einloggen</button>
+      <button id="bannerLogoutBtn" type="button" class="hidden px-4 py-2 rounded-lg text-sm font-semibold text-white transition" style="background:#1A8A4F;">Logout</button>
     </div>
   </div>
 </div>
