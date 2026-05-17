@@ -115,23 +115,33 @@ body {
       </div>
     </header>
 <main class="space-y-0" style="width:100%;max-width:1280px;margin:0 auto;background:white;min-height:100dvh;">
-  <section id="authSection" class="grid md:grid-cols-2 gap-4">
-    <div id="loginSection" class="bg-white rounded-2xl border p-4 shadow-sm">
-      <h2 class="font-semibold mb-2">Login</h2>
-      <div class="space-y-2">
-        <input id="loginEmail" class="w-full border rounded p-2" placeholder="E-Mail" />
-        <input id="loginPassword" type="password" class="w-full border rounded p-2" placeholder="Passwort" />
-        <button id="loginBtn" class="px-4 py-2 rounded bg-emerald-600 text-white">Einloggen</button>
-        <button id="forgotBtn" class="px-4 py-2 rounded bg-amber-500 text-white">Passwort vergessen</button>
-        <p id="authMessage" class="text-sm text-slate-600"></p>
-      </div>
+  <section id="authSection" class="fixed inset-0 z-50 flex items-center justify-center" style="background:#F5F5F3;">
+  <div style="width:100%;max-width:420px;background:white;border-radius:20px;padding:48px 36px;margin:16px;box-shadow:0 4px 32px rgba(0,0,0,0.08);">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-size:28px;font-weight:900;letter-spacing:-1px;color:#1a1a1a;font-family:Georgia,serif;">Verein!</div>
+      <div style="font-size:10px;letter-spacing:4px;color:#888;margin-top:4px;">MANAGER · PRO</div>
     </div>
-    <div id="brandingSection" class="bg-white rounded-2xl border p-4 shadow-sm">
-      <h2 class="font-semibold mb-2">Branding / Vereinslogo</h2>
-      <input id="logoInput" type="file" accept="image/*" class="mb-2" />
-      <button id="uploadLogoBtn" class="px-4 py-2 rounded bg-sky-600 text-white">Logo hochladen</button>
+    <h1 style="font-size:28px;font-weight:900;color:#1a1a1a;margin:0 0 8px;line-height:1.15;font-family:Georgia,serif;">Willkommen<br>zurück 👋</h1>
+    <p style="font-size:14px;color:#666;margin:0 0 28px;">Logge dich ein, um deine Mannschaft zu führen.</p>
+    <div style="margin-bottom:14px;">
+      <label style="font-size:10px;font-weight:700;letter-spacing:2px;color:#888;display:block;margin-bottom:6px;">E-MAIL</label>
+      <input id="loginEmail" type="email" placeholder="trainer@verein.de" style="width:100%;box-sizing:border-box;padding:13px 14px;border:1.5px solid #E0DED8;border-radius:10px;font-size:14px;" />
     </div>
-  </section>
+    <div style="margin-bottom:14px;">
+      <label style="font-size:10px;font-weight:700;letter-spacing:2px;color:#888;display:block;margin-bottom:6px;">PASSWORT</label>
+      <input id="loginPassword" type="password" placeholder="••••••••" style="width:100%;box-sizing:border-box;padding:13px 14px;border:1.5px solid #E0DED8;border-radius:10px;font-size:14px;" />
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#888;cursor:pointer;">
+        <input type="checkbox" style="width:15px;height:15px;">
+        Eingeloggt bleiben
+      </label>
+      <button id="forgotBtn" style="font-size:13px;color:#888;background:none;border:none;cursor:pointer;padding:0;">Passwort vergessen?</button>
+    </div>
+    <button id="loginBtn" style="width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#0E3823 0%,#1A8A4F 100%);color:white;font-size:15px;font-weight:700;cursor:pointer;">Einloggen →</button>
+    <p id="authMessage" style="text-align:center;margin-top:12px;font-size:13px;color:#e53e3e;min-height:20px;"></p>
+  </div>
+</section>
 
   
   <section id="dashboardShell" class="space-y-0">
