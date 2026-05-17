@@ -884,7 +884,13 @@ function renderSessionUi() {
   }
 
   if (authSection) {
-    authSection.classList.toggle('hidden', hasUser);
+    if (hasUser) {
+      authSection.classList.add('hidden');
+      authSection.style.display = 'none';
+    } else {
+      authSection.classList.remove('hidden');
+      authSection.style.display = '';
+    }
   }
 
   if (logoutBtn) {
