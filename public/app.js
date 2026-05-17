@@ -1046,6 +1046,7 @@ function logout() {
   if (el('loginPassword')) el('loginPassword').value = '';
 
   el('authSection')?.classList.remove('hidden');
+el('authSection').style.display = '';
   el('logoutBtn')?.classList.add('hidden');
   el('bannerLoginBtn')?.classList.remove('hidden');
 el('bannerLogoutBtn')?.classList.add('hidden');
