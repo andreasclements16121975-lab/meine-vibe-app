@@ -1508,14 +1508,14 @@ function setBodyScroll(allow) {
     document.body.style.top = '';
     document.documentElement.style.overscrollBehavior = '';
   } else {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.position = '';
-    document.body.style.width = '100%';
-    document.body.style.height = '100%';
-    document.body.style.top = '0';
-    document.documentElement.style.overscrollBehavior = 'none';
-  }
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.style.top = '';
+      document.documentElement.style.overscrollBehavior = 'none';
+    }
 }
 function renderNextEvent() {
   const box = document.getElementById('nextEventBox');
