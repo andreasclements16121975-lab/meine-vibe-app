@@ -979,7 +979,7 @@ function initDashboardTabs() {
       
       if (target === 'start') {
         el('dashboardHome')?.classList.remove('hidden');
-        setBodyScroll(false);
+        setBodyScroll(true);
       } else {
         el('dashboardHome')?.classList.add('hidden');
         setBodyScroll(true);
@@ -1028,7 +1028,7 @@ function initDashboardTabs() {
     const onclick = btn.getAttribute('onclick') || '';
     if (onclick.includes('dashboardHome') && onclick.includes('classList.remove')) {
       setTimeout(() => {
-        setBodyScroll(false);
+        setBodyScroll(true);
         el('dashboardTabs')?.parentElement?.classList.add('hidden');
       }, 0);
     }
