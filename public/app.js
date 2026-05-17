@@ -857,7 +857,7 @@ function syncDashboardViewportState() {
   updateResponsiveNavigation();
 
   const homeVisible = !el('dashboardHome')?.classList.contains('hidden');
-  const shouldLockHomeOnMobile = homeVisible && isMobileViewport() && window.innerWidth < 768;
+  const shouldLockHomeOnMobile = false;
 
   setBodyScroll(!shouldLockHomeOnMobile);
 }
@@ -1510,7 +1510,7 @@ function setBodyScroll(allow) {
   } else {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
+    document.body.style.position = '';
     document.body.style.width = '100%';
     document.body.style.height = '100%';
     document.body.style.top = '0';
