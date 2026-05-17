@@ -857,7 +857,7 @@ function syncDashboardViewportState() {
   updateResponsiveNavigation();
 
   const homeVisible = !el('dashboardHome')?.classList.contains('hidden');
-  const shouldLockHomeOnMobile = homeVisible && isMobileViewport();
+  const shouldLockHomeOnMobile = homeVisible && isMobileViewport() && window.innerWidth < 768;
 
   setBodyScroll(!shouldLockHomeOnMobile);
 }
