@@ -1456,7 +1456,7 @@ function getNextEvent(events) {
     })
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  return upcoming[0] || null;
+  return upcoming[0] || testEvent;
 }
 
 function formatEventDistance(dateStr) {
