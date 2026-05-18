@@ -925,6 +925,8 @@ function renderSessionUi() {
 
   setAuthInfo(`Eingeloggt als ${currentUser.name} (${currentUser.role})`);
   renderNextEvent();
+  el('welcomeBanner')?.classList.remove('hidden');
+el('nextEventBox')?.classList.remove('hidden');
   syncDashboardViewportState();
 
   requestAnimationFrame(() => {
