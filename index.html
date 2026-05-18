@@ -95,6 +95,52 @@ body {
   align-items: center !important;
   justify-content: center !important;
 }
+      .tile {
+  background: #FFFFFF;
+  border-radius: 13px;
+  padding: 11px;
+  height: 78px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+  position: relative;
+}
+.tile:hover { border-color: #E9ECE5; }
+.tile:active { transform: scale(0.97); }
+.tile-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
+  background: #F5F5F7;
+  border: 1px solid #E9ECE5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tile-title {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0E1A14;
+  letter-spacing: -0.015em;
+  margin-top: 8px;
+}
+.tile-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #0E1A14;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 999px;
+  min-width: 14px;
+  text-align: center;
+}
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   </head>
