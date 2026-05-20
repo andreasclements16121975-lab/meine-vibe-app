@@ -1562,6 +1562,35 @@ function renderNextEvent() {
   }
 
   box.classList.remove('hidden');
+  // Banner-Slider: wechselt zwischen Spielinfo und Begrüßung
+    const sliderEl = document.getElementById('bannerSlide');
+    if (sliderEl && currentUser) {
+      const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
+      const greetText = `Hallo, ${currentUser.name}`;
+      const slides = [labelText, greetText];
+      let slideIdx = 0;
+      if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
+      sliderEl.textContent = slides[0];
+      window._bannerSliderInterval = setInterval(() => {
+        sliderEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        sliderEl.style.transform = 'translateX(-100%)';
+        sliderEl.style.opacity = '0';
+        setTimeout(() => {
+          slideIdx = (slideIdx + 1) % slides.length;
+          sliderEl.textContent = slides[slideIdx];
+          sliderEl.style.transition = 'none';
+          sliderEl.style.transform = 'translateX(100%)';
+          sliderEl.style.opacity = '0';
+          requestAnimationFrame(() => {
+            sliderEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+            sliderEl.style.transform = 'translateX(0)';
+            sliderEl.style.opacity = '1';
+          });
+        }, 500);
+      }, 4000);
+    } else if (sliderEl) {
+      sliderEl.textContent = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
+    }
   // Banner auf "Termin erstellen" direkt befüllen
   const l2 = document.getElementById('nextEventLabelCreate');
   const t2 = document.getElementById('nextEventTitleCreate');
