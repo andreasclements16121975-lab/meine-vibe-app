@@ -1564,9 +1564,10 @@ function renderNextEvent() {
   box.classList.remove('hidden');
   // Banner-Slider: wechselt zwischen Spielinfo und Begrüßung
     const sliderEl = document.getElementById('bannerSlide');
-    if (sliderEl && currentUser) {
+    const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || 'null');
+    if (sliderEl && user) {
       const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
-      const greetText = `Hallo, ${currentUser.name}`;
+      const greetText = `Hallo, ${user.name}`;
       const slides = [labelText, greetText];
       let slideIdx = 0;
       if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
