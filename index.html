@@ -193,21 +193,21 @@ body {
   
   <section id="dashboardShell" class="space-y-0" style="background:#F5F5F7;">
     <div id="welcomeBanner" style="position:sticky;top:0;z-index:40;">
-  <div id="nextEventBox" class="mb-0" style="background:#0E3823;padding:16px 16px 14px;border-radius:16px;margin:8px;">
-  <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
-    <span style="width:7px;height:7px;border-radius:50%;background:#5FE89A;display:inline-block;flex-shrink:0;"></span>
-    <span id="nextEventLabel" style="font-size:10px;font-weight:700;letter-spacing:2px;color:#5FE89A;font-family:monospace;"></span>
+  <div id="nextEventBox" class="mb-0" style="background:#0E3823;padding:20px 16px 14px;border-radius:16px;margin:8px;font-family:'Fraunces',serif;">
+  <div id="bannerSlider" style="text-align:center;margin-bottom:14px;min-height:24px;overflow:hidden;">
+    <div id="bannerSlide" style="font-size:13px;font-weight:700;letter-spacing:1px;color:white;transition:opacity 0.5s ease;">
+      <span id="nextEventLabel"></span>
+    </div>
   </div>
-  <div style="font-size:20px;font-weight:800;color:white;line-height:1.25;margin-bottom:6px;">
-    vs. <span id="nextEventTitle" style="color:#5FE89A;font-style:italic;"></span>
-    <span style="color:#5FE89A;font-style:italic;">in <span id="nextEventDays">-</span> Tagen.</span>
+  <div style="font-size:20px;font-weight:800;color:white;line-height:1.25;margin-bottom:6px;text-align:center;">
+    vs. <span id="nextEventTitle" style="font-style:italic;"></span>
+    <span style="font-style:italic;">in <span id="nextEventDays">-</span> Tagen.</span>
   </div>
-  <div id="nextEventDetails" style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:12px;"></div>
-  <div style="display:flex;justify-content:space-between;align-items:center;">
-    <div id="nextEventPlayers" style="font-size:11px;color:rgba(255,255,255,0.5);"></div>
+  <div id="nextEventDetails" style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;"></div>
+  <div style="display:flex;justify-content:flex-end;align-items:center;">
     <div style="display:flex;gap:8px;">
-      <button id="bannerLoginBtn" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/20 hover:bg-white/10 transition">Einloggen</button>
-      <button id="bannerLogoutBtn" type="button" class="hidden px-4 py-2 rounded-lg text-sm font-semibold text-white transition" style="background:#1A8A4F;">Logout</button>
+      <button id="bannerLoginBtn" type="button" class="px-4 py-2 rounded-lg text-sm font-semibold text-white border border-white/20 hover:bg-white/10 transition" style="font-family:'Fraunces',serif;">Einloggen</button>
+      <button id="bannerLogoutBtn" type="button" class="hidden px-4 py-2 rounded-lg text-sm font-semibold text-white transition" style="background:#1A8A4F;font-family:'Fraunces',serif;">Logout</button>
     </div>
   </div>
 </div>
