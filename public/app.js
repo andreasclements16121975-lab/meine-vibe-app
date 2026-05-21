@@ -1569,15 +1569,16 @@ function renderNextEvent() {
     const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || 'null');
     if (sliderEl && user) {
       const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
-      const userName = user.name ? user.name.split(' ')[0] : '';
+      const userName = user.name || '';
       let showMatch = true;
       if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
       sliderEl.textContent = labelText;
       if (matchLine) matchLine.style.visibility = '';
       if (detailsLine) detailsLine.style.visibility = '';
+      const slider = document.getElementById('bannerSlider');
       window._bannerSliderInterval = setInterval(() => {
-        box.style.transition = 'opacity 0.5s ease';
-        box.style.opacity = '0';
+        slider.style.transition = 'transform 0.5s ease';
+        slider.style.transform = 'translateX(-100%)';
         setTimeout(() => {
           showMatch = !showMatch;
           if (showMatch) {
@@ -1585,11 +1586,16 @@ function renderNextEvent() {
             if (matchLine) matchLine.style.visibility = '';
             if (detailsLine) detailsLine.style.visibility = '';
           } else {
-            sliderEl.textContent = `Hallo, ${userName}`;
+            sliderEl.textContent = `Hallo, ${userName}!`;
             if (matchLine) matchLine.style.visibility = 'hidden';
             if (detailsLine) detailsLine.style.visibility = 'hidden';
           }
-          box.style.opacity = '1';
+          slider.style.transition = 'none';
+          slider.style.transform = 'translateX(100%)';
+          requestAnimationFrame(() => {
+            slider.style.transition = 'transform 0.5s ease';
+            slider.style.transform = 'translateX(0)';
+          });
         }, 500);
       }, 4000);
     } else if (sliderEl) {
