@@ -1573,8 +1573,8 @@ function renderNextEvent() {
       let showMatch = true;
       if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
       sliderEl.textContent = labelText;
-      if (matchLine) matchLine.style.display = '';
-      if (detailsLine) detailsLine.style.display = '';
+      if (matchLine) matchLine.style.visibility = '';
+      if (detailsLine) detailsLine.style.visibility = '';
       window._bannerSliderInterval = setInterval(() => {
         box.style.transition = 'opacity 0.5s ease';
         box.style.opacity = '0';
@@ -1582,12 +1582,12 @@ function renderNextEvent() {
           showMatch = !showMatch;
           if (showMatch) {
             sliderEl.textContent = labelText;
-            if (matchLine) matchLine.style.display = '';
-            if (detailsLine) detailsLine.style.display = '';
+            if (matchLine) matchLine.style.visibility = '';
+            if (detailsLine) detailsLine.style.visibility = '';
           } else {
             sliderEl.textContent = `Hallo, ${userName}`;
-            if (matchLine) matchLine.style.display = 'none';
-            if (detailsLine) detailsLine.style.display = 'none';
+            if (matchLine) matchLine.style.visibility = 'hidden';
+            if (detailsLine) detailsLine.style.visibility = 'hidden';
           }
           box.style.opacity = '1';
         }, 500);
