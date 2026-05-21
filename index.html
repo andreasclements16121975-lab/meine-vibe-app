@@ -194,20 +194,16 @@ body {
   <section id="dashboardShell" class="space-y-0" style="background:#F5F5F7;">
     <div id="welcomeBanner" style="position:sticky;top:0;z-index:40;">
   <div id="nextEventBox" class="mb-0" style="background:#0E3823;padding:20px 16px 14px;border-radius:16px;margin:8px;font-family:'Fraunces',serif;">
-  <div id="bannerSlider" style="text-align:center;overflow:hidden;">
-    <div id="bannerSlide" style="transition:transform 0.5s ease, opacity 0.5s ease;">
-      <div id="bannerSlideMatch">
-        <div id="nextEventLabel" style="font-family:'Fraunces',serif;font-size:20px;font-weight:800;letter-spacing:-0.015em;color:white;margin-bottom:6px;"></div>
-        <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:#FFFFFF;line-height:1.05;letter-spacing:-0.02em;margin-bottom:6px;">
-          vs. <span id="nextEventTitle"></span>
-          <span>in <span id="nextEventDays">-</span> Tagen.</span>
-        </div>
-        <div id="nextEventDetails" style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:12px;"></div>
-      </div>
-      <div id="bannerSlideGreet" style="display:none;">
-        <div id="bannerGreetText" style="font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:#FFFFFF;letter-spacing:-0.02em;line-height:1.05;padding:20px 0;"></div>
+  <div id="bannerSlider" style="text-align:center;margin-bottom:14px;min-height:24px;overflow:hidden;">
+      <div id="bannerSlide" style="font-family:'Fraunces',serif;font-size:20px;font-weight:800;letter-spacing:-0.015em;color:white;transition:opacity 0.5s ease;">
+        <span id="nextEventLabel"></span>
       </div>
     </div>
+    <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:#FFFFFF;line-height:1.05;letter-spacing:-0.02em;margin-bottom:6px;text-align:center;">
+      vs. <span id="nextEventTitle"></span>
+      <span>in <span id="nextEventDays">-</span> Tagen.</span>
+    </div>
+    <div id="nextEventDetails" style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:12px;text-align:center;"></div>
   </div>
   <div style="display:flex;justify-content:flex-end;align-items:center;">
     <div style="display:flex;gap:8px;">
