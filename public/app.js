@@ -1566,35 +1566,55 @@ function renderNextEvent() {
     const sliderEl = document.getElementById('bannerSlide');
     const matchLine = document.querySelector('#nextEventTitle')?.closest('div');
     const detailsLine = document.getElementById('nextEventDetails');
+    const bannerSlider = document.getElementById('bannerSlider');
     const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || 'null');
-    if (sliderEl && user) {
-      const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
+    if (sliderEl && user && matchLine && detailsLine && bannerSlider) {
       const userName = user.name || '';
+      const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
       let showMatch = true;
       if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
       sliderEl.textContent = labelText;
-      if (matchLine) matchLine.style.visibility = '';
-      if (detailsLine) detailsLine.style.visibility = '';
-      const slider = document.getElementById('bannerSlider');
+      let wrap = document.getElementById('_bWrap');
+      if (!wrap) {
+        wrap = document.createElement('div');
+        wrap.id = '_bWrap';
+        wrap.style.overflow = 'hidden';
+        wrap.style.position = 'relative';
+        bannerSlider.parentElement.insertBefore(wrap, bannerSlider);
+        wrap.appendChild(bannerSlider);
+        wrap.appendChild(matchLine);
+        wrap.appendChild(detailsLine);
+      }
+      wrap.style.minHeight = wrap.offsetHeight + 'px';
+      let greet = document.getElementById('_bGreet');
+      if (!greet) {
+        greet = document.createElement('div');
+        greet.id = '_bGreet';
+        greet.style.cssText = 'font-family:Fraunces,serif;font-size:22px;font-weight:800;color:#FFFFFF;letter-spacing:-0.02em;text-align:center;display:none;align-items:center;justify-content:center;position:absolute;top:0;left:0;right:0;bottom:0;';
+        wrap.appendChild(greet);
+      }
+      greet.textContent = `Hallo, ${userName}!`;
       window._bannerSliderInterval = setInterval(() => {
-        slider.style.transition = 'transform 0.5s ease';
-        slider.style.transform = 'translateX(-100%)';
+        wrap.style.transition = 'transform 0.5s ease';
+        wrap.style.transform = 'translateX(-100%)';
         setTimeout(() => {
           showMatch = !showMatch;
           if (showMatch) {
-            sliderEl.textContent = labelText;
-            if (matchLine) matchLine.style.visibility = '';
-            if (detailsLine) detailsLine.style.visibility = '';
+            bannerSlider.style.visibility = '';
+            matchLine.style.visibility = '';
+            detailsLine.style.visibility = '';
+            greet.style.display = 'none';
           } else {
-            sliderEl.textContent = `Hallo, ${userName}!`;
-            if (matchLine) matchLine.style.visibility = 'hidden';
-            if (detailsLine) detailsLine.style.visibility = 'hidden';
+            bannerSlider.style.visibility = 'hidden';
+            matchLine.style.visibility = 'hidden';
+            detailsLine.style.visibility = 'hidden';
+            greet.style.display = 'flex';
           }
-          slider.style.transition = 'none';
-          slider.style.transform = 'translateX(100%)';
+          wrap.style.transition = 'none';
+          wrap.style.transform = 'translateX(100%)';
           requestAnimationFrame(() => {
-            slider.style.transition = 'transform 0.5s ease';
-            slider.style.transform = 'translateX(0)';
+            wrap.style.transition = 'transform 0.5s ease';
+            wrap.style.transform = 'translateX(0)';
           });
         }, 500);
       }, 4000);
