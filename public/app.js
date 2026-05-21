@@ -1564,29 +1564,32 @@ function renderNextEvent() {
   box.classList.remove('hidden');
   // Banner-Slider: wechselt zwischen Spielinfo und Begrüßung
     const sliderEl = document.getElementById('bannerSlide');
+    const matchLine = document.querySelector('#nextEventTitle')?.closest('div');
+    const detailsLine = document.getElementById('nextEventDetails');
     const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || 'null');
     if (sliderEl && user) {
       const labelText = `NÄCHSTES SPIEL · ${formatEventLabel(next)}`;
-      const greetText = `Hallo, ${user.name}`;
-      const slides = [labelText, greetText];
-      let slideIdx = 0;
+      const userName = user.name ? user.name.split(' ')[0] : '';
+      let showMatch = true;
       if (window._bannerSliderInterval) clearInterval(window._bannerSliderInterval);
-      sliderEl.textContent = slides[0];
+      sliderEl.textContent = labelText;
+      if (matchLine) matchLine.style.display = '';
+      if (detailsLine) detailsLine.style.display = '';
       window._bannerSliderInterval = setInterval(() => {
-        sliderEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-        sliderEl.style.transform = 'translateX(-100%)';
-        sliderEl.style.opacity = '0';
+        box.style.transition = 'opacity 0.5s ease';
+        box.style.opacity = '0';
         setTimeout(() => {
-          slideIdx = (slideIdx + 1) % slides.length;
-          sliderEl.textContent = slides[slideIdx];
-          sliderEl.style.transition = 'none';
-          sliderEl.style.transform = 'translateX(100%)';
-          sliderEl.style.opacity = '0';
-          requestAnimationFrame(() => {
-            sliderEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-            sliderEl.style.transform = 'translateX(0)';
-            sliderEl.style.opacity = '1';
-          });
+          showMatch = !showMatch;
+          if (showMatch) {
+            sliderEl.textContent = labelText;
+            if (matchLine) matchLine.style.display = '';
+            if (detailsLine) detailsLine.style.display = '';
+          } else {
+            sliderEl.textContent = `Hallo, ${userName}`;
+            if (matchLine) matchLine.style.display = 'none';
+            if (detailsLine) detailsLine.style.display = 'none';
+          }
+          box.style.opacity = '1';
         }, 500);
       }, 4000);
     } else if (sliderEl) {
