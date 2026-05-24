@@ -1641,61 +1641,172 @@ function renderNextEvent() {
   }
   if (det2 && detailsEl) det2.innerHTML = detailsEl.innerHTML;
 }
-function renderCalendar(events) {
-  calendarEvents = events;
-  renderNextEvent();
-  const now = new Date();
+function renderCalendar() {
+  const grid = el('calGrid');
+  const monthLabel = el('calMonthLabel');
+  const yearLabel = el('calYearLabel');
+  const upcomingList = el('calUpcomingList');
+  const upcomingCount = el('calUpcomingCount');
+  
+  if (!grid || !monthLabel || !yearLabel) return;
+  
+  // Monat und Jahr anzeigen
+  const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
   const y = calendarViewDate.getFullYear();
   const m = calendarViewDate.getMonth();
-  const holidayMap = getHolidayMap(y);
-  const days = new Date(y, m + 1, 0).getDate();
-  const startDay = (new Date(y, m, 1).getDay() + 6) % 7;
-  const labels = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  const cells = labels.map((d) => `<div class="font-semibold p-1 text-center">${d}</div>`);
-  for (let i = 0; i < startDay; i++) cells.push('<div class="p-2 border rounded bg-slate-50"></div>');
-
-  for (let day = 1; day <= days; day++) {
-    const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const dayEvents = events.filter((e) => e.date === iso);
-    const isToday = now.getFullYear() === y && now.getMonth() === m && now.getDate() === day;
-   const holidayName = holidayMap[iso] || '';
-
-cells.push(`
-  <div class="p-2 border rounded min-h-20">
-    <div class="font-medium inline-flex items-center justify-center w-7 h-7 rounded-full ${isToday ? 'bg-blue-100 text-blue-700' : ''}">
-      ${day}
-    </div>
-    ${holidayName ? `<div class="text-[11px] rounded px-1 py-0.5 my-1 bg-rose-100 text-rose-700 leading-tight">${holidayName}</div>` : ''}
-    ${dayEvents
-      .map((e) => {
-        const eventLabel = e.title || 'Termin';
-        const detailLabel = e.opponent || '';
-        const addressLabel = e.address || '-';
-
-        const eventTypeClass =
-          e.title === 'Training'
-            ? 'bg-blue-100'
-            : e.title === 'Event'
-              ? 'bg-orange-100'
-              : 'bg-emerald-100';
-
-        return `
-          <div class="text-xs rounded px-1 py-1 my-1 ${eventTypeClass} leading-tight cursor-pointer overflow-hidden" data-event-id="${e.id}" title="${eventLabel}${detailLabel ? ` - ${detailLabel}` : ''} | ${addressLabel}">
-            <div class="font-medium truncate">${eventLabel}</div>
-            <div class="truncate">${detailLabel || '-'}</div>
-            <div class="truncate">${addressLabel}</div>
-            <a class="text-blue-700 underline block truncate" href="${e.mapLink || '#'}" target="_blank" rel="noreferrer">Google Maps</a>
-          </div>
-        `;
-      })
-      .join('')}
-  </div>
-`);
+  monthLabel.textContent = months[m];
+  yearLabel.textContent = y;
+  
+  // Heute
+  const today = new Date();
+  const isCurrentMonth = today.getFullYear() === y && today.getMonth() === m;
+  
+  // Erste Tag des Monats (0=So, 1=Mo, ..., 6=Sa)
+  const firstDay = new Date(y, m, 1).getDay();
+  const firstDayMo = (firstDay === 0) ? 6 : firstDay - 1; // Mo-Start (nicht So)
+  
+  // Tage im Monat
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  
+  // Grid leeren
+  grid.innerHTML = '';
+  
+  // Leere Zellen für vorherigen Monat
+  for (let i = 0; i < firstDayMo; i++) {
+    const cell = document.createElement('button');
+    cell.className = 'cal-day is-other-month';
+    cell.style.pointerEvents = 'none';
+    grid.appendChild(cell);
   }
-  el('calendarGrid').innerHTML = cells.join('');
-  el('currentYearLabel').textContent = String(y);
-  el('monthSelect').value = String(m);
-  refreshLineupEventOptions();
+  
+  // Tage dieses Monats
+  for (let day = 1; day <= daysInMonth; day++) {
+    const cell = document.createElement('button');
+    cell.className = 'cal-day';
+    cell.type = 'button';
+    
+    const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const isToday = isCurrentMonth && today.getDate() === day;
+    const isHoliday = calendarHolidays[dateStr];
+    
+    // Klassen setzen
+    if (isToday) cell.classList.add('is-today');
+    if (isHoliday) cell.classList.add('is-holiday');
+    
+    // Tagnummer
+    const dayNum = document.createElement('div');
+    dayNum.className = 'cal-day-num';
+    dayNum.textContent = day;
+    cell.appendChild(dayNum);
+    
+    // Termine an diesem Tag
+    const dayEvents = calendarEvents.filter(e => e.date === dateStr);
+    if (dayEvents.length > 0 || isHoliday) {
+      const chipsContainer = document.createElement('div');
+      chipsContainer.className = 'cal-chips';
+      
+      if (isHoliday) {
+        const chip = document.createElement('div');
+        chip.className = 'cal-chip is-holiday';
+        chip.textContent = calendarHolidays[dateStr];
+        chipsContainer.appendChild(chip);
+      }
+      
+      // Max 2 Event-Chips anzeigen
+      dayEvents.slice(0, 2).forEach(evt => {
+        const chip = document.createElement('div');
+        chip.className = `cal-chip is-${evt.title.toLowerCase().replace(/\s+/g, '')}`;
+        const label = evt.title === 'Training' ? 'TR' : evt.title === 'Spiel' ? 'SP' : 'EV';
+        chip.textContent = label;
+        chipsContainer.appendChild(chip);
+      });
+      
+      // "+N mehr" wenn 3+ Events
+      if (dayEvents.length > 2) {
+        const more = document.createElement('div');
+        more.className = 'cal-chip-more';
+        more.textContent = `+${dayEvents.length - 2}`;
+        chipsContainer.appendChild(more);
+      }
+      
+      cell.appendChild(chipsContainer);
+    }
+    
+    cell.onclick = () => openCalendarDaySheet(dateStr, day, isHoliday);
+    grid.appendChild(cell);
+  }
+  
+  // Leere Zellen für nächsten Monat
+  const totalCells = grid.children.length;
+  const remainingCells = (7 * 6) - totalCells; // 6 Wochen max
+  for (let i = 0; i < remainingCells; i++) {
+    const cell = document.createElement('button');
+    cell.className = 'cal-day is-other-month';
+    cell.style.pointerEvents = 'none';
+    grid.appendChild(cell);
+  }
+  
+  // Nächste Termine rendern
+  renderUpcomingEvents();
+}
+
+function renderUpcomingEvents() {
+  const list = el('calUpcomingList');
+  const count = el('calUpcomingCount');
+  if (!list) return;
+  
+  list.innerHTML = '';
+  
+  // Nächste 7 Tage
+  const upcomingEvents = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  calendarEvents.forEach(evt => {
+    const eventDate = new Date(evt.date);
+    if (eventDate >= today) {
+      upcomingEvents.push(evt);
+    }
+  });
+  
+  upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+  upcomingEvents.slice(0, 5).forEach(evt => {
+    const date = new Date(evt.date);
+    const dayOfMonth = date.getDate();
+    const monthShort = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'][date.getMonth()];
+    
+    const card = document.createElement('div');
+    card.className = `cal-upcoming-item is-${evt.title.toLowerCase().replace(/\s+/g, '')}`;
+    card.style.cursor = 'pointer';
+    
+    const dateBox = document.createElement('div');
+    dateBox.className = 'cal-upcoming-date';
+    dateBox.innerHTML = `<div class="cal-upcoming-day">${dayOfMonth}</div><div class="cal-upcoming-month">${monthShort}</div>`;
+    
+    const body = document.createElement('div');
+    body.className = 'cal-upcoming-body';
+    body.innerHTML = `<div class="cal-upcoming-label">${evt.title}</div><div class="cal-upcoming-title">${evt.opponent || evt.title}</div>`;
+    
+    const time = document.createElement('div');
+    time.className = 'cal-upcoming-time';
+    time.textContent = evt.time || '–';
+    
+    card.appendChild(dateBox);
+    card.appendChild(body);
+    card.appendChild(time);
+    card.onclick = () => openCalendarDaySheet(evt.date, dayOfMonth, false);
+    
+    list.appendChild(card);
+  });
+  
+  if (count) {
+    count.textContent = upcomingEvents.length > 0 ? `${upcomingEvents.length}` : '';
+  }
+}
+
+function openCalendarDaySheet(dateStr, dayOfMonth, isHoliday) {
+  console.log('Tag geklickt:', dateStr, dayOfMonth, isHoliday);
+  // Placeholder - Bottom-Sheet kommt später
 }
 
 function initCalendarControls() {
