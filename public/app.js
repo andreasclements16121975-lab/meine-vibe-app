@@ -14,16 +14,16 @@ let calendarViewDate = new Date();
 let calendarEvents = [];
 let selectedCalendarEventId = '';
 let calendarHolidays = {
-  '2026-1-1': 'Neujahr',
-  '2026-1-6': 'Epiphanie',
-  '2026-4-10': 'Karfreitag',
-  '2026-4-13': 'Ostermontag',
-  '2026-5-1': 'Tag der Arbeit',
-  '2026-5-21': 'Christi Himmelfahrt',
-  '2026-5-31': 'Pfingstsonntag',
-  '2026-6-1': 'Pfingstmontag',
-  '2026-10-3': 'Tag der Einheit',
-  '2026-11-1': 'Allerheiligen',
+  '2026-01-01': 'Neujahr',
+  '2026-01-06': 'Epiphanie',
+  '2026-04-10': 'Karfreitag',
+  '2026-04-13': 'Ostermontag',
+  '2026-05-01': 'Tag der Arbeit',
+  '2026-05-21': 'Christi Himmelfahrt',
+  '2026-05-31': 'Pfingstsonntag',
+  '2026-06-01': 'Pfingstmontag',
+  '2026-10-03': 'Tag der Einheit',
+  '2026-11-01': 'Allerheiligen',
   '2026-12-25': 'Weihnachtstag',
   '2026-12-26': '2. Weihnachtstag',
   '2026-12-31': 'Silvester'
@@ -1720,10 +1720,10 @@ function renderCalendar() {
       chipsContainer.className = 'cal-chips';
       
       if (isHoliday) {
-        const chip = document.createElement('div');
-        chip.className = 'cal-chip is-holiday';
-        chip.textContent = calendarHolidays[dateStr];
-        chipsContainer.appendChild(chip);
+        const holidayDiv = document.createElement('div');
+        holidayDiv.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:7px;font-weight:600;color:#C83E3E;text-align:center;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:1px 1px;';
+        holidayDiv.textContent = calendarHolidays[dateStr];
+        chipsContainer.appendChild(holidayDiv);
       }
       
       // Max 2 Event-Chips anzeigen
