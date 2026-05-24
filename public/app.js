@@ -1810,29 +1810,25 @@ function openCalendarDaySheet(dateStr, dayOfMonth, isHoliday) {
 }
 
 function initCalendarControls() {
-  const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-  el('monthSelect').innerHTML = months.map((name, idx) => `<option value="${idx}">${name}</option>`).join('');
-  el('monthSelect').value = String(calendarViewDate.getMonth());
-  el('currentYearLabel').textContent = String(calendarViewDate.getFullYear());
-
-  el('prevMonthBtn').addEventListener('click', () => {
-    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
-    renderCalendar(calendarEvents);
-  });
-  el('nextMonthBtn').addEventListener('click', () => {
-    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
-    renderCalendar(calendarEvents);
-  });
-  el('monthSelect').addEventListener('change', () => {
-    calendarViewDate = new Date(calendarViewDate.getFullYear(), Number(el('monthSelect').value), 1);
-    renderCalendar(calendarEvents);
-  });
-
-  el('calendarGrid').addEventListener('click', (ev) => {
-    const entry = ev.target.closest('[data-event-id]');
-    if (!entry) return;
-    openCalendarModal(entry.dataset.eventId);
-  });
+  const prevBtn = el('calPrevMonth');
+  const nextBtn = el('calNextMonth');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      calendarViewDate.setMonth(calendarViewDate.getMonth() - 1);
+      renderCalendar();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      calendarViewDate.setMonth(calendarViewDate.getMonth() + 1);
+      renderCalendar();
+    });
+  }
+  
+  // Initial rendern
+  renderCalendar();
 }
 
 function openCalendarModal(eventId) {
