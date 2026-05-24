@@ -1697,6 +1697,8 @@ function renderNextEvent() {
 }
 function renderCalendar() {
   const grid = el('calGrid');
+  // Feiertage für das aktuelle Anzeigjahr aktualisieren (funktioniert für alle Jahre)
+  calendarHolidays = getGermanHolidays(calendarViewDate.getFullYear());
   const monthLabel = el('calMonthLabel');
   const yearLabel = el('calYearLabel');
   const upcomingList = el('calUpcomingList');
