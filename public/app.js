@@ -13,6 +13,7 @@ let currentUser = null;
 let calendarViewDate = new Date();
 let calendarEvents = [];
 let selectedCalendarEventId = '';
+let calendarHolidays = {};
 const LINEUP_STORAGE_KEY = 'lineupBuilderStoreV1';
 const lineupState = {
   sourceMode: 'free',
