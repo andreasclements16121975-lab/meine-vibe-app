@@ -141,6 +141,146 @@ body {
   min-width: 14px;
   text-align: center;
 }
+      /* ===== KALENDER ===== */
+.cal-day {
+  aspect-ratio: 0.78;
+  border-radius: 8px;
+  padding: 4px 2px 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  position: relative;
+}
+.cal-day:hover { background: #FAFAFB; }
+.cal-day.is-other-month { opacity: 0.35; }
+.cal-day-num {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0E1A14;
+  margin-bottom: 2px;
+}
+.cal-day.is-today .cal-day-num {
+  background: #0E1A14;
+  color: white;
+}
+.cal-day.is-holiday {
+  background: #FDECEC;
+}
+.cal-day.is-holiday .cal-day-num {
+  color: #C83E3E;
+}
+.cal-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 0 2px;
+}
+.cal-chip {
+  height: 12px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.cal-chip.is-match { background: #1A8A4F; }
+.cal-chip.is-training { background: #2563B8; }
+.cal-chip.is-event { background: #7E57C2; }
+.cal-chip.is-holiday { background: #C83E3E; }
+.cal-chip-more {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: #5E6F67;
+  text-align: center;
+  padding: 1px 0;
+}
+
+/* ===== UPCOMING-LISTE ===== */
+.cal-upcoming-item {
+  background: white;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 3px solid #1A8A4F;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.cal-upcoming-item:active { transform: scale(0.98); }
+.cal-upcoming-item.is-match { border-left-color: #1A8A4F; }
+.cal-upcoming-item.is-training { border-left-color: #2563B8; }
+.cal-upcoming-item.is-event { border-left-color: #7E57C2; }
+.cal-upcoming-item.is-holiday { border-left-color: #C83E3E; }
+.cal-upcoming-date {
+  min-width: 38px;
+  text-align: center;
+}
+.cal-upcoming-day {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0E1A14;
+  line-height: 1;
+}
+.cal-upcoming-month {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: #94A39C;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.cal-upcoming-body {
+  flex: 1;
+  min-width: 0;
+}
+.cal-upcoming-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: #94A39C;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.cal-upcoming-title {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0E1A14;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cal-upcoming-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5E6F67;
+  flex-shrink: 0;
+}
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   </head>
