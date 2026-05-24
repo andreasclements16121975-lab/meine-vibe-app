@@ -48,9 +48,8 @@ function getGermanHolidays(year) {
   }
   
   function addDays(date, days) {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
+    // Schaltjahr-sicher: über Millisekunden rechnen
+    return new Date(date.getTime() + days * 86400000);
   }
   
   // === BEWEGLICHE FEIERTAGE ===
