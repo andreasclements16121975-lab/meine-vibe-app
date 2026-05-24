@@ -18,13 +18,21 @@ function getGermanHolidays(year) {
   
   // Vordefinierte Osterdaten für zuverlässige Berechnung
   const easterDates = {
-    2026: new Date(2026, 3, 5),  // 5. April 2026
-    2027: new Date(2027, 3, 28), // 28. April 2027
-    2028: new Date(2028, 3, 9),  // 9. April 2028
-    2029: new Date(2029, 3, 1),  // 1. April 2029
-    2030: new Date(2030, 4, 19), // 19. Mai 2030
-    2031: new Date(2031, 4, 4),  // 4. Mai 2031
-    2032: new Date(2032, 3, 25), // 25. April 2032
+    2026: new Date(2026, 3, 5),   // 5. April 2026
+    2027: new Date(2027, 2, 28),  // 28. März 2027
+    2028: new Date(2028, 3, 16),  // 16. April 2028
+    2029: new Date(2029, 3, 1),   // 1. April 2029
+    2030: new Date(2030, 3, 21),  // 21. April 2030
+    2031: new Date(2031, 3, 13),  // 13. April 2031
+    2032: new Date(2032, 2, 28),  // 28. März 2032
+    2033: new Date(2033, 3, 25),  // 25. April 2033
+    2034: new Date(2034, 3, 10),  // 10. April 2034
+    2035: new Date(2035, 3, 2),   // 2. April 2035
+    2036: new Date(2036, 3, 22),  // 22. April 2036
+    2037: new Date(2037, 3, 6),   // 6. April 2037
+    2038: new Date(2038, 3, 26),  // 26. April 2038
+    2039: new Date(2039, 3, 18),  // 18. April 2039
+    2040: new Date(2040, 3, 2),   // 2. April 2040
   };
   
   // Feste Feiertage
