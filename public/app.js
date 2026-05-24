@@ -66,7 +66,6 @@ function getGermanHolidays(year) {
 
 let calendarHolidays = getGermanHolidays(new Date().getFullYear());
 
-let calendarHolidays = getGermanHolidays(new Date().getFullYear());
 const LINEUP_STORAGE_KEY = 'lineupBuilderStoreV1';
 const lineupState = {
   sourceMode: 'free',
