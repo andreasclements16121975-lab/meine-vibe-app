@@ -16,26 +16,7 @@ let selectedCalendarEventId = '';
 function getGermanHolidays(year) {
   const holidays = {};
   
-  // Vordefinierte Osterdaten für zuverlässige Berechnung
-  const easterDates = {
-    2026: new Date(2026, 3, 5),   // 5. April 2026
-    2027: new Date(2027, 2, 28),  // 28. März 2027
-    2028: new Date(2028, 3, 16),  // 16. April 2028
-    2029: new Date(2029, 3, 1),   // 1. April 2029
-    2030: new Date(2030, 3, 21),  // 21. April 2030
-    2031: new Date(2031, 3, 13),  // 13. April 2031
-    2032: new Date(2032, 2, 28),  // 28. März 2032
-    2033: new Date(2033, 3, 25),  // 25. April 2033
-    2034: new Date(2034, 3, 10),  // 10. April 2034
-    2035: new Date(2035, 3, 2),   // 2. April 2035
-    2036: new Date(2036, 3, 22),  // 22. April 2036
-    2037: new Date(2037, 3, 6),   // 6. April 2037
-    2038: new Date(2038, 3, 26),  // 26. April 2038
-    2039: new Date(2039, 3, 18),  // 18. April 2039
-    2040: new Date(2040, 3, 2),   // 2. April 2040
-  };
-  
-  // Feste Feiertage
+  // === FESTE FEIERTAGE ===
   holidays[`${year}-01-01`] = 'Neujahr';
   holidays[`${year}-01-06`] = 'Heilige Drei Könige';
   holidays[`${year}-05-01`] = 'Tag der Arbeit';
@@ -44,30 +25,40 @@ function getGermanHolidays(year) {
   holidays[`${year}-12-26`] = '2. Weihnachtstag';
   holidays[`${year}-12-31`] = 'Silvester';
   
-  // Bewegliche Feiertage berechnen
-  if (easterDates[year]) {
-    const easterDate = easterDates[year];
-    
-    const karfreitag = new Date(easterDate);
-    karfreitag.setDate(karfreitag.getDate() - 2);
-    holidays[`${karfreitag.getFullYear()}-${String(karfreitag.getMonth() + 1).padStart(2, '0')}-${String(karfreitag.getDate()).padStart(2, '0')}`] = 'Karfreitag';
-    
-    const ostermontag = new Date(easterDate);
-    ostermontag.setDate(ostermontag.getDate() + 1);
-    holidays[`${ostermontag.getFullYear()}-${String(ostermontag.getMonth() + 1).padStart(2, '0')}-${String(ostermontag.getDate()).padStart(2, '0')}`] = 'Ostermontag';
-    
-    const christi = new Date(easterDate);
-    christi.setDate(christi.getDate() + 39);
-    holidays[`${christi.getFullYear()}-${String(christi.getMonth() + 1).padStart(2, '0')}-${String(christi.getDate()).padStart(2, '0')}`] = 'Christi Himmelfahrt';
-    
-    const pfingstsonntag = new Date(easterDate);
-    pfingstsonntag.setDate(pfingstsonntag.getDate() + 49);
-    holidays[`${pfingstsonntag.getFullYear()}-${String(pfingstsonntag.getMonth() + 1).padStart(2, '0')}-${String(pfingstsonntag.getDate()).padStart(2, '0')}`] = 'Pfingstsonntag';
-    
-    const pfingstmontag = new Date(easterDate);
-    pfingstmontag.setDate(pfingstmontag.getDate() + 50);
-    holidays[`${pfingstmontag.getFullYear()}-${String(pfingstmontag.getMonth() + 1).padStart(2, '0')}-${String(pfingstmontag.getDate()).padStart(2, '0')}`] = 'Pfingstmontag';
+  // === OSTERN BERECHNEN (Meeus/Jones/Butcher Algorithmus) ===
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const g = Math.floor((8 * b + 13) / 25);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 19 * l) / 433);
+  const n = Math.floor((h + l - 7 * m + 90) / 25);
+  const p = (h + l - 7 * m + 33 * n + 19) % 32;
+  
+  const easterDate = new Date(year, n - 1, p);
+  
+  // === HELPER-FUNKTIONEN ===
+  function formatDate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
+  
+  function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+  
+  // === BEWEGLICHE FEIERTAGE ===
+  holidays[formatDate(addDays(easterDate, -2))] = 'Karfreitag';
+  holidays[formatDate(addDays(easterDate, 1))] = 'Ostermontag';
+  holidays[formatDate(addDays(easterDate, 39))] = 'Christi Himmelfahrt';
+  holidays[formatDate(addDays(easterDate, 49))] = 'Pfingstsonntag';
+  holidays[formatDate(addDays(easterDate, 50))] = 'Pfingstmontag';
   
   return holidays;
 }
