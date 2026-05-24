@@ -13,7 +13,21 @@ let currentUser = null;
 let calendarViewDate = new Date();
 let calendarEvents = [];
 let selectedCalendarEventId = '';
-let calendarHolidays = {};
+let calendarHolidays = {
+  '2026-1-1': 'Neujahr',
+  '2026-1-6': 'Epiphanie',
+  '2026-4-10': 'Karfreitag',
+  '2026-4-13': 'Ostermontag',
+  '2026-5-1': 'Tag der Arbeit',
+  '2026-5-21': 'Christi Himmelfahrt',
+  '2026-5-31': 'Pfingstsonntag',
+  '2026-6-1': 'Pfingstmontag',
+  '2026-10-3': 'Tag der Einheit',
+  '2026-11-1': 'Allerheiligen',
+  '2026-12-25': 'Weihnachtstag',
+  '2026-12-26': '2. Weihnachtstag',
+  '2026-12-31': 'Silvester'
+};
 const LINEUP_STORAGE_KEY = 'lineupBuilderStoreV1';
 const lineupState = {
   sourceMode: 'free',
