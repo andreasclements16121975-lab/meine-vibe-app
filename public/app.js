@@ -16,6 +16,17 @@ let selectedCalendarEventId = '';
 function getGermanHolidays(year) {
   const holidays = {};
   
+  // Vordefinierte Osterdaten für zuverlässige Berechnung
+  const easterDates = {
+    2026: new Date(2026, 3, 5),  // 5. April 2026
+    2027: new Date(2027, 3, 28), // 28. April 2027
+    2028: new Date(2028, 3, 9),  // 9. April 2028
+    2029: new Date(2029, 3, 1),  // 1. April 2029
+    2030: new Date(2030, 4, 19), // 19. Mai 2030
+    2031: new Date(2031, 4, 4),  // 4. Mai 2031
+    2032: new Date(2032, 3, 25), // 25. April 2032
+  };
+  
   // Feste Feiertage
   holidays[`${year}-01-01`] = 'Neujahr';
   holidays[`${year}-01-06`] = 'Heilige Drei Könige';
@@ -25,47 +36,35 @@ function getGermanHolidays(year) {
   holidays[`${year}-12-26`] = '2. Weihnachtstag';
   holidays[`${year}-12-31`] = 'Silvester';
   
-  // Ostern berechnen (Computus-Algorithmus)
-  const a = year % 19;
-  const b = Math.floor(year / 100);
-  const c = year % 100;
-  const d = Math.floor(b / 4);
-  const e = b % 4;
-  const f = Math.floor((b + 8) / 25);
-  const g = Math.floor((b - f + 1) / 3);
-  const h = (19 * a + b - d - g + 15) % 30;
-  const i = Math.floor(c / 4);
-  const k = c % 4;
-  const l = (32 + 2 * e + 2 * i - h - k) % 7;
-  const m = Math.floor((a + 11 * h + 22 * l) / 451);
-  const month = Math.floor((h + l - 7 * m + 114) / 31);
-  const day = ((h + l - 7 * m + 114) % 31) + 1;
-  
-  const easterDate = new Date(year, month - 1, day);
-  
-  // Vom Ostern abhängige Feiertage
-  const karfreitag = new Date(easterDate);
-  karfreitag.setDate(karfreitag.getDate() - 2);
-  holidays[`${karfreitag.getFullYear()}-${String(karfreitag.getMonth() + 1).padStart(2, '0')}-${String(karfreitag.getDate()).padStart(2, '0')}`] = 'Karfreitag';
-  
-  const ostermontag = new Date(easterDate);
-  ostermontag.setDate(ostermontag.getDate() + 1);
-  holidays[`${ostermontag.getFullYear()}-${String(ostermontag.getMonth() + 1).padStart(2, '0')}-${String(ostermontag.getDate()).padStart(2, '0')}`] = 'Ostermontag';
-  
-  const christi = new Date(easterDate);
-  christi.setDate(christi.getDate() + 39);
-  holidays[`${christi.getFullYear()}-${String(christi.getMonth() + 1).padStart(2, '0')}-${String(christi.getDate()).padStart(2, '0')}`] = 'Christi Himmelfahrt';
-  
-  const pfingstsonntag = new Date(easterDate);
-  pfingstsonntag.setDate(pfingstsonntag.getDate() + 49);
-  holidays[`${pfingstsonntag.getFullYear()}-${String(pfingstsonntag.getMonth() + 1).padStart(2, '0')}-${String(pfingstsonntag.getDate()).padStart(2, '0')}`] = 'Pfingstsonntag';
-  
-  const pfingstmontag = new Date(easterDate);
-  pfingstmontag.setDate(pfingstmontag.getDate() + 50);
-  holidays[`${pfingstmontag.getFullYear()}-${String(pfingstmontag.getMonth() + 1).padStart(2, '0')}-${String(pfingstmontag.getDate()).padStart(2, '0')}`] = 'Pfingstmontag';
+  // Bewegliche Feiertage berechnen
+  if (easterDates[year]) {
+    const easterDate = easterDates[year];
+    
+    const karfreitag = new Date(easterDate);
+    karfreitag.setDate(karfreitag.getDate() - 2);
+    holidays[`${karfreitag.getFullYear()}-${String(karfreitag.getMonth() + 1).padStart(2, '0')}-${String(karfreitag.getDate()).padStart(2, '0')}`] = 'Karfreitag';
+    
+    const ostermontag = new Date(easterDate);
+    ostermontag.setDate(ostermontag.getDate() + 1);
+    holidays[`${ostermontag.getFullYear()}-${String(ostermontag.getMonth() + 1).padStart(2, '0')}-${String(ostermontag.getDate()).padStart(2, '0')}`] = 'Ostermontag';
+    
+    const christi = new Date(easterDate);
+    christi.setDate(christi.getDate() + 39);
+    holidays[`${christi.getFullYear()}-${String(christi.getMonth() + 1).padStart(2, '0')}-${String(christi.getDate()).padStart(2, '0')}`] = 'Christi Himmelfahrt';
+    
+    const pfingstsonntag = new Date(easterDate);
+    pfingstsonntag.setDate(pfingstsonntag.getDate() + 49);
+    holidays[`${pfingstsonntag.getFullYear()}-${String(pfingstsonntag.getMonth() + 1).padStart(2, '0')}-${String(pfingstsonntag.getDate()).padStart(2, '0')}`] = 'Pfingstsonntag';
+    
+    const pfingstmontag = new Date(easterDate);
+    pfingstmontag.setDate(pfingstmontag.getDate() + 50);
+    holidays[`${pfingstmontag.getFullYear()}-${String(pfingstmontag.getMonth() + 1).padStart(2, '0')}-${String(pfingstmontag.getDate()).padStart(2, '0')}`] = 'Pfingstmontag';
+  }
   
   return holidays;
 }
+
+let calendarHolidays = getGermanHolidays(new Date().getFullYear());
 
 let calendarHolidays = getGermanHolidays(new Date().getFullYear());
 const LINEUP_STORAGE_KEY = 'lineupBuilderStoreV1';
