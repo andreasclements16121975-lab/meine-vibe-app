@@ -527,10 +527,11 @@ body {
         <!-- Kalender-Grid (wird per JS gefüllt) -->
         <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
 
-      </div>
+        <!-- Trennlinie -->
+        <div style="height:1px;background:#E5E7EB;margin:12px 0;"></div>
 
-      <!-- Legende: Event-Kategorien -->
-        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:14px;padding:12px 14px;margin:16px;display:flex;flex-wrap:wrap;gap:12px 8px;align-items:center;justify-content:center;">
+        <!-- Legende: Event-Kategorien (zentriert) -->
+        <div style="display:flex;flex-wrap:wrap;gap:12px 8px;align-items:center;justify-content:center;padding:12px 0;">
           
           <!-- Training -->
           <div style="display:flex;align-items:center;gap:6px;">
@@ -556,6 +557,9 @@ body {
             <span style="font-size:11px;color:#6B7280;font-weight:500;">Heimspiel</span>
           </div>
         </div>
+      </div>
+
+    
 
     </section>
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
