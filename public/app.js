@@ -1571,9 +1571,10 @@ function setBodyScroll(allow) {
     }
 }
 function renderNextEvent() {
-  // Banner im Termine-Tab (overview) NICHT anzeigen
-  const overviewPanel = document.querySelector('section[data-tab-panel="overview"]');
-  if (overviewPanel && !overviewPanel.classList.contains('hidden')) {
+  // Banner NUR auf der Startseite anzeigen (wenn KEIN Tab-Panel sichtbar ist)
+  const allPanels = document.querySelectorAll('section[data-tab-panel]');
+  const anyPanelVisible = Array.from(allPanels).some(panel => !panel.classList.contains('hidden'));
+  if (anyPanelVisible) {
     const box = document.getElementById('nextEventBox');
     if (box) box.classList.add('hidden');
     return;
