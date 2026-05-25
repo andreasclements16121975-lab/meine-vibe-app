@@ -992,16 +992,17 @@ el('nextEventBox')?.classList.remove('hidden');
 
 function initDashboardTabs() {
   el('dashboardHome')?.classList.remove('hidden');
-
+  el('nextEventBox')?.classList.remove('hidden');
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
   syncDashboardViewportState();
 }
 
   const openDashboardSection = (tabKey) => {
-  el('dashboardHome')?.classList.add('hidden');
-  activateDashboardTab(tabKey);
-  syncDashboardViewportState();
-};
+    el('dashboardHome')?.classList.add('hidden');
+    el('nextEventBox')?.classList.add('hidden');
+    activateDashboardTab(tabKey);
+    syncDashboardViewportState();
+  };
 
   el('dashboardTabs')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-tab-button]');
