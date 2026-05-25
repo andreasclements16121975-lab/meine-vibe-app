@@ -993,6 +993,13 @@ el('nextEventBox')?.classList.remove('hidden');
 function initDashboardTabs() {
   el('dashboardHome')?.classList.remove('hidden');
   el('nextEventBox')?.classList.remove('hidden');
+  // Termine Header Buttons
+  document.getElementById('terminBackBtn')?.addEventListener('click', () => {
+    initDashboardTabs();
+  });
+  document.getElementById('terminLogoutBtn')?.addEventListener('click', () => {
+    document.getElementById('logoutBtn')?.click();
+  });
   document.querySelectorAll('[data-tab-panel]').forEach((panel) => panel.classList.add('hidden'));
   syncDashboardViewportState();
 }
