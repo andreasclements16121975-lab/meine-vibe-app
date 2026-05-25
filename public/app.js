@@ -1007,6 +1007,7 @@ function initDashboardTabs() {
   const openDashboardSection = (tabKey) => {
     el('dashboardHome')?.classList.add('hidden');
     el('nextEventBox')?.classList.add('hidden');
+    document.getElementById('logoutBtn')?.classList.add('hidden');
     activateDashboardTab(tabKey);
     syncDashboardViewportState();
   };
