@@ -1571,6 +1571,13 @@ function setBodyScroll(allow) {
     }
 }
 function renderNextEvent() {
+  // Banner im Termine-Tab (overview) NICHT anzeigen
+  const overviewPanel = document.querySelector('section[data-tab-panel="overview"]');
+  if (overviewPanel && !overviewPanel.classList.contains('hidden')) {
+    const box = document.getElementById('nextEventBox');
+    if (box) box.classList.add('hidden');
+    return;
+  }
   const box = document.getElementById('nextEventBox');
   const labelEl = document.getElementById('nextEventLabel');
   const titleEl = document.getElementById('nextEventTitle');
