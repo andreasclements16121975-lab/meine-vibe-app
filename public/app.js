@@ -993,6 +993,7 @@ el('nextEventBox')?.classList.remove('hidden');
 function initDashboardTabs() {
   el('dashboardHome')?.classList.remove('hidden');
   el('nextEventBox')?.classList.remove('hidden');
+  el('bannerLogoutBtn')?.classList.remove('hidden');
   // Termine Header Buttons
   document.getElementById('terminBackBtn')?.addEventListener('click', () => {
     initDashboardTabs();
@@ -1008,6 +1009,7 @@ function initDashboardTabs() {
     el('dashboardHome')?.classList.add('hidden');
     el('nextEventBox')?.classList.add('hidden');
     document.getElementById('logoutBtn')?.classList.add('hidden');
+    document.getElementById('bannerLogoutBtn')?.classList.add('hidden');
     activateDashboardTab(tabKey);
     syncDashboardViewportState();
   };
