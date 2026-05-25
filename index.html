@@ -529,14 +529,38 @@ body {
 
       </div>
 
-      <!-- NÄCHSTE TERMINE -->
-      <div style="margin:0 16px 16px;padding:0;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <span style="font-family:'Fraunces',serif;font-size:16px;font-weight:800;color:#0E1A14;">Nächste Termine</span>
-          <span id="calUpcomingCount" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#94A39C;"></span>
+      <!-- Legende: Event-Kategorien -->
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:14px;padding:12px 14px;margin:16px;display:flex;flex-wrap:wrap;gap:12px 8px;align-items:center;">
+          <!-- Spiel -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#16A34A;flex-shrink:0;"></div>
+            <span style="font-size:11px;color:#6B7280;font-weight:500;">Spiel</span>
+          </div>
+          
+          <!-- Training -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#2563EB;flex-shrink:0;"></div>
+            <span style="font-size:11px;color:#6B7280;font-weight:500;">Training</span>
+          </div>
+          
+          <!-- Feiertag -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>
+            <span style="font-size:11px;color:#6B7280;font-weight:500;">Feiertag</span>
+          </div>
+          
+          <!-- Auswärts -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;flex-shrink:0;"></div>
+            <span style="font-size:11px;color:#6B7280;font-weight:500;">Auswärts</span>
+          </div>
+          
+          <!-- Heimspiel -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#15803D;flex-shrink:0;"></div>
+            <span style="font-size:11px;color:#6B7280;font-weight:500;">Heimspiel</span>
+          </div>
         </div>
-        <div id="calUpcomingList" style="display:flex;flex-direction:column;gap:8px;"></div>
-      </div>
 
     </section>
     <section data-tab-panel="create-event" class="hidden bg-white rounded-2xl border px-4 pb-4 pt-0 shadow-sm sm:px-6 sm:pb-6">
