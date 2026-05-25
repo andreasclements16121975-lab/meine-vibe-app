@@ -437,6 +437,26 @@ body {
 
       <!-- KALENDER CARD -->
       <div style="margin:16px;background:white;border-radius:18px;padding:14px 10px 12px;">
+        <!-- Header: Zurück + Titel + Logout -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:4px 0;">
+          <!-- Zurück-Button -->
+          <button type="button" id="terminBackBtn" style="width:36px;height:36px;border:1px solid #E5E7EB;border-radius:10px;background:#FFFFFF;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Titel-Bereich -->
+          <div style="flex:1;text-align:center;padding:0 8px;">
+            <div style="font-size:11px;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;">SAISON 25/26</div>
+            <div style="font-size:19px;font-weight:700;color:#111827;font-family:'Fraunces',serif;">Termine</div>
+          </div>
+
+          <!-- Logout-Button -->
+          <button type="button" id="terminLogoutBtn" style="height:36px;padding:0 14px;border:none;border-radius:10px;background:#16A34A;color:#FFFFFF;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;">
+            Logout
+          </button>
+        </div>
         <!-- Terminkalender iOS Segmented Control -->
       <div style="display:flex;background:#FFFFFF;padding:3px;border-radius:10px;gap:0;margin-bottom:16px;height:40px;align-items:center;border:1px solid #E5E7EB;">
         
