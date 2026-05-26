@@ -1759,7 +1759,17 @@ function renderCalendar() {
   }
   
   // Tage dieses Monats
+  let currentWeek = null;
   for (let day = 1; day <= daysInMonth; day++) {
+    const dayDate = new Date(y, m, day);
+    const week = getISOWeek(dayDate);
+    if (week !== currentWeek) {
+      const kwCell = document.createElement('div');
+      kwCell.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#0E1A14;padding:2px 0;';
+      kwCell.textContent = 'KW ' + week;
+      grid.appendChild(kwCell);
+      currentWeek = week;
+    }
     const cell = document.createElement('button');
     cell.className = 'cal-day';
     cell.type = 'button';
