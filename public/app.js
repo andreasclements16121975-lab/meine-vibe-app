@@ -1710,6 +1710,14 @@ function renderNextEvent() {
   }
   if (det2 && detailsEl) det2.innerHTML = detailsEl.innerHTML;
 }
+// ISO 8601 Kalenderwoche berechnen
+function getISOWeek(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
 function renderCalendar() {
   const grid = el('calGrid');
   // Feiertage für das aktuelle Anzeigjahr aktualisieren (funktioniert für alle Jahre)
