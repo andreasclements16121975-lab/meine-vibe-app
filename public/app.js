@@ -1757,7 +1757,6 @@ function renderCalendar() {
     cell.style.pointerEvents = 'none';
     grid.appendChild(cell);
   }
-  currentWeek = null;
   
   // Tage dieses Monats
   let currentWeek = null;
