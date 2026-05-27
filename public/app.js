@@ -1749,7 +1749,7 @@ function renderCalendar() {
   
   // Grid leeren
   grid.innerHTML = '';
-  let currentWeek = null;
+  
   // Leere Zellen für vorherigen Monat
   for (let i = 0; i < firstDayMo; i++) {
     const cell = document.createElement('button');
@@ -1759,6 +1759,7 @@ function renderCalendar() {
   }
   
   // Tage dieses Monats
+  let currentWeek = null;
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDate = new Date(y, m, day);
     const week = getISOWeek(dayDate);
