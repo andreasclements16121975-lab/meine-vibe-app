@@ -1758,6 +1758,9 @@ function renderCalendar() {
     kwCellFirst.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:#C83E3E;padding:0;display:flex;align-items:center;justify-content:center;height:100%;';
     kwCellFirst.textContent = firstWeek;
     grid.appendChild(kwCellFirst);
+    const divFirst = document.createElement('div');
+    divFirst.style.cssText = 'width:1px;background:#E5E7EB;height:100%;';
+    grid.appendChild(divFirst);
   }
 
   for (let i = 0; i < firstDayMo; i++) {
@@ -1777,6 +1780,9 @@ function renderCalendar() {
       kwCell.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:#C83E3E;padding:0;display:flex;align-items:center;justify-content:center;height:100%;';
       kwCell.textContent = week;
       grid.appendChild(kwCell);
+      const div = document.createElement('div');
+      div.style.cssText = 'width:1px;background:#E5E7EB;height:100%;';
+      grid.appendChild(div);
       currentWeek = week;
     }
     const cell = document.createElement('button');
