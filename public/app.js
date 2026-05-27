@@ -1751,6 +1751,15 @@ function renderCalendar() {
   grid.innerHTML = '';
   
   // Leere Zellen für vorherigen Monat
+  if (firstDayMo > 0) {
+    const firstDayOfMonth = new Date(y, m, 1);
+    const firstWeek = getISOWeek(firstDayOfMonth);
+    const kwCellFirst = document.createElement('div');
+    kwCellFirst.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#0E1A14;padding:2px 0;';
+    kwCellFirst.textContent = 'KW ' + firstWeek;
+    grid.appendChild(kwCellFirst);
+  }
+
   for (let i = 0; i < firstDayMo; i++) {
     const cell = document.createElement('button');
     cell.className = 'cal-day is-other-month';
@@ -1759,7 +1768,7 @@ function renderCalendar() {
   }
   
   // Tage dieses Monats
-  let currentWeek = null;
+  let currentWeek = firstDayMo > 0 ? getISOWeek(new Date(y, m, 1)) : null;
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDate = new Date(y, m, day);
     const week = getISOWeek(dayDate);
