@@ -1775,7 +1775,7 @@ function renderCalendar() {
     if (week !== currentWeek) {
       const kwCell = document.createElement('div');
       kwCell.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;color:#0E1A14;padding:2px 0;';
-      kwCell.textContent = 'KW ' + week;
+      kwCell.textContent = week;
       grid.appendChild(kwCell);
       currentWeek = week;
     }
