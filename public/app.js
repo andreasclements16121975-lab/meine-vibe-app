@@ -1805,7 +1805,7 @@ function renderCalendar() {
       
       if (isHoliday) {
         const holidayDiv = document.createElement('div');
-        holidayDiv.style.cssText = 'font-family:JetBrains Mono,monospace;font-size:7px;font-weight:600;color:#C83E3E;text-align:center;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:1px 1px;';
+        holidayDiv.style.cssText = 'height:16px;max-width:48px;padding:0 4px;border-radius:5px;background:#FDEAEA;color:#DC2626;font-size:9px;font-weight:600;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:"JetBrains Mono",monospace;';
         holidayDiv.textContent = calendarHolidays[dateStr];
         chipsContainer.appendChild(holidayDiv);
       }
