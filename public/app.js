@@ -1755,7 +1755,7 @@ function renderCalendar() {
     const firstDayOfMonth = new Date(y, m, 1);
     const firstWeek = getISOWeek(firstDayOfMonth);
     const kwCellFirst = document.createElement('div');
-    kwCellFirst.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:#C83E3E;padding:0;display:flex;align-items:center;justify-content:center;height:100%;border-right:1px solid #E5E7EB;';
+    kwCellFirst.style.cssText = 'text-align:center;font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:#C83E3E;padding:0;display:flex;align-items:center;justify-content:center;height:100%;';
     kwCellFirst.textContent = firstWeek;
     grid.appendChild(kwCellFirst);
   }
