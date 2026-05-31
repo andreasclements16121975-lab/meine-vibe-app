@@ -1803,12 +1803,7 @@ function renderCalendar() {
       const chipsContainer = document.createElement('div');
       chipsContainer.className = 'cal-chips';
       
-      if (isHoliday) {
-        const holidayDiv = document.createElement('div');
-        holidayDiv.style.cssText = 'height:16px;max-width:48px;padding:0 4px;border-radius:5px;background:#FDEAEA;color:#DC2626;font-size:9px;font-weight:600;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:"JetBrains Mono",monospace;';
-        holidayDiv.textContent = calendarHolidays[dateStr];
-        chipsContainer.appendChild(holidayDiv);
-      }
+      
       
       // Max 2 Event-Chips anzeigen
       dayEvents.slice(0, 2).forEach(evt => {
