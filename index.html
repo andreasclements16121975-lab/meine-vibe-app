@@ -527,7 +527,20 @@ body {
 
         <!-- Kalender-Grid (wird per JS gefüllt) -->
         <div id="calGrid" style="display:grid;grid-template-columns:32px repeat(7,1fr);gap:3px;background-image:linear-gradient(to right, transparent 33px, #E5E7EB 33px, #E5E7EB 34px, transparent 34px);"></div>
+<!-- ===== TERMIN-LISTE (zunächst versteckt) ===== -->
+    <div id="terminListeView" style="display:none;padding:0 16px 96px 16px;max-width:560px;margin:0 auto;">
+      <!-- Filter-Chips -->
+      <div id="terminListeFilter" style="display:flex;gap:8px;overflow-x:auto;padding:14px 0 18px 0;scrollbar-width:none;-ms-overflow-style:none;">
+        <button class="tl-filter-chip is-active" data-filter="alle" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:500;background:#002015;color:#FFFFFF;border:1px solid #002015;cursor:pointer;white-space:nowrap;flex-shrink:0;">Alle</button>
+        <button class="tl-filter-chip" data-filter="spiel" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:500;background:#FFFFFF;color:#6B7280;border:1px solid #E5E7EB;cursor:pointer;white-space:nowrap;flex-shrink:0;">Spiele</button>
+        <button class="tl-filter-chip" data-filter="training" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:500;background:#FFFFFF;color:#6B7280;border:1px solid #E5E7EB;cursor:pointer;white-space:nowrap;flex-shrink:0;">Training</button>
+        <button class="tl-filter-chip" data-filter="feiertag" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:500;background:#FFFFFF;color:#6B7280;border:1px solid #E5E7EB;cursor:pointer;white-space:nowrap;flex-shrink:0;">Feiertage</button>
+        <button class="tl-filter-chip" data-filter="sonstige" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:500;background:#FFFFFF;color:#6B7280;border:1px solid #E5E7EB;cursor:pointer;white-space:nowrap;flex-shrink:0;">Sonstige</button>
+      </div>
 
+      <!-- Termin-Liste Container -->
+      <div id="terminListeContent"></div>
+    </div>
         <!-- Trennlinie -->
         <div style="height:1px;background:#E5E7EB;margin:44px 0 12px 0;"></div>
 
