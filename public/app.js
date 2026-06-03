@@ -1926,8 +1926,48 @@ function initCalendarControls() {
   }
   
   // Initial rendern
-  renderCalendar();
-}
+    renderCalendar();
+
+    // Tab-Umschaltung: Kalender / Liste
+    const tabKalenderBtn = document.getElementById('calTabKalender');
+    const tabListeBtn = document.getElementById('calTabList');
+    const calGrid = document.getElementById('calGrid');
+    const terminListeView = document.getElementById('terminListeView');
+
+    function switchToKalender() {
+      if (calGrid) calGrid.style.display = 'grid';
+      if (terminListeView) terminListeView.style.display = 'none';
+      const monthHeader = document.querySelector('#calMonthLabel')?.closest('div')?.parentElement;
+      if (monthHeader) monthHeader.style.display = '';
+      if (tabKalenderBtn) {
+        tabKalenderBtn.style.background = '#002015';
+        tabKalenderBtn.style.color = '#FFFFFF';
+      }
+      if (tabListeBtn) {
+        tabListeBtn.style.background = '#FFFFFF';
+        tabListeBtn.style.color = '#666';
+      }
+    }
+
+    function switchToListe() {
+      if (calGrid) calGrid.style.display = 'none';
+      if (terminListeView) terminListeView.style.display = 'block';
+      const monthHeader = document.querySelector('#calMonthLabel')?.closest('div')?.parentElement;
+      if (monthHeader) monthHeader.style.display = 'none';
+      if (tabListeBtn) {
+        tabListeBtn.style.background = '#002015';
+        tabListeBtn.style.color = '#FFFFFF';
+      }
+      if (tabKalenderBtn) {
+        tabKalenderBtn.style.background = '#FFFFFF';
+        tabKalenderBtn.style.color = '#666';
+      }
+      if (typeof renderTerminListe === 'function') renderTerminListe();
+    }
+
+    if (tabKalenderBtn) tabKalenderBtn.addEventListener('click', switchToKalender);
+    if (tabListeBtn) tabListeBtn.addEventListener('click', switchToListe);
+  }
 
 function openCalendarModal(eventId) {
   const eventItem = calendarEvents.find((e) => e.id === eventId);
