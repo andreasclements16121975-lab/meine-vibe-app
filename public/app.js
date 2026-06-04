@@ -1929,7 +1929,7 @@ function initCalendarControls() {
     renderCalendar();
 
     // Tab-Umschaltung: Kalender / Liste
-    const tabKalenderBtn = document.getElementById('calTabKalender');
+    const tabKalenderBtn = document.getElementById('calTabCalendar');
     const tabListeBtn = document.getElementById('calTabList');
     const calGrid = document.getElementById('calGrid');
     const terminListeView = document.getElementById('terminListeView');
