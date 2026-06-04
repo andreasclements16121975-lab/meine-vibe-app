@@ -1968,7 +1968,185 @@ function initCalendarControls() {
     if (tabKalenderBtn) tabKalenderBtn.addEventListener('click', switchToKalender);
     if (tabListeBtn) tabListeBtn.addEventListener('click', switchToListe);
   }
+// ===== TERMIN-LISTE: State =====
+  let terminListeFilter = 'alle';
 
+  // ===== TERMIN-LISTE: Hauptfunktion =====
+  function renderTerminListe() {
+    const container = document.getElementById('terminListeContent');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // Events aus calendarEvents holen + Feiertage des aktuellen Jahres
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const currentYear = today.getFullYear();
+
+    // Feiertage als Events umwandeln
+    const holidays = getGermanHolidays(currentYear) || {};
+    const holidayEvents = Object.entries(holidays).map(([dateStr, name]) => ({
+      id: 'holiday-' + dateStr,
+      title: name,
+      type: 'feiertag',
+      date: dateStr,
+      time: null,
+      location: 'Gesetzlicher Feiertag'
+    }));
+
+    // Bestehende Termine normalisieren
+    const normalizedEvents = (calendarEvents || []).map(e => ({
+      id: e.id,
+      title: e.title || e.opponent || 'Termin',
+      type: (e.title || '').toLowerCase().includes('training') ? 'training'
+          : (e.title || '').toLowerCase().includes('spiel') ? 'spiel'
+          : 'sonstige',
+      date: e.date,
+      time: e.kickoffTime || e.meetingTime || null,
+      location: e.address || e.opponent || '',
+      raw: e
+    }));
+
+    const allEvents = [...normalizedEvents, ...holidayEvents]
+      .filter(e => {
+        if (!e.date) return false;
+        const d = new Date(e.date);
+        d.setHours(0, 0, 0, 0);
+        return d >= today;
+      })
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Filter anwenden
+    let filtered = allEvents;
+    if (terminListeFilter === 'spiel') filtered = allEvents.filter(e => e.type === 'spiel');
+    else if (terminListeFilter === 'training') filtered = allEvents.filter(e => e.type === 'training');
+    else if (terminListeFilter === 'feiertag') filtered = allEvents.filter(e => e.type === 'feiertag');
+    else if (terminListeFilter === 'sonstige') filtered = allEvents.filter(e => e.type === 'sonstige');
+
+    // Empty State
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:48px 16px;color:#6B7280;">
+          <div style="font-size:15px;font-weight:600;color:#111827;margin-bottom:6px;">Keine Termine vorhanden</div>
+          <div style="font-size:13px;">Aktuell sind keine Termine geplant.</div>
+        </div>`;
+      return;
+    }
+
+    // Gruppierung: Heute / Morgen / Diese Woche / Nächste Woche / Später
+    const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+    const weekEnd = new Date(today); weekEnd.setDate(weekEnd.getDate() + (7 - today.getDay()));
+    const nextWeekEnd = new Date(weekEnd); nextWeekEnd.setDate(nextWeekEnd.getDate() + 7);
+
+    const groups = { heute: [], morgen: [], dieseWoche: [], naechsteWoche: [], spaeter: [] };
+    filtered.forEach(e => {
+      const d = new Date(e.date); d.setHours(0, 0, 0, 0);
+      if (d.getTime() === today.getTime()) groups.heute.push(e);
+      else if (d.getTime() === tomorrow.getTime()) groups.morgen.push(e);
+      else if (d <= weekEnd) groups.dieseWoche.push(e);
+      else if (d <= nextWeekEnd) groups.naechsteWoche.push(e);
+      else groups.spaeter.push(e);
+    });
+
+    const groupLabels = {
+      heute: 'Heute',
+      morgen: 'Morgen',
+      dieseWoche: 'Diese Woche',
+      naechsteWoche: 'Nächste Woche',
+      spaeter: 'Später'
+    };
+
+    let firstGroup = true;
+    Object.keys(groups).forEach(key => {
+      if (groups[key].length === 0) return;
+      const header = document.createElement('div');
+      header.style.cssText = `font-size:13px;font-weight:700;color:#374151;margin-top:${firstGroup ? '0' : '18px'};margin-bottom:8px;`;
+      header.textContent = groupLabels[key];
+      container.appendChild(header);
+      firstGroup = false;
+
+      groups[key].forEach(evt => container.appendChild(buildEventCard(evt, today)));
+    });
+  }
+
+  // ===== TERMIN-LISTE: Card-Builder =====
+  function buildEventCard(evt, today) {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04);cursor:pointer;';
+
+    const d = new Date(evt.date);
+    const dayNum = d.getDate();
+    const monthShort = ['JAN','FEB','MRZ','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'][d.getMonth()];
+    const isToday = d.toDateString() === today.toDateString();
+    const isHoliday = evt.type === 'feiertag';
+
+    // Datumskachel
+    const dateBox = document.createElement('div');
+    let dateBoxBg = '#F3F4F6', dayColor = '#111827', monthColor = '#6B7280';
+    if (isToday) { dateBoxBg = '#002015'; dayColor = '#FFFFFF'; monthColor = '#D1FAE5'; }
+    else if (isHoliday) { dateBoxBg = '#FDEAEA'; dayColor = '#DC2626'; monthColor = '#DC2626'; }
+    dateBox.style.cssText = `width:48px;height:56px;border-radius:12px;background:${dateBoxBg};display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;`;
+    dateBox.innerHTML = `
+      <div style="font-size:18px;font-weight:700;color:${dayColor};line-height:1;">${dayNum}</div>
+      <div style="font-size:11px;font-weight:600;color:${monthColor};text-transform:uppercase;margin-top:2px;">${monthShort}</div>
+    `;
+
+    // Mitte: Titel + Badge + Meta
+    const middle = document.createElement('div');
+    middle.style.cssText = 'flex:1;min-width:0;';
+
+    const badgeStyles = {
+      spiel:    { bg: '#DCFCE7', color: '#15803D' },
+      training: { bg: '#DBEAFE', color: '#2563EB' },
+      feiertag: { bg: '#FDEAEA', color: '#DC2626' },
+      sonstige: { bg: '#F3F4F6', color: '#4B5563' }
+    };
+    const badgeLabel = { spiel: 'SPIEL', training: 'TRAINING', feiertag: 'FEIERTAG', sonstige: 'TERMIN' };
+    const bs = badgeStyles[evt.type] || badgeStyles.sonstige;
+
+    middle.innerHTML = `
+      <div style="display:inline-block;height:22px;line-height:22px;padding:0 8px;border-radius:999px;background:${bs.bg};color:${bs.color};font-size:11px;font-weight:600;margin-bottom:4px;">${badgeLabel[evt.type] || 'TERMIN'}</div>
+      <div style="font-size:15px;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${evt.title}</div>
+      <div style="font-size:12px;font-weight:400;color:#6B7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">${evt.location || ''}</div>
+    `;
+
+    // Rechts: Uhrzeit
+    const right = document.createElement('div');
+    right.style.cssText = 'font-size:12px;font-weight:600;color:#111827;flex-shrink:0;';
+    right.textContent = evt.time || (isHoliday ? '—' : '');
+
+    card.appendChild(dateBox);
+    card.appendChild(middle);
+    card.appendChild(right);
+
+    // Klick öffnet bestehendes Modal, falls vorhanden
+    if (evt.raw && evt.raw.id && typeof openCalendarModal === 'function') {
+      card.onclick = () => openCalendarModal(evt.raw.id);
+    }
+
+    return card;
+  }
+
+  // ===== TERMIN-LISTE: Filter-Chips =====
+  document.addEventListener('click', (e) => {
+    const chip = e.target.closest('.tl-filter-chip');
+    if (!chip) return;
+    terminListeFilter = chip.dataset.filter || 'alle';
+
+    // Chips visuell umschalten
+    document.querySelectorAll('.tl-filter-chip').forEach(c => {
+      if (c.dataset.filter === terminListeFilter) {
+        c.style.background = '#002015';
+        c.style.color = '#FFFFFF';
+        c.style.borderColor = '#002015';
+      } else {
+        c.style.background = '#FFFFFF';
+        c.style.color = '#6B7280';
+        c.style.borderColor = '#E5E7EB';
+      }
+    });
+
+    renderTerminListe();
+  });
 function openCalendarModal(eventId) {
   const eventItem = calendarEvents.find((e) => e.id === eventId);
   if (!eventItem) return;
