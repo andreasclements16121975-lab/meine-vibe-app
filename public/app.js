@@ -1954,8 +1954,9 @@ function initCalendarControls() {
       if (terminListeView) terminListeView.style.display = 'block';
       const monthHeader = document.querySelector('#calMonthLabel')?.closest('div')?.parentElement;
       if (monthHeader) monthHeader.style.display = 'none';
-      // Wochentagsleiste verstecken
-      const weekdayRow = document.getElementById('calWeekdayHeader');
+      // Wochentagsleiste verstecken (Element direkt vor calGrid)
+      const calGridEl = document.getElementById('calGrid');
+      const weekdayRow = calGridEl?.previousElementSibling?.previousElementSibling;
       if (weekdayRow) weekdayRow.style.display = 'none';
       // Legende (Training/Feiertag/Auswärts/Heimspiel) verstecken
       const legende = document.querySelector('[style*="Training"]')?.closest('div[style*="flex-wrap"]');
