@@ -1954,6 +1954,16 @@ function initCalendarControls() {
       if (terminListeView) terminListeView.style.display = 'block';
       const monthHeader = document.querySelector('#calMonthLabel')?.closest('div')?.parentElement;
       if (monthHeader) monthHeader.style.display = 'none';
+      // Wochentagsleiste verstecken (Element direkt vor calGrid)
+      const calGridEl = document.getElementById('calGrid');
+      const weekdayRow = calGridEl?.previousElementSibling?.previousElementSibling;
+      if (weekdayRow) weekdayRow.style.display = 'none';
+      // Legende (Training/Feiertag/Auswärts/Heimspiel) verstecken
+      const legende = document.querySelector('[style*="Training"]')?.closest('div[style*="flex-wrap"]');
+      if (legende) legende.style.display = 'none';
+      // Trennlinie verstecken
+      const trennlinie = document.querySelector('div[style*="margin:44px 0 12px"]');
+      if (trennlinie) trennlinie.style.display = 'none';
       if (tabListeBtn) {
         tabListeBtn.style.background = '#002015';
         tabListeBtn.style.color = '#FFFFFF';
